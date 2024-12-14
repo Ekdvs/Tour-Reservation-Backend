@@ -29,9 +29,10 @@ try {
         }
          catch (MessagingException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to send email");
+            throw new RuntimeException("Failed to send email");}}
+            public void sendotpcode(String toEmail, String subject, String htmlContent) {
 
-
+            }
  }
-}
-}
+
+
