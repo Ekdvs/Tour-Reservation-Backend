@@ -1,6 +1,7 @@
 package com.online.travel.planning.online.travel.planning.backend.Model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,5 +23,6 @@ public class User {
     private String phoneNumber;
     private String userRole="user";
     private LocalDate dateRegistered =LocalDate.now();
+    private LocalTime timeRegistered =LocalTime.now();
 
 }
