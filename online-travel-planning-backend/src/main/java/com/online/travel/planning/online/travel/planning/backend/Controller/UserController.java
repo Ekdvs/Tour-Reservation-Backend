@@ -104,7 +104,7 @@ public class UserController {
         return userService.updatePassword(userEmail, newPassword);
     }
 
-    /*// Get user profile by email
+    // Get user profile by email
     @GetMapping("/{email}")
     public ResponseEntity<User> getUserProfile(@PathVariable String email) {
         User user = userService.getUserProfile(email);
@@ -121,7 +121,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(user);
-    }*/}
+    }}
 
     /*@Value("${profile-pic.upload-dir}")
     private String uploadDir; // The directory to save the profile pictures
