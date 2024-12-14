@@ -29,6 +29,7 @@ public class User {
     private LocalDate dateRegistered =LocalDate.now();
     private LocalTime timeRegistered =LocalTime.now();
 
+
     public String getUserId() {
         return userId;
     }
