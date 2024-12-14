@@ -1,6 +1,7 @@
 package com.online.travel.planning.online.travel.planning.backend.ServiceImplementation;
 
 import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
+import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
 import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
 
 import java.util.HashMap;
@@ -17,8 +18,8 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-   /*  @Autowired
-    private EmailService emailService;*/
+     @Autowired
+    private Email_Service emailService;
 
     private final Map<String,String> recoveryCodes = new HashMap<>();
 
