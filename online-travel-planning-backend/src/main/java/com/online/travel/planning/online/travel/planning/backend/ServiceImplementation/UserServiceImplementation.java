@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,5 +19,10 @@ public class UserServiceImplementation implements UserService {
     private EmailService emailService;*/
 
     private final Map<String,String> recoveryCodes = new HashMap<>();
+
+    @Override
+    public User createUser(User user){
+        
+    }
 
 }
