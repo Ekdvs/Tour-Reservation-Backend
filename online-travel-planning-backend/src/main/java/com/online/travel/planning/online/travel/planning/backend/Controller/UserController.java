@@ -15,5 +15,17 @@ import java.util.Map;
 @RequestMapping("/user")
 
 public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    // Create a new user
+    @PostMapping("/addUser")
+    public ResponseEntity<User> createUser(@RequestBody User user) throws MessagingException {
+        User createdUser = userService.createUser(user);
+        return ResponseEntity.ok(createdUser);
+    }
 
 }
