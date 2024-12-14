@@ -1,11 +1,12 @@
 package com.online.travel.planning.online.travel.planning.backend.Controller;
 
+import com.online.travel.planning.online.travel.planning.backend.Model.User;
 import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
 import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,8 @@ import java.util.Map;
 @RestController
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/user")
-
 public class UserController {
+
     @Autowired
     private UserService userService;
 
@@ -28,6 +29,7 @@ public class UserController {
         User createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }
+
     // Get user by ID
     @GetMapping("/getUserById/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") String userId) {
@@ -40,6 +42,7 @@ public class UserController {
         String userName=user.getFirstName();
         return userName;
     }
+
     @GetMapping("/getUserByEmail/{id}")
     public User getUserByEmail(@PathVariable("id") String userEmail) {
         return userService.getUserByUserEmail(userEmail);
@@ -50,6 +53,7 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
     // Delete user by ID
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") String userId) {
@@ -81,7 +85,7 @@ public class UserController {
         return "User registered successfully";
     }
 
-    @PostMapping("/send-code")
+    @PostMapping("/sendotpcode")
     public String sendRecoveryCode(@RequestBody Map<String, String> payload) {
         String userEmail = payload.get("userEmail");
         if (userEmail == null || userEmail.isBlank()) {
@@ -98,9 +102,71 @@ public class UserController {
     @PostMapping("/update-password")
     public User updatePassword(@RequestParam String userEmail, @RequestParam String newPassword) {
         return userService.updatePassword(userEmail, newPassword);
-}
+    }
+
+    /*// Get user profile by email
+    @GetMapping("/{email}")
+    public ResponseEntity<User> getUserProfile(@PathVariable String email) {
+        User user = userService.getUserProfile(email);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/{email}")
+    public ResponseEntity<User> updateUserProfile(@PathVariable String email,@RequestBody User updatedUser ) {
+        User user = userService.updateUserProfile(email, updatedUser);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(user);
+    }*/}
+
+    /*@Value("${profile-pic.upload-dir}")
+    private String uploadDir; // The directory to save the profile pictures
+
+    @PutMapping("/{email}")
+    public ResponseEntity<Map<String, String>> updateUserProfile(@PathVariable String email,
+                                                                 @RequestParam Map<String, String> formData,
+                                                                 @RequestParam(required = false) MultipartFile profilePicture) {
+        Map<String, String> response = new HashMap<>();
+
+        try {
+            if (profilePicture != null && !profilePicture.isEmpty()) {
+                String fileName = StringUtils.cleanPath(profilePicture.getOriginalFilename());
+                Path uploadPath = Paths.get(uploadDir);
+
+                // Create the directory if it does not exist
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                // Save the file
+                Path targetLocation = uploadPath.resolve(fileName);
+                Files.copy(profilePicture.getInputStream(), targetLocation);
+
+                // Store the image URL in the database (e.g., the file path or URL)
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/uploads/")
+                        .path(fileName)
+                        .toUriString();
+
+                // You can save the fileDownloadUri in your database (User's profile picture URL)
+                response.put("profilePicture", fileDownloadUri);
+            }
+
+            // Update other user information as needed
+            response.put("message", "User profile updated successfully!");
+            return ResponseEntity.ok(response);
+
+        } catch (IOException e) {
+            response.put("message", "Could not upload the file. Please try again!");
+            return ResponseEntity.status(500).body(response);
+        }
+    }*/
 
 
 
 
-}
+
