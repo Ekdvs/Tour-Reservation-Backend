@@ -47,9 +47,7 @@ try {
         } 
         catch (MessagingException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to send email");
-        
-                }
+            throw new RuntimeException("Failed to send email");  }
             }
  }
 
