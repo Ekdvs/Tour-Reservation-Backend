@@ -88,4 +88,9 @@ public class UserServiceImplementation implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public void deleteUser(String userId) {
+        userRepository.deleteById(userId);
+    }
 }
