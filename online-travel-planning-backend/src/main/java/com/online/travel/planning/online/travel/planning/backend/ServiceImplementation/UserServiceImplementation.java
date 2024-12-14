@@ -4,6 +4,7 @@ import com.online.travel.planning.online.travel.planning.backend.Repository.User
 import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,5 +82,10 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User getUserByUserEmail(String userEmail) {
         return userRepository.findByUserEmail(userEmail);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
