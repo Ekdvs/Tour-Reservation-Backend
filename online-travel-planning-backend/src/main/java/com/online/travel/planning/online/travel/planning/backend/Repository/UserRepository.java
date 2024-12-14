@@ -1,6 +1,7 @@
 package com.online.travel.planning.online.travel.planning.backend.Repository;
 
-import com.online.travel.planning.online.travel.planning.backend.Model.User;
+
+import org.apache.catalina.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
