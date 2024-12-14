@@ -2,6 +2,7 @@ package com.online.travel.planning.online.travel.planning.backend.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import jakarta.mail.internet.MimeMessage;
@@ -14,6 +15,13 @@ public class Email_Service {
 try {
             // Create a MimeMessage
             MimeMessage message = mailSender.createMimeMessage();
+ 
+            // Use MimeMessageHelper to configure the email
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true); // Pass 'true' for HTML content
+            helper.setFrom("ceylontravelplanning@gmail.com");
 
 
  }
