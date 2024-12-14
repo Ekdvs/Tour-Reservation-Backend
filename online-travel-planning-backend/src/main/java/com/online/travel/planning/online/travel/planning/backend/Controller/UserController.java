@@ -49,6 +49,57 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+    // Delete user by ID
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") String userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok("User with ID " + userId + " has been deleted successfully.");
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user, HttpSession session) {
+        User existingUser = userRepository.findByUserEmail(user.getUserEmail());
+        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
+            session.setAttribute("user", user);
+            return "Login successful";
+        } else {
+            return "Invalid username or password";
+        }
+    }
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "Logged out successfully";
+    }
+    @PostMapping("/register")
+    public String register(@RequestBody User user) {
+        if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
+            return "User already registered as a user";
+        }
+        userRepository.save(user);
+        return "User registered successfully";
+    }
+
+    @PostMapping("/send-code")
+    public String sendRecoveryCode(@RequestBody Map<String, String> payload) {
+        String userEmail = payload.get("userEmail");
+        if (userEmail == null || userEmail.isBlank()) {
+            throw new RuntimeException("Email cannot be empty.");
+        }
+        return userService.sendRecoveryCode(userEmail);
+    }
+
+    @PostMapping("/verify-code")
+    public boolean verifyRecoveryCode(@RequestParam String userEmail, @RequestParam String recoveryCode) {
+        return userService.verifyRecoveryCode(userEmail, recoveryCode);
+    }
+
+    @PostMapping("/update-password")
+    public User updatePassword(@RequestParam String userEmail, @RequestParam String newPassword) {
+        return userService.updatePassword(userEmail, newPassword);
+    }
+
+
 
 
 }
