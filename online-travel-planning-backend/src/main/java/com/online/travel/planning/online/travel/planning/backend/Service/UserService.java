@@ -8,5 +8,6 @@ public interface UserService {
     User createUser(User user) throws MessagingException;
     User getUserById(String userId);
     User getUserNameById(String userId);
+    User getUserByUserEmail(String userEmail);
 
 }
