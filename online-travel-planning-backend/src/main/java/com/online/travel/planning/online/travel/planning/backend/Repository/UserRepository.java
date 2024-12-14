@@ -8,5 +8,6 @@ public class UserRepository extends MongoRepository<User,String> {
 
     Optional<User> findByUserId(String userId);
     User findByUserEmail(String username);
+    Optional<User> findUsernameByUserId(String userId);
 
 }
