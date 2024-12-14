@@ -11,9 +11,9 @@ public interface UserService {
     User getUserById(String userId);
     User getUserNameById(String userId);
     User getUserByUserEmail(String userEmail);
-List<User> getAllUsers();
-void deleteUser(String userId);
-String sendRecoveryCode(String userEmail);
-boolean verifyRecoveryCode(String userEmail, String recoveryCode);
-User updatePassword(String userEmail, String newPassword);
+    List<User> getAllUsers();
+    void deleteUser(String userId);
+    String sendRecoveryCode(String userEmail);
+    boolean verifyRecoveryCode(String userEmail, String recoveryCode);
+    User updatePassword(String userEmail, String newPassword);
 }
