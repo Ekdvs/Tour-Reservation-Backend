@@ -166,4 +166,16 @@ public class UserServiceImplementation implements UserService {
         }
         return false;
     }
+
+    @Override
+    public User updatePassword(String userEmail, String newPassword) {
+        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("No user found with email: " + userEmail);
+        }
+
+        User user = optionalUser.get();
+        user.setPassword(newPassword); // Update password
+        return userRepository.save(user);
+    }
 }
