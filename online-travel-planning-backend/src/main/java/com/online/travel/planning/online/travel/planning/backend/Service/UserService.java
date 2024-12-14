@@ -14,5 +14,6 @@ public interface UserService {
 List<User> getAllUsers();
 void deleteUser(String userId);
 String sendRecoveryCode(String userEmail);
+boolean verifyRecoveryCode(String userEmail, String recoveryCode);
 
 }
