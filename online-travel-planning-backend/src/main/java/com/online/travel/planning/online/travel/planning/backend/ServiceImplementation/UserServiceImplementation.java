@@ -178,4 +178,8 @@ public class UserServiceImplementation implements UserService {
         user.setPassword(newPassword); // Update password
         return userRepository.save(user);
     }
+    @Override
+    public User getUserProfile(String email) {
+        return userRepository.findByUserEmail(email);
+    }
 }
