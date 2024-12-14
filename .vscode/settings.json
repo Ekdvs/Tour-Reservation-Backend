@@ -1,3 +1,10 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "cSpell.words": [
+        "fileurl",
+        "hjlmsbyzyparapua",
+        "sendotpcode",
+        "starttls",
+        "updateuserpassword"
+    ]
 }
