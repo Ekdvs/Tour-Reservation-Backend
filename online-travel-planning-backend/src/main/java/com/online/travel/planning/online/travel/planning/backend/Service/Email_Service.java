@@ -35,7 +35,13 @@ try {
                     // Create a MimeMessage
                     MimeMessage message = mailSender.createMimeMessage();
                 
-                
+                 // Use MimeMessageHelper to configure the email
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true); // Pass 'true' for HTML content
+            helper.setFrom("ceylontravelplanning@gmail.com");
+
                 }
             }
  }
