@@ -13,5 +13,6 @@ public interface UserService {
     User getUserByUserEmail(String userEmail);
 List<User> getAllUsers();
 void deleteUser(String userId);
+String sendRecoveryCode(String userEmail);
 
 }
