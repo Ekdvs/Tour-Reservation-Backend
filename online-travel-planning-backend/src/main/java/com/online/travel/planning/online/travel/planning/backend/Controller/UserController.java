@@ -27,5 +27,17 @@ public class UserController {
         User createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }
+    // Get user by ID
+    @GetMapping("/getUserById/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") String userId) {
+        User user = userService.getUserById(userId);
+        return ResponseEntity.ok(user);
+    }
+    @GetMapping("/getUserNameByID/{id}")
+    public String getUsernameById(@PathVariable("id") String userId) {
+        User user = userService.getUserNameById(userId);
+        String userName=user.getFirstName();
+        return userName;
+    }
 
 }
