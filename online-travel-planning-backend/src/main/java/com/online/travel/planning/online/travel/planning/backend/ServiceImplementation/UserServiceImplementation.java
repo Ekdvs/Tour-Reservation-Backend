@@ -10,4 +10,7 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+   /*  @Autowired
+    private EmailService emailService;*/
+
 }
