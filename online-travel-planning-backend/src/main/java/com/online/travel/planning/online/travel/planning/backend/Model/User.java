@@ -22,6 +22,7 @@ public class User {
     private String password;
     private String phoneNumber;
     private String userRole="user";
+
     private LocalDate dateRegistered =LocalDate.now();
     private LocalTime timeRegistered =LocalTime.now();
 
