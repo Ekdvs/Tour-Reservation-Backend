@@ -182,4 +182,21 @@ public class UserServiceImplementation implements UserService {
     public User getUserProfile(String email) {
         return userRepository.findByUserEmail(email);
     }
+
+    @Override
+    public User updateUserProfile(String userEmail, User user) {
+        User updatedUser = userRepository.findByUserEmail(userEmail);
+        if (updatedUser == null) {
+            return null;
+        }
+        else {
+            updatedUser.setFirstName(user.getFirstName());
+            updatedUser.setLastName(user.getLastName());
+            updatedUser.setPhoneNumber(user.getPhoneNumber());
+            updatedUser.setTitle(user.getTitle());
+            updatedUser.setGender(user.getGender());
+            updatedUser.setCountry(user.getCountry());
+            return userRepository.save(updatedUser);
+
+        }
 }
