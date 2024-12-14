@@ -1,6 +1,5 @@
 package com.online.travel.planning.online.travel.planning.backend.Controller;
 import com.online.travel.planning.online.travel.planning.backend.Model.User;
-import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
 import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
@@ -97,7 +96,7 @@ public class UserController {
     @PostMapping("/update-password")
     public User updatePassword(@RequestParam String userEmail, @RequestParam String newPassword) {
         return userService.updatePassword(userEmail, newPassword);
-    }
+}
 
 
 
