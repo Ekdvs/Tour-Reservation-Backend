@@ -99,7 +99,7 @@ public class UserController {
         return userService.verifyRecoveryCode(userEmail, recoveryCode);
     }
 
-    @PostMapping("/update-password")
+    @PostMapping("/updateuserpassword")
     public User updatePassword(@RequestParam String userEmail, @RequestParam String newPassword) {
         return userService.updatePassword(userEmail, newPassword);
     }
