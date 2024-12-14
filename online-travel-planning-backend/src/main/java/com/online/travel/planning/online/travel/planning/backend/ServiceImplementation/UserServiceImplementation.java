@@ -156,4 +156,14 @@ public class UserServiceImplementation implements UserService {
 
         return recoveryCode; // Optionally return it to the frontend for testing purposes
     }
+
+    @Override
+    public boolean verifyRecoveryCode(String userEmail, String recoveryCode) {
+        String storedCode = recoveryCodes.get(userEmail);
+        if (storedCode != null && storedCode.equals(recoveryCode)) {
+            recoveryCodes.remove(userEmail);
+            return true;
+        }
+        return false;
+    }
 }
