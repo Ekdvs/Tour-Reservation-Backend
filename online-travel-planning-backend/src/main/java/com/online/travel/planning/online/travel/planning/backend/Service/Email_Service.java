@@ -42,6 +42,13 @@ try {
             helper.setText(htmlContent, true); // Pass 'true' for HTML content
             helper.setFrom("ceylontravelplanning@gmail.com");
 
+            // Send the email
+            mailSender.send(message);
+        } 
+        catch (MessagingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to send email");
+        
                 }
             }
  }
