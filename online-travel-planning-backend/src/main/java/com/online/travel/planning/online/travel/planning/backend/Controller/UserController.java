@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:3001")
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/user")
 public class UserController {
 
@@ -89,18 +89,42 @@ public class UserController {
     }
 
     @PostMapping("/sendotpcode")
-    public String sendRecoveryCode(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<String> sendRecoveryCode(@RequestBody Map<String, String> payload) {
         String userEmail = payload.get("userEmail");
+
         if (userEmail == null || userEmail.isBlank()) {
-            throw new RuntimeException("Email cannot be empty.");
+            return ResponseEntity.badRequest().body("Email cannot be empty.");
         }
-        return userService.sendRecoveryCode(userEmail);
+
+        try {
+            String result = userService.sendRecoveryCode(userEmail);
+            return ResponseEntity.ok(result); // Return "OTP sent successfully" if service works fine.
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to send OTP. Please try again.");
+        }
     }
 
+
     @PostMapping("/verify-code")
-    public boolean verifyRecoveryCode(@RequestParam String userEmail, @RequestParam String recoveryCode) {
-        return userService.verifyRecoveryCode(userEmail, recoveryCode);
+    public ResponseEntity<String> verifyRecoveryCode(@RequestParam String userEmail, @RequestParam String recoveryCode) {
+        if (userEmail == null || userEmail.isBlank() || recoveryCode == null || recoveryCode.isBlank()) {
+            return ResponseEntity.badRequest().body("Email and recovery code cannot be empty.");
+        }
+
+        try {
+            boolean isVerified = userService.verifyRecoveryCode(userEmail, recoveryCode);
+            if (isVerified) {
+                return ResponseEntity.ok("OTP verified successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP. Please try again.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Verification failed. Please try again.");
+        }
     }
+
 
     @PostMapping("/update-password/{email}")
     public ResponseEntity<String> updatePassword(
