@@ -99,9 +99,37 @@ public class UserController {
         return userService.verifyRecoveryCode(userEmail, recoveryCode);
     }
 
-    @PostMapping("/updateuserpassword")
-    public User updatePassword(@RequestParam String userEmail, @RequestParam String newPassword) {
-        return userService.updatePassword(userEmail, newPassword);
+    @PostMapping("/update-password/{email}")
+    public ResponseEntity<String> updatePassword(
+            @PathVariable("email") String userEmail,
+            @RequestBody Map<String, String> payload) {
+
+        // Extract newPassword from the request body
+        String Password = payload.get("Password");
+
+        // Validate the newPassword input
+        if (Password == null || Password.isBlank()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("New password must not be empty.");
+        }
+
+        try {
+            // Call the service to update the password
+            User user = userService.updatePassword(userEmail, Password);
+
+            // Check if the user was found and the password updated
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("User not found or password could not be updated.");
+            }
+
+            // Return success message
+            return ResponseEntity.ok("Password updated successfully.");
+        } catch (RuntimeException e) {
+            // Handle any exceptions thrown by the service
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while updating the password: " + e.getMessage());
+        }
     }
 
     // Get user profile by email
