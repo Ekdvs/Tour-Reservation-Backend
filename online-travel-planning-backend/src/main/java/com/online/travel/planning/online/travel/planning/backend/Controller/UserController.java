@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -107,23 +108,42 @@ public class UserController {
 
 
     @PostMapping("/verify-code")
-    public ResponseEntity<String> verifyRecoveryCode(@RequestParam String userEmail, @RequestParam String recoveryCode) {
+    public ResponseEntity<Map<String, Object>> verifyRecoveryCode(
+            @RequestParam String userEmail,
+            @RequestParam String recoveryCode) {
+        // Validate input
         if (userEmail == null || userEmail.isBlank() || recoveryCode == null || recoveryCode.isBlank()) {
-            return ResponseEntity.badRequest().body("Email and recovery code cannot be empty.");
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Email and recovery code cannot be empty.");
+            return ResponseEntity.badRequest().body(response);
         }
 
         try {
+            // Verify OTP
             boolean isVerified = userService.verifyRecoveryCode(userEmail, recoveryCode);
             if (isVerified) {
-                return ResponseEntity.ok("OTP verified successfully.");
+                // Successful verification
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", true);
+                response.put("message", "OTP verified successfully.");
+                return ResponseEntity.ok(response);
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP. Please try again.");
+                // Invalid OTP
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", false);
+                response.put("message", "Invalid OTP. Please try again.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Verification failed. Please try again.");
+            // Handle server errors
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Verification failed. Please try again.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
 
 
     @PostMapping("/update-password/{email}")
