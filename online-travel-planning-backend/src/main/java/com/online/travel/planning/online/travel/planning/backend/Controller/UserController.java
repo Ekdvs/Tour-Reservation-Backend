@@ -99,7 +99,7 @@ public class UserController {
 
         try {
             String result = userService.sendRecoveryCode(userEmail);
-            return ResponseEntity.ok(result); // Return "OTP sent successfully" if service works fine.
+            return ResponseEntity.ok(result); 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to send OTP. Please try again.");
@@ -111,7 +111,7 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> verifyRecoveryCode(
             @RequestParam String userEmail,
             @RequestParam String recoveryCode) {
-        // Validate input
+        
         if (userEmail == null || userEmail.isBlank() || recoveryCode == null || recoveryCode.isBlank()) {
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
@@ -120,23 +120,23 @@ public class UserController {
         }
 
         try {
-            // Verify OTP
+            
             boolean isVerified = userService.verifyRecoveryCode(userEmail, recoveryCode);
             if (isVerified) {
-                // Successful verification
+                
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", true);
                 response.put("message", "OTP verified successfully.");
                 return ResponseEntity.ok(response);
             } else {
-                // Invalid OTP
+                
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", false);
                 response.put("message", "Invalid OTP. Please try again.");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
         } catch (Exception e) {
-            // Handle server errors
+            
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "Verification failed. Please try again.");
@@ -151,26 +151,26 @@ public class UserController {
             @PathVariable("email") String userEmail,
             @RequestBody Map<String, String> payload) {
 
-        // Extract newPassword from the request body
+       
         String Password = payload.get("Password");
 
-        // Validate the newPassword input
+        
         if (Password == null || Password.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("New password must not be empty.");
         }
 
         try {
-            // Call the service to update the password
+            
             User user = userService.updatePassword(userEmail, Password);
 
-            // Check if the user was found and the password updated
+            
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("User not found or password could not be updated.");
             }
 
-            // Return success message
+            
             return ResponseEntity.ok("Password updated successfully.");
         } catch (RuntimeException e) {
             // Handle any exceptions thrown by the service
