@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,44 +90,87 @@ public class UserController {
     }
 
     @PostMapping("/sendotpcode")
-    public String sendRecoveryCode(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<String> sendRecoveryCode(@RequestBody Map<String, String> payload) {
         String userEmail = payload.get("userEmail");
+
         if (userEmail == null || userEmail.isBlank()) {
-            throw new RuntimeException("Email cannot be empty.");
+            return ResponseEntity.badRequest().body("Email cannot be empty.");
         }
-        return userService.sendRecoveryCode(userEmail);
+
+        try {
+            String result = userService.sendRecoveryCode(userEmail);
+            return ResponseEntity.ok(result); 
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to send OTP. Please try again.");
+        }
     }
 
+
     @PostMapping("/verify-code")
-    public boolean verifyRecoveryCode(@RequestParam String userEmail, @RequestParam String recoveryCode) {
-        return userService.verifyRecoveryCode(userEmail, recoveryCode);
+    public ResponseEntity<Map<String, Object>> verifyRecoveryCode(
+            @RequestParam String userEmail,
+            @RequestParam String recoveryCode) {
+        
+        if (userEmail == null || userEmail.isBlank() || recoveryCode == null || recoveryCode.isBlank()) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Email and recovery code cannot be empty.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        try {
+            
+            boolean isVerified = userService.verifyRecoveryCode(userEmail, recoveryCode);
+            if (isVerified) {
+                
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", true);
+                response.put("message", "OTP verified successfully.");
+                return ResponseEntity.ok(response);
+            } else {
+                
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", false);
+                response.put("message", "Invalid OTP. Please try again.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+        } catch (Exception e) {
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Verification failed. Please try again.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
+
+
 
     @PostMapping("/update-password/{email}")
     public ResponseEntity<String> updatePassword(
             @PathVariable("email") String userEmail,
             @RequestBody Map<String, String> payload) {
 
-        // Extract newPassword from the request body
+       
         String Password = payload.get("Password");
 
-        // Validate the newPassword input
+        
         if (Password == null || Password.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("New password must not be empty.");
         }
 
         try {
-            // Call the service to update the password
+            
             User user = userService.updatePassword(userEmail, Password);
 
-            // Check if the user was found and the password updated
+            
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("User not found or password could not be updated.");
             }
 
-            // Return success message
+            
             return ResponseEntity.ok("Password updated successfully.");
         } catch (RuntimeException e) {
             // Handle any exceptions thrown by the service

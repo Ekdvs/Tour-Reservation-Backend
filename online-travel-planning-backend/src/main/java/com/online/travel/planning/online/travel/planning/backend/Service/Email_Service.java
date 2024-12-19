@@ -11,28 +11,32 @@ import jakarta.mail.internet.MimeMessage;
 @Service
 public class Email_Service {
     @Autowired
- private JavaMailSender mailSender; // Use JavaMailSender instead of MailSender
+ private JavaMailSender mailSender;
  public void sendWelcomeEmail(String toEmail, String subject, String htmlContent) {
 try {
-            // Create a MimeMessage
+
             MimeMessage message = mailSender.createMimeMessage();
  
-            // Use MimeMessageHelper to configure the email
+
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(toEmail);
             helper.setSubject(subject);
             helper.setText(htmlContent, true); // Pass 'true' for HTML content
             helper.setFrom("ceylontravelplanning@gmail.com");
 
-            // Send the email
+
             mailSender.send(message);
         }
          catch (MessagingException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to send email");}}
-            public void sendotpcode(String toEmail, String subject, String htmlContent) {
+            throw new RuntimeException("Failed to send email");
+        }
+ }
+
+
+    public void sendotpcode(String toEmail, String subject, String htmlContent) {
                 try {
-                    // Create a MimeMessage
+
                     MimeMessage message = mailSender.createMimeMessage();
                 
                  // Use MimeMessageHelper to configure the email
@@ -47,8 +51,30 @@ try {
         } 
         catch (MessagingException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to send email");  }
+            throw new RuntimeException("Failed to send email");
+                }
             }
+    public void updatepassword(String toEmail, String subject, String htmlContent) {
+        try {
+
+            MimeMessage message = mailSender.createMimeMessage();
+
+            // Use MimeMessageHelper to configure the email
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true); // Pass 'true' for HTML content
+            helper.setFrom("ceylontravelplanning@gmail.com");
+
+            // Send the email
+            mailSender.send(message);
+        }
+        catch (MessagingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to send email");
+        }
+    }
+
  }
 
 
