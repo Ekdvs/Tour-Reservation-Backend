@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/online travel planning backend new.iml" filepath="$PROJECT_DIR$/.idea/online travel planning backend new.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Tour-Reservation-Backend.iml" filepath="$PROJECT_DIR$/.idea/Tour-Reservation-Backend.iml" />
     </modules>
   </component>
 </project>

@@ -1,18 +1,16 @@
 package com.online.travel.planning.online.travel.planning.backend.Model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
 @Document(collection = "user")
-
 public class User {
     @Id
     private String userId;
@@ -26,9 +24,8 @@ public class User {
     private String gender;
     private String country;
 
-    private LocalDate dateRegistered =LocalDate.now();
-    private LocalTime timeRegistered =LocalTime.now();
-
+    private LocalDate dateRegistered = LocalDate.now();
+    private LocalTime timeRegistered = LocalTime.now();
 
     public String getUserId() {
         return userId;

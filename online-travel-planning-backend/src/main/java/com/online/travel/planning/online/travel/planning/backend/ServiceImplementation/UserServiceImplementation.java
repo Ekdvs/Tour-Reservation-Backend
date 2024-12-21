@@ -1,30 +1,27 @@
 package com.online.travel.planning.online.travel.planning.backend.ServiceImplementation;
 
-
-import com.online.travel.planning.online.travel.planning.backend.Model.User;
 import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
-import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
 import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImplementation implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
-    private Email_Service emailService;
+   /*  @Autowired
+    private EmailService emailService;*/
 
     private final Map<String,String> recoveryCodes = new HashMap<>();
 
-    @Override
     public User createUser(User user) {
         // Save the user to the database
         User newUser = userRepository.save(user);
@@ -71,17 +68,18 @@ public class UserServiceImplementation implements UserService {
         return newUser;
     }
 
-
     @Override
     public User getUserById(String userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
     }
+
     @Override
     public User getUserNameById(String userId) {
         return userRepository.findUsernameByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
     }
+
     @Override
     public User getUserByUserEmail(String userEmail) {
         return userRepository.findByUserEmail(userEmail);
@@ -159,7 +157,6 @@ public class UserServiceImplementation implements UserService {
         return recoveryCode; // Optionally return it to the frontend for testing purposes
     }
 
-
     @Override
     public boolean verifyRecoveryCode(String userEmail, String recoveryCode) {
         String storedCode = recoveryCodes.get(userEmail);
@@ -181,7 +178,6 @@ public class UserServiceImplementation implements UserService {
         user.setPassword(newPassword); // Update password
         return userRepository.save(user);
     }
-
     @Override
     public User getUserProfile(String email) {
         return userRepository.findByUserEmail(email);
@@ -203,9 +199,4 @@ public class UserServiceImplementation implements UserService {
             return userRepository.save(updatedUser);
 
         }
-    }
-
-
-
-
 }

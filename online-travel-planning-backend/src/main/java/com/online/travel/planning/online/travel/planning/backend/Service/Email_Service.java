@@ -12,7 +12,7 @@ import jakarta.mail.internet.MimeMessage;
 public class Email_Service {
     @Autowired
  private JavaMailSender mailSender; // Use JavaMailSender instead of MailSender
- public void sendWelcomeEmail(String toEmail, String subject, String htmlContent) {
+ public void sendEmail(String toEmail, String subject, String htmlContent) {
 try {
             // Create a MimeMessage
             MimeMessage message = mailSender.createMimeMessage();
