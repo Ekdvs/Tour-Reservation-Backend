@@ -66,6 +66,9 @@ public class TravelPlace {
     public Double getPrice() {
         return price;
     }
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getCategory() {
         return category;
