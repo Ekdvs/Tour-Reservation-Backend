@@ -109,6 +109,7 @@ public class UserController {
         return "User registered successfully";
     }
 
+    //sendotpcode
     @PostMapping("/sendotpcode")
     public ResponseEntity<String> sendRecoveryCode(@RequestBody Map<String, String> payload) {
         String userEmail = payload.get("userEmail");
@@ -126,7 +127,7 @@ public class UserController {
         }
     }
 
-
+    //verify otp code
     @PostMapping("/verify-code")
     public ResponseEntity<Map<String, Object>> verifyRecoveryCode(
             @RequestParam String userEmail,
@@ -165,49 +166,39 @@ public class UserController {
     }
 
 
-
+    //update password using email
     @PostMapping("/update-password/{email}")
     public ResponseEntity<String> updatePassword(
             @PathVariable("email") String userEmail,
             @RequestBody Map<String, String> payload) {
 
-       
-        String Password = payload.get("Password");
+        // Extract newPassword from the request body
+        String newPassword = payload.get("Password");
 
-        
-        if (Password == null || Password.isBlank()) {
+        // Validate the newPassword input
+        if (newPassword == null || newPassword.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("New password must not be empty.");
         }
 
         try {
-            
-            User user = userService.updatePassword(userEmail, Password);
+            // Call the service to update the password with password encoding
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            User user = userService.updatePassword(userEmail, encodedPassword);
 
-            
+            // Check if the user was found and the password updated
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("User not found or password could not be updated.");
             }
 
-            
+            // Return success message
             return ResponseEntity.ok("Password updated successfully.");
         } catch (RuntimeException e) {
             // Handle any exceptions thrown by the service
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while updating the password: " + e.getMessage());
         }
-    }
-
-
-
-    @PutMapping("/{email}")
-    public ResponseEntity<User> updateUserProfile(@PathVariable String email,@RequestBody User updatedUser ) {
-        User user = userService.updateUserProfile(email, updatedUser);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return ResponseEntity.ok(user);
     }
 
     // Get user profile by email
