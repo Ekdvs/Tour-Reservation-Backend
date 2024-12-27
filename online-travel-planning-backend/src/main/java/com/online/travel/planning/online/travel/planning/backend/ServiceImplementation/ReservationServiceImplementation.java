@@ -26,4 +26,9 @@ public class ReservationServiceImplementation
         return reservationRepository.findAll();
     }
 
+    @Override
+    public List<Reservation> getReservationByUserId(String userId){
+        return reservationRepository.findReservationByUserId(userId);
+    };
+
 }
