@@ -41,6 +41,21 @@ public class ReservationServiceImplementation
     public Reservation addReservation(Reservation reservation) {
         return reservationRepository.save(reservation);
     }
+
+    @Override
+    public Reservation updateReservation(String reservationId, Reservation reservationDetail) {
+        return reservationRepository.findById(reservationId).map(reservation -> {
+            reservation.setPackgeId(reservationDetail.getPackgeId());
+            reservation.setUserId(reservationDetail.getUserId());
+            reservation.setReservationDate(reservationDetail.getReservationDate());
+            reservation.setReservationTime(reservationDetail.getReservationTime());
+            reservation.setNumOfPerson(reservationDetail.getNumOfPerson());
+            reservation.setPerPersonCharge(reservationDetail.getPerPersonCharge());
+            reservation.setTotalCharge(reservationDetail.getTotalCharge());
+            reservation.setStatus(reservationDetail.getStatus());
+            return reservationRepository.save(reservation);
+        }).orElseThrow(() -> new RuntimeException("Reservation not found with id " + reservationId));
+    }
     
 
 }
