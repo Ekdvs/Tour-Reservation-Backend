@@ -1,5 +1,8 @@
 package com.online.travel.planning.online.travel.planning.backend.Model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +16,10 @@ public class Reservation {
     private Double totalCharge;
     private Double perPersonCharge;
     private String status = "Available";
+    private LocalDate reservationDate = LocalDate.now();
+    private LocalTime reservationTime = LocalTime.now();
+
+
 
     
 
