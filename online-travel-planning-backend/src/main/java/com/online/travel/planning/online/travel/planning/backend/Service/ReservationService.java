@@ -15,4 +15,5 @@ public interface ReservationService {
     double getTotalChargeByCurrentDate();
     double getTotalCharge();
     int getTotalPersonByCurrentDate();
+    int getTotalPerson();
 }
