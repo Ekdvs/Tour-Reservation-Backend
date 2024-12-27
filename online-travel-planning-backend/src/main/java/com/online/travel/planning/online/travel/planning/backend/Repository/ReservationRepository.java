@@ -13,7 +13,10 @@ public interface ReservationRepository extends MongoRepository <Reservation, Str
      List<Reservation> findReservationByUserId(String userId);
       @Query(value = "{'reservationDate': ?0}", fields = "{'totalCharge': 1}")
     List<Reservation> findTotalChargesByDate(LocalDate date);
+    @Query(value = "{'reservationDate': ?0}", fields = "{'numOfTickets': 1}")
+    List<Reservation> findNumOfPersonByDate(LocalDate date);
 
+   
    
 
 }
