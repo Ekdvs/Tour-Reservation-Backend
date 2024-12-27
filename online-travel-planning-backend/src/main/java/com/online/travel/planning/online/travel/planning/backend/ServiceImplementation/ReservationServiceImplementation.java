@@ -56,6 +56,12 @@ public class ReservationServiceImplementation
             return reservationRepository.save(reservation);
         }).orElseThrow(() -> new RuntimeException("Reservation not found with id " + reservationId));
     }
+
+    @Override
+    public void deleteReservation(String reservationId) {
+        reservationRepository.deleteById(reservationId);
+    }
+
     
 
 }
