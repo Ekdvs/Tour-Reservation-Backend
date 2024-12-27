@@ -19,6 +19,42 @@ public class Reservation {
     private LocalDate reservationDate = LocalDate.now();
     private LocalTime reservationTime = LocalTime.now();
 
+    public String getReservationId() {
+        return reservationId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getPackgeId() {
+        return packgeId;
+    }
+
+    public Integer getNumOfPerson() {
+        return numOfPerson;
+    }
+
+    public Double getTotalCharge() {
+        return totalCharge;
+    }
+
+    public Double getPerPersonCharge() {
+        return perPersonCharge;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public LocalDate getReservationDate() {
+        return reservationDate;
+    }
+
+    public LocalTime getReservationTime() {
+        return reservationTime;
+    }
+
 
 
     
