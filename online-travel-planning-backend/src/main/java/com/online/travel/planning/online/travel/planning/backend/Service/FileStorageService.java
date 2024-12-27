@@ -28,7 +28,9 @@ public class FileStorageService {
 
             // Return the file URL or path
             return filePath.toString();
-        } 
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file", e);
+        }
     }
 
 }
