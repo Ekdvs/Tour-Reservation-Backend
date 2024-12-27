@@ -19,4 +19,5 @@ public interface UserService {
     User getUserProfile(String email);
     User updateUserProfile(String email, User updatedUser);
     long getOnlineUsersCount();
+    User promoteUserToGuide(String userId);
 }
