@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,6 +47,12 @@ public class ReservationController {
     @PostMapping("/addReservation")
     public Reservation addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
+    }
+
+    @PutMapping("/updateReservation/{id}")
+    public Reservation updateReservation(@PathVariable("id") String reservationId,
+                                         @RequestBody Reservation reservation) {
+        return reservationService.updateReservation(reservationId, reservation);
     }
 
     
