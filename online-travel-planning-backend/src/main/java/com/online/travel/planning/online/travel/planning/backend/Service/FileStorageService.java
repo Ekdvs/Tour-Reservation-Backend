@@ -12,7 +12,23 @@ public class FileStorageService {
     private final String uploadDir = "uploads/profile_pictures/";
 
     public String saveFile(MultipartFile file) {
-        
+        try {
+            // Ensure the directory exists
+            Path uploadPath = Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Define the file path
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path filePath = uploadPath.resolve(fileName);
+
+            // Save the file
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Return the file URL or path
+            return filePath.toString();
+        } 
     }
 
 }
