@@ -16,8 +16,7 @@ public interface UserService {
     String sendRecoveryCode(String userEmail);
     boolean verifyRecoveryCode(String userEmail, String recoveryCode);
     User updatePassword(String userEmail, String newPassword);
-
     User getUserProfile(String email);
-
     User updateUserProfile(String email, User updatedUser);
+    long getOnlineUsersCount();
 }
