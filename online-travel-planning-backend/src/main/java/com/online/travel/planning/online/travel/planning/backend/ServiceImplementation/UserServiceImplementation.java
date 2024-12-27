@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -229,6 +230,18 @@ public class UserServiceImplementation implements UserService {
         emailService.sendEmail(userEmail, subject, message);
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public long getOnlineUsersCount() {
+        // Get the current time and calculate the cutoff for "recent activity" (e.g., last 5 minutes)
+        LocalDateTime cutoffTime = LocalDateTime.now().minusMinutes(5);
+
+        // Find users who have logged in after the cutoff time
+        List<User> onlineUsers = userRepository.findByLastLoginAfter(cutoffTime);
+
+        // Return the count of online users
+        return onlineUsers.size();
     }
 
     @Override
