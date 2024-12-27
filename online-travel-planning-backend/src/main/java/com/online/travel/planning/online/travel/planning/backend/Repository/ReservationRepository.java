@@ -1,5 +1,9 @@
 package com.online.travel.planning.online.travel.planning.backend.Repository;
 
-public interface ReservationRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.online.travel.planning.online.travel.planning.backend.Model.Reservation;
+
+public interface ReservationRepository extends MongoRepository <Reservation, String>{
 
 }
