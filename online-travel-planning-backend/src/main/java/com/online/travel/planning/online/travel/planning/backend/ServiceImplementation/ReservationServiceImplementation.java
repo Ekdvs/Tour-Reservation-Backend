@@ -1,8 +1,11 @@
 package com.online.travel.planning.online.travel.planning.backend.ServiceImplementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.online.travel.planning.online.travel.planning.backend.Model.Reservation;
 import com.online.travel.planning.online.travel.planning.backend.Repository.ReservationRepository;
 import com.online.travel.planning.online.travel.planning.backend.Service.ReservationService;
 
@@ -16,6 +19,11 @@ public class ReservationServiceImplementation
 
     public ReservationServiceImplementation(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
+    }
+
+    @Override
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
     }
 
 }
