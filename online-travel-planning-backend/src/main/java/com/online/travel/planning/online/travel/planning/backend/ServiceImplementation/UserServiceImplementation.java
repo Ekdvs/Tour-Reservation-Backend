@@ -266,6 +266,20 @@ public class UserServiceImplementation implements UserService {
 
         }
     }
+    @Override
+    public User promoteUserToGuide(String userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUserRole("travelGuide"); // Update the role
+            return userRepository.save(user); // Save the updated user
+
+        }
+        else {
+            return null;
+        }
+
+    }
 
 
 
