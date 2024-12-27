@@ -11,7 +11,11 @@ import io.swagger.v3.oas.annotations.servers.Servers;
 @Service
 public class ReservationServiceImplementation 
 
-@Autowired
+    @Autowired
     private ReservationRepository reservationRepository;
+
+    public ReservationServiceImplementation(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
+    }
 
 }
