@@ -241,7 +241,7 @@ public class UserController {
 
 
 
-    /*@Value("${profile-pic.upload-dir}")
+    /*@Value("${8888profile-pic.upload-dir}")
     private String uploadDir; // The directory to save the profile pictures
 
     @PutMapping("/{email}")
