@@ -72,6 +72,15 @@ public class ReservationServiceImplementation
                 .sum();
     }
 
+    @Override
+    public double getTotalCharge() {
+        return reservationRepository.findAllTotalCharges()
+                .stream()
+                .mapToDouble(Reservation::getTotalCharge)
+                .sum();
+    }
+
+
     
 
 }
