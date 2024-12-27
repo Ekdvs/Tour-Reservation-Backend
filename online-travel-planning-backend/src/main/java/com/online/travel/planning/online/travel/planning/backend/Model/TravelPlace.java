@@ -9,6 +9,9 @@ public class TravelPlace {
     private Double price;
     private LocalDate dateAdded = LocalDate.now();
     private LocalTime timeAdded = LocalTime.now();
+    private List<String> pictureUrls;
+    private String category;
+
 
 
 }
