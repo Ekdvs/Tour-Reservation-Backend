@@ -210,6 +210,7 @@ public class UserController {
         }
         return ResponseEntity.ok(user);
     }
+
     //updateuserpofile
     @PutMapping("/{email}")
     public ResponseEntity<User> updateUserProfile(@PathVariable String email,@RequestBody User updatedUser ) {
@@ -220,6 +221,21 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    //user change to travel guide
+    @PutMapping("/travelgudie/{userId}")
+    public ResponseEntity<String> promoteToGuide(@PathVariable String userId) {
+        try {
+            // Call service method to update the user's role
+            User newuser = userService.promoteUserToGuide(userId);
+            if (newuser!=null) {
+                return ResponseEntity.ok("User successfully promoted to Travel Guide");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error promoting user to Travel Guide");
+        }
+    }
 }
 
 
