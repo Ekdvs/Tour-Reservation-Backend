@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +28,19 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     // Create a new user
     @PostMapping("/addUser")
     public ResponseEntity<User> createUser(@RequestBody User user) throws MessagingException {
         User createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
+    }
+
+    @GetMapping("/usersOnline")
+    public long getUsersOnline() {
+        return userService.getOnlineUsersCount();  // Fetch and return the online user count
     }
 
     // Get user by ID
