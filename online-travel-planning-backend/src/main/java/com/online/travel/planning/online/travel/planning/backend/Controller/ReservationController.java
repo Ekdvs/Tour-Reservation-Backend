@@ -78,6 +78,12 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getTotalPerson());
     }
 
+    @GetMapping("/totalTickets")
+    public ResponseEntity<Integer> getTotalTickets() {
+        return ResponseEntity.ok(reservationService.getTotalPerson());
+    }
+
+
     
 
     
