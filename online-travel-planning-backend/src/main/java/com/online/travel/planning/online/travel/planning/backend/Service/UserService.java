@@ -20,4 +20,5 @@ public interface UserService {
     User updateUserProfile(String email, User updatedUser);
     long getOnlineUsersCount();
     User promoteUserToGuide(String userId);
+    //List<User> getNewCustomers();
 }
