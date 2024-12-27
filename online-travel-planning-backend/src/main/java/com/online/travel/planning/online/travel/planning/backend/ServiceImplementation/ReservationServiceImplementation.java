@@ -1,5 +1,6 @@
 package com.online.travel.planning.online.travel.planning.backend.ServiceImplementation;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +61,15 @@ public class ReservationServiceImplementation
     @Override
     public void deleteReservation(String reservationId) {
         reservationRepository.deleteById(reservationId);
+    }
+
+     @Override
+    public double getTotalChargeByCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        return reservationRepository.findTotalChargesByDate(currentDate)
+                .stream()
+                .mapToDouble(Reservation::getTotalCharge)
+                .sum();
     }
 
     
