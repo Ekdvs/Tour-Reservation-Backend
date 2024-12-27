@@ -11,5 +11,5 @@ public interface ReservationService {
     Optional<Reservation> getReservationById(String reservationId);
     Reservation addReservation(Reservation reservation);
     Reservation updateReservation(String reservationId, Reservation reservationDetail);
-    
+    void deleteReservation(String reservationId);
 }
