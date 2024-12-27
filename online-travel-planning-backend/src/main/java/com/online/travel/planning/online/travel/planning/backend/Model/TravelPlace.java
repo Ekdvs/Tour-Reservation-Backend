@@ -7,6 +7,8 @@ public class TravelPlace {
     private String location;
     private String description;
     private Double price;
+    private LocalDate dateAdded = LocalDate.now();
+    private LocalTime timeAdded = LocalTime.now();
 
 
 }
