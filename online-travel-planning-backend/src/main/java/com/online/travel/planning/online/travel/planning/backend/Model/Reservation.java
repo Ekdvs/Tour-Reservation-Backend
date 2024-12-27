@@ -7,5 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Reservation {
     @Id
     private String reservationId;
+    private String userId;
+    private String packgeId;
+    private Integer numOfPerson;
+    private Double totalCharge;
+    private Double perPersonCharge;
+    private String status = "Available";
+
+    
 
 }
