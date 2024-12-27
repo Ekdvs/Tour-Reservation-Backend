@@ -36,6 +36,9 @@ public class TravelPlace {
     public void setTimeAdded(LocalTime timeAdded) {
         this.timeAdded = timeAdded;
     }
+    public String getPlaceId() {
+        return placeId;
+    }
 
 
 
