@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c7d5da3-c44c-4a9b-a824-3ac2f112697a" name="Changes" comment="upadate mongodb" />
+    <list default="true" id="1c7d5da3-c44c-4a9b-a824-3ac2f112697a" name="Changes" comment="promoteUserToGuide">
+      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Service/Email_Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Service/Email_Service.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -15,22 +27,32 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Ekdvs"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ekdvs&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Ekdvs/Tour-Reservation-Backend.git",
     "accountId": "81869a32-2cf2-4c4b-9db7-a957083ca7e9"
+  },
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
+    },
+    "owner": "Ekdvs",
+    "repository": "Tour-Reservation-Backend"
   }
 }]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2qFJddVrJWWVxl7xfTpPM5Ztem1" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -45,7 +67,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.OnlineTravelPlanningBackendApplication.executor": "Run",
-    "git-widget-placeholder": "vishwa",
+    "git-widget-placeholder": "#17 on developer",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/ekdvs/Downloads/online travel planning backend new",
     "node.js.detected.package.eslint": "true",
@@ -82,6 +104,7 @@
       <option name="presentableId" value="Default" />
       <updated>1734252478893</updated>
       <workItem from="1734252480083" duration="315000" />
+      <workItem from="1735271606585" duration="1712000" />
     </task>
     <task id="LOCAL-00001" summary="upadate mongodb">
       <option name="closed" value="true" />
@@ -91,7 +114,199 @@
       <option name="project" value="LOCAL" />
       <updated>1734252781766</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add config class">
+      <option name="closed" value="true" />
+      <created>1735271723776</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1735271723776</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add config dependence">
+      <option name="closed" value="true" />
+      <created>1735271795365</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1735271795365</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add update application prpoerty">
+      <option name="closed" value="true" />
+      <created>1735271887736</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1735271887736</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add update dependence">
+      <option name="closed" value="true" />
+      <created>1735272078884</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272078884</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add ecurityFilterChain">
+      <option name="closed" value="true" />
+      <created>1735272109488</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272109488</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add PasswordEncoder">
+      <option name="closed" value="true" />
+      <created>1735272133563</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272133563</updated>
+    </task>
+    <task id="LOCAL-00008" summary="usersOnline">
+      <option name="closed" value="true" />
+      <created>1735272231962</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272231962</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add user there password hash">
+      <option name="closed" value="true" />
+      <created>1735272272845</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272272845</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update login this password hashing">
+      <option name="closed" value="true" />
+      <created>1735272329995</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272329995</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update register password hashing">
+      <option name="closed" value="true" />
+      <created>1735272410781</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272410781</updated>
+    </task>
+    <task id="LOCAL-00012" summary="update register password hashing">
+      <option name="closed" value="true" />
+      <created>1735272568638</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272568638</updated>
+    </task>
+    <task id="LOCAL-00013" summary="updateuserpofile">
+      <option name="closed" value="true" />
+      <created>1735272619389</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272619389</updated>
+    </task>
+    <task id="LOCAL-00014" summary="user change to travel guide">
+      <option name="closed" value="true" />
+      <created>1735272686357</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272686357</updated>
+    </task>
+    <task id="LOCAL-00015" summary="user change to travel guide">
+      <option name="closed" value="true" />
+      <created>1735272704426</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272704426</updated>
+    </task>
+    <task id="LOCAL-00016" summary="update user">
+      <option name="closed" value="true" />
+      <created>1735272766469</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272766469</updated>
+    </task>
+    <task id="LOCAL-00017" summary="genater getter and setter">
+      <option name="closed" value="true" />
+      <created>1735272800213</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272800213</updated>
+    </task>
+    <task id="LOCAL-00018" summary="update user repository">
+      <option name="closed" value="true" />
+      <created>1735272863638</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272863638</updated>
+    </task>
+    <task id="LOCAL-00019" summary="getOnlineUsersCount()">
+      <option name="closed" value="true" />
+      <created>1735272943201</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272943201</updated>
+    </task>
+    <task id="LOCAL-00020" summary="promoteUserToGuide">
+      <option name="closed" value="true" />
+      <created>1735272961627</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1735272961627</updated>
+    </task>
+    <task id="LOCAL-00021" summary="();&#10;}">
+      <option name="closed" value="true" />
+      <created>1735273006061</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1735273006061</updated>
+    </task>
+    <task id="LOCAL-00022" summary="sent otp update">
+      <option name="closed" value="true" />
+      <created>1735273149565</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1735273149565</updated>
+    </task>
+    <task id="LOCAL-00023" summary="password update update">
+      <option name="closed" value="true" />
+      <created>1735273194782</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1735273194782</updated>
+    </task>
+    <task id="LOCAL-00024" summary="getOnlineUsersCount()">
+      <option name="closed" value="true" />
+      <created>1735273240144</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1735273240144</updated>
+    </task>
+    <task id="LOCAL-00025" summary="promoteUserToGuide">
+      <option name="closed" value="true" />
+      <created>1735273266228</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1735273266228</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,6 +314,29 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="upadate mongodb" />
-    <option name="LAST_COMMIT_MESSAGE" value="upadate mongodb" />
+    <MESSAGE value="upadate mongodb and chnage localhost 3000" />
+    <MESSAGE value="add config class" />
+    <MESSAGE value="add config dependence" />
+    <MESSAGE value="add update application prpoerty" />
+    <MESSAGE value="add update dependence" />
+    <MESSAGE value="add ecurityFilterChain" />
+    <MESSAGE value="add PasswordEncoder" />
+    <MESSAGE value="PasswordEncoder   @Autowired" />
+    <MESSAGE value="usersOnline" />
+    <MESSAGE value="add user there password hash" />
+    <MESSAGE value="update login this password hashing" />
+    <MESSAGE value="update register password hashing" />
+    <MESSAGE value="updateuserpofile" />
+    <MESSAGE value="user change to travel guide" />
+    <MESSAGE value="update user" />
+    <MESSAGE value="genater getter and setter" />
+    <MESSAGE value="update user repository" />
+    <MESSAGE value="();&#10;}" />
+    <MESSAGE value="create user update" />
+    <MESSAGE value="sent otp update" />
+    <MESSAGE value="password update update" />
+    <MESSAGE value="getOnlineUsersCount()" />
+    <MESSAGE value="promoteUserToGuide" />
+    <option name="LAST_COMMIT_MESSAGE" value="promoteUserToGuide" />
   </component>
 </project>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -24,49 +25,62 @@ public class UserServiceImplementation implements UserService {
 
     private final Map<String,String> recoveryCodes = new HashMap<>();
 
-    @Override
     public User createUser(User user) {
-        // Save the user to the database
+
+        if (user == null || user.getUserEmail() == null || user.getUserEmail().isEmpty()) {
+            throw new IllegalArgumentException("Invalid user data. Email is required.");
+        }
+
+
         User newUser = userRepository.save(user);
 
-        // Get the email from the User object
+
         String userEmail = newUser.getUserEmail();
 
-        // Prepare the email content
+
         String subject = "Welcome to Travel Planning Website!";
-        String message =
-                "<html>" +
-                        "<head>" +
-                        "<style>" +
-                        "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }" +
-                        ".container { max-width: 800px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }" +
-                        ".header { background-color: yellow; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; }" +
-                        ".content { padding: 20px; font-size: 16px; color: #333; }" +
-                        ".content p { line-height: 1.6; }" +
-                        ".welcome { font-weight: bold; color: #135bf2; font-size: 18px; }" +
-                        ".footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #dddddd; text-align: center; font-size: 13px; color: #777; }" +
-                        ".footer p { margin: 5px 0; }" +
-                        "</style>" +
-                        "</head>" +
-                        "<body>" +
-                        "<h1 style='color: #4CAF50;'>Welcome to Travel Planning Website!</h1>" +
-                        "<p>Dear <strong>" + newUser.getFirstName() + " " + newUser.getLastName() + "</strong>,</p>" +
-                        "<p>Thank you for registering with us. We are excited to have you on board.</p>" +
-                        "<p>Enjoy planning your trips!</p>" +
-                        "<br>" +
-                        "<p>Best Regards,</p>" +
-                        "<p><strong>Travel Planning Team</strong></p>" +
-                        "<div class='footer'>" +
-                        "<p>&copy; 2024 online-travel-planning LK. All rights reserved.</p>" +
-                        "<p>If you have any questions, please contact us at ceylontravelplanning@gmail.com</p>" +
-                        "</div>"+
-                        "</body>" +
-                        "</html>";
-
-
+        String message = "<html>" +
+                "<head>" +
+                "<style>" +
+                "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }" +
+                ".container { max-width: 800px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }" +
+                ".header { background-color: #4CAF50; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; }" +
+                ".content { padding: 20px; font-size: 16px; color: #333; }" +
+                ".content p { line-height: 1.6; }" +
+                ".welcome { font-weight: bold; color: #135bf2; font-size: 18px; }" +
+                ".footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #dddddd; text-align: center; font-size: 13px; color: #777; }" +
+                ".footer p { margin: 5px 0; }" +
+                "</style>" +
+                "</head>" +
+                "<body>" +
+                "<div class='container'>" +
+                "<div class='header'>" +
+                "<h1>Welcome to Travel Planning Website!</h1>" +
+                "</div>" +
+                "<div class='content'>" +
+                "<p>Dear <strong>" + newUser.getFirstName() + " " + newUser.getLastName() + "</strong>,</p>" +
+                "<p>Thank you for registering with us. We are excited to have you on board.</p>" +
+                "<p>Enjoy planning your trips and feel free to explore our travel services!</p>" +
+                "<br>" +
+                "<p>Best Regards,</p>" +
+                "<p><strong>Travel Planning Team</strong></p>" +
+                "</div>" +
+                "<div class='footer'>" +
+                "<p>&copy; 2024 online-travel-planning LK. All rights reserved.</p>" +
+                "<p>If you have any questions, please contact us at <a href='mailto:ceylontravelplanning@gmail.com'>ceylontravelplanning@gmail.com</a></p>" +
+                "</div>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
 
         // Send the welcome email
-        emailService.sendWelcomeEmail(userEmail, subject, message);
+        try {
+            emailService.sendEmail(userEmail, subject, message); // Ensure this method supports HTML content
+            System.out.println("Email sent successfully to: " + userEmail);
+        } catch (Exception e) {
+            System.err.println("Failed to send email to: " + userEmail);
+            e.printStackTrace();
+        }
 
         return newUser;
     }
@@ -105,10 +119,10 @@ public class UserServiceImplementation implements UserService {
             throw new RuntimeException("No user found with email: " + userEmail);
         }
 
-        // Generate a random 6-digit code
+
         String recoveryCode = String.format("%06d", new Random().nextInt(999999));
 
-        // Save the code in a temporary storage (e.g., in-memory map, Redis, or database)
+
         recoveryCodes.put(userEmail, recoveryCode);
 
 
@@ -121,7 +135,7 @@ public class UserServiceImplementation implements UserService {
                         "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }" +
                         ".image { width: 50px; height: 50px; display: block; margin: 0 auto; }" +
                         ".container { max-width: 800px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }" +
-                        ".header { background-color: yellow; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; }" +
+                        ".header { background-color: #00ff99; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; }" +
                         ".content { padding: 20px; font-size: 16px; color: #333; }" +
                         ".content p { line-height: 1.6; }" +
                         ".recovery-code { font-weight: bold; color: #135bf2; font-size: 18px; }" +
@@ -132,7 +146,6 @@ public class UserServiceImplementation implements UserService {
                         "<body>" +
                         "<div class='container'>" +
                         "<div class='header'><h2>Account Recovery</h2></div>" +
-                        "<div class='image'><img src='https://via.placeholder.com/50' alt='Sri Lanka'></div>" +
                         "<div class='content'>" +
                         "<p>Dear " + optionalUser.get().getFirstName() + " " + optionalUser.get().getLastName() + ",</p>" +
                         "<p>We received a request to reset the password for your account. Use the code below to proceed with password recovery:</p>" +
@@ -153,7 +166,7 @@ public class UserServiceImplementation implements UserService {
 
 
         // Send the welcome email
-        emailService.sendotpcode(userEmail, subject, message);
+        emailService.sendOTPEmail(userEmail, subject, message);
 
 
         return recoveryCode; // Optionally return it to the frontend for testing purposes
@@ -179,7 +192,56 @@ public class UserServiceImplementation implements UserService {
 
         User user = optionalUser.get();
         user.setPassword(newPassword); // Update password
+
+        //email message
+        String subject = "Your Account Password Changed!";
+        String message ="<head>" +
+                "<style>" +
+                "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }" +
+                ".image { width: 50px; height: 50px; display: block; margin: 0 auto; }" +
+                ".container { max-width: 800px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }" +
+                ".header { background-color: #00ff99; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; }" +
+                ".content { padding: 20px; font-size: 16px; color: #333; }" +
+                ".content p { line-height: 1.6; }" +
+                ".recovery-code { font-weight: bold; color: #135bf2; font-size: 18px; }" +
+                ".footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #dddddd; text-align: center; font-size: 13px; color: #777; }" +
+                ".footer p { margin: 5px 0; }" +
+                "</style>" +
+                "</head>" +
+                "<body>" +
+                "<div class='container'>" +
+                "<div class='header'><h2>Password Change</h2></div>" +
+                "<div class='content'>" +
+                "<p>Dear " + optionalUser.get().getFirstName() + " " + optionalUser.get().getLastName()+ ",</p>" +
+                "<p>you change to  the password for your account. Succesfull!!</p>" +
+                "<p>If you did not request this change, please contact our support team immediately.</p>" +
+                "<p>Warm regards,</p>" +
+                "<p><strong>online-travel-planning Support Team</strong></p>" +
+                "</div>" +
+                "<div class='footer'>" +
+                "<p>&copy; 2024 online-travel-planning LK. All rights reserved.</p>" +
+                "<p>If you have any questions, please contact us at ceylontravelplanning@gmail.com</p>" +
+                "</div>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
+
+        // Send the welcome email
+        emailService.sendEmail(userEmail, subject, message);
+
         return userRepository.save(user);
+    }
+
+    @Override
+    public long getOnlineUsersCount() {
+        // Get the current time and calculate the cutoff for "recent activity" (e.g., last 5 minutes)
+        LocalDateTime cutoffTime = LocalDateTime.now().minusMinutes(5);
+
+        // Find users who have logged in after the cutoff time
+        List<User> onlineUsers = userRepository.findByLastLoginAfter(cutoffTime);
+
+        // Return the count of online users
+        return onlineUsers.size();
     }
 
     @Override
@@ -203,6 +265,20 @@ public class UserServiceImplementation implements UserService {
             return userRepository.save(updatedUser);
 
         }
+    }
+    @Override
+    public User promoteUserToGuide(String userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUserRole("travelGuide"); // Update the role
+            return userRepository.save(user); // Save the updated user
+
+        }
+        else {
+            return null;
+        }
+
     }
 
 
