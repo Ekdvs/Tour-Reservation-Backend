@@ -1,10 +1,14 @@
 package com.online.travel.planning.online.travel.planning.backend.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.online.travel.planning.online.travel.planning.backend.Model.Reservation;
 import com.online.travel.planning.online.travel.planning.backend.Service.ReservationService;
 
 @RestController
@@ -18,5 +22,12 @@ public class ReservationController {
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
+
+    @GetMapping("/getAllReservations")
+    public List<Reservation> getAllReservations() {
+        return reservationService.getAllReservations();
+    }
+
+    
 
 }
