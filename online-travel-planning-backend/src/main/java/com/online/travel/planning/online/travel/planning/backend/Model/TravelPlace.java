@@ -12,6 +12,11 @@ public class TravelPlace {
     private List<String> pictureUrls;
     private String category;
 
+    //add getter setter
+    public List<String> getPictureUrls() {
+        return pictureUrls;
+    }
+
 
 
 }
