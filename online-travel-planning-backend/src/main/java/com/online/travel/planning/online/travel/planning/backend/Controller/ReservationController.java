@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,6 +61,11 @@ public class ReservationController {
     public String deleteReservation(@PathVariable("id") String reservationId) {
         reservationService.deleteReservation(reservationId);
         return "Match deleted with ID " + reservationId;
+    }
+
+    @GetMapping("/totalCharge/today")
+    public ResponseEntity<Double> getTotalChargeByCurrentDate() {
+        return ResponseEntity.ok(reservationService.getTotalChargeByCurrentDate());
     }
 
     
