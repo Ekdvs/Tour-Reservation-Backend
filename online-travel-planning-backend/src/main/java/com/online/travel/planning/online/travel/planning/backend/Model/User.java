@@ -1,6 +1,7 @@
 package com.online.travel.planning.online.travel.planning.backend.Model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import org.springframework.data.annotation.Id;
@@ -25,10 +26,10 @@ public class User {
     private String title;
     private String gender;
     private String country;
-
+    private String profilePictureUrl;
     private LocalDate dateRegistered =LocalDate.now();
     private LocalTime timeRegistered =LocalTime.now();
-
+    private LocalDateTime lastLogin;
 
     public String getUserId() {
         return userId;
@@ -110,6 +111,14 @@ public class User {
         this.country = country;
     }
 
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
+    }
+
     public LocalDate getDateRegistered() {
         return dateRegistered;
     }
@@ -124,5 +133,13 @@ public class User {
 
     public void setTimeRegistered(LocalTime timeRegistered) {
         this.timeRegistered = timeRegistered;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }
