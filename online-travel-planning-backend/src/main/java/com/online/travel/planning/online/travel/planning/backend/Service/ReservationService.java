@@ -10,4 +10,6 @@ public interface ReservationService {
     List<Reservation> getReservationByUserId(String userId);
     Optional<Reservation> getReservationById(String reservationId);
     Reservation addReservation(Reservation reservation);
+    Reservation updateReservation(String reservationId, Reservation reservationDetail);
+    
 }
