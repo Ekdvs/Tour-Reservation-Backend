@@ -17,6 +17,11 @@ public class TravelPlace {
         return pictureUrls;
     }
 
+    public void setPictureUrls(List<String> pictureUrls) {
+        this.pictureUrls = pictureUrls;
+    }
+
+
 
 
 }
