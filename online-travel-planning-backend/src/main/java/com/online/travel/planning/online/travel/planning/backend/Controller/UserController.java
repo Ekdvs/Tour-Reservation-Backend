@@ -34,7 +34,9 @@ public class UserController {
     // Create a new user
     @PostMapping("/addUser")
     public ResponseEntity<User> createUser(@RequestBody User user) throws MessagingException {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User createdUser = userService.createUser(user);
+
         return ResponseEntity.ok(createdUser);
     }
 
