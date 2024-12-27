@@ -13,4 +13,5 @@ public interface ReservationService {
     Reservation updateReservation(String reservationId, Reservation reservationDetail);
     void deleteReservation(String reservationId);
     double getTotalChargeByCurrentDate();
+    double getTotalCharge();
 }
