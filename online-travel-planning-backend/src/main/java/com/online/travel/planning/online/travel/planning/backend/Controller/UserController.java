@@ -76,6 +76,7 @@ public class UserController {
         return ResponseEntity.ok("User with ID " + userId + " has been deleted successfully.");
     }
 
+    //login
     @PostMapping("/login")
     public String login(@RequestBody User user, HttpSession session) {
         User existingUser = userRepository.findByUserEmail(user.getUserEmail());
@@ -87,16 +88,23 @@ public class UserController {
             return "Invalid username or password";
         }
     }
+
+    //logout
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "Logged out successfully";
     }
+
+    //register
     @PostMapping("/register")
     public String register(@RequestBody User user) {
         if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
             return "User already registered as a user";
         }
+
+        //password convert to hash
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "User registered successfully";
     }
