@@ -55,6 +55,42 @@ public class Reservation {
         return reservationTime;
     }
 
+    public void setReservationId(String reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setPackgeId(String packgeId) {
+        this.packgeId = packgeId;
+    }
+
+    public void setNumOfPerson(Integer numOfPerson) {
+        this.numOfPerson = numOfPerson;
+    }
+
+    public void setTotalCharge(Double totalCharge) {
+        this.totalCharge = totalCharge;
+    }
+
+    public void setPerPersonCharge(Double perPersonCharge) {
+        this.perPersonCharge = perPersonCharge;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setReservationDate(LocalDate reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+
+    public void setReservationTime(LocalTime reservationTime) {
+        this.reservationTime = reservationTime;
+    }
+
 
 
     
