@@ -63,6 +63,14 @@ public class TravelPlace {
         this.description = description;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
 
 
 
