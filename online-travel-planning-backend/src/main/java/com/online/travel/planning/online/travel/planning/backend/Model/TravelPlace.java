@@ -21,6 +21,11 @@ public class TravelPlace {
         this.pictureUrls = pictureUrls;
     }
 
+    public LocalDate getDateAdded() {
+
+        return dateAdded;
+    }
+
 
 
 
