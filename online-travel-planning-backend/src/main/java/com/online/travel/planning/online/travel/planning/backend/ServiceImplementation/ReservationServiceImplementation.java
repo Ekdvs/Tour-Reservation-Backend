@@ -80,6 +80,15 @@ public class ReservationServiceImplementation
                 .sum();
     }
 
+    @Override
+    public int getTotalPersonByCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        return reservationRepository.findNumOfPersonByDate(currentDate)
+                .stream()
+                .mapToInt(Reservation::getNumOfPerson)
+                .sum();
+    }
+
 
     
 
