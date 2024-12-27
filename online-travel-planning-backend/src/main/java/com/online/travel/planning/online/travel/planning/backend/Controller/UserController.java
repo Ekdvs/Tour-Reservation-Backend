@@ -209,7 +209,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(user);
-    }}
+    }
+    //updateuserpofile
+    @PutMapping("/{email}")
+    public ResponseEntity<User> updateUserProfile(@PathVariable String email,@RequestBody User updatedUser ) {
+        User user = userService.updateUserProfile(email, updatedUser);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(user);
+    }
+
+}
 
 
 
