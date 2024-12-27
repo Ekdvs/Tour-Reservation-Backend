@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.online.travel.planning.online.travel.planning.backend.Model.Reservation;
 import com.online.travel.planning.online.travel.planning.backend.Service.ReservationService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -38,6 +41,11 @@ public class ReservationController {
     @GetMapping("/getReservationByUserId/{id}")
     public List<Reservation> getReservationByUserId(@PathVariable("id") String userId) {
         return reservationService.getReservationByUserId(userId);
+    }
+
+    @PostMapping("/addReservation")
+    public Reservation addReservation(@RequestBody Reservation reservation) {
+        return reservationService.addReservation(reservation);
     }
 
     
