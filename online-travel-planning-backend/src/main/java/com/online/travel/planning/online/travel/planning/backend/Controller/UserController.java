@@ -221,6 +221,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+
     //user change to travel guide
     @PutMapping("/travelgudie/{userId}")
     public ResponseEntity<String> promoteToGuide(@PathVariable String userId) {
