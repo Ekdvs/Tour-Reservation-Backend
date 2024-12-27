@@ -25,6 +25,9 @@ public class TravelPlace {
 
         return dateAdded;
     }
+    public void setDateAdded(LocalDate dateAdded) {
+        this.dateAdded = dateAdded;
+    }
 
 
 
