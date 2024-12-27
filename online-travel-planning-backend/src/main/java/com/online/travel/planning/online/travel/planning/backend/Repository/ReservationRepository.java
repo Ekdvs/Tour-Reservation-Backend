@@ -15,7 +15,10 @@ public interface ReservationRepository extends MongoRepository <Reservation, Str
     List<Reservation> findTotalChargesByDate(LocalDate date);
     @Query(value = "{'reservationDate': ?0}", fields = "{'numOfTickets': 1}")
     List<Reservation> findNumOfPersonByDate(LocalDate date);
+    @Query(value = "{}", fields = "{'totalCharge': 1}")
+    List<Reservation> findAllTotalCharges();
 
+   
    
    
 
