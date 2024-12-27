@@ -29,6 +29,14 @@ public class TravelPlace {
         this.dateAdded = dateAdded;
     }
 
+    public LocalTime getTimeAdded() {
+        return timeAdded;
+    }
+
+    public void setTimeAdded(LocalTime timeAdded) {
+        this.timeAdded = timeAdded;
+    }
+
 
 
 
