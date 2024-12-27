@@ -79,8 +79,9 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestBody User user, HttpSession session) {
         User existingUser = userRepository.findByUserEmail(user.getUserEmail());
-        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
-            session.setAttribute("user", user);
+
+        if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+            session.setAttribute("user", existingUser);
             return "Login successful";
         } else {
             return "Invalid username or password";
