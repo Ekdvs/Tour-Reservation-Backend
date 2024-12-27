@@ -73,6 +73,11 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getTotalCharge());
     }
 
+    @GetMapping("/totalTickets/today")
+    public ResponseEntity<Integer> getTotalPersonByCurrentDate() {
+        return ResponseEntity.ok(reservationService.getTotalPerson());
+    }
+
     
 
     
