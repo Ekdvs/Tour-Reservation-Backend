@@ -6,4 +6,5 @@ import com.online.travel.planning.online.travel.planning.backend.Model.Reservati
 
 public interface ReservationService {
     List<Reservation> getAllReservations();
+    List<Reservation> getReservationByUserId(String userId);
 }
