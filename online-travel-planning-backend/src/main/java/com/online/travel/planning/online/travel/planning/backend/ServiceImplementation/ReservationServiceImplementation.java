@@ -89,6 +89,14 @@ public class ReservationServiceImplementation
                 .sum();
     }
 
+    @Override
+    public int getTotalPerson() {
+        return reservationRepository.findAllNumOfPerson()
+                .stream()
+                .mapToInt(Reservation::getNumOfPerson)
+                .sum();
+    }
+
 
     
 
