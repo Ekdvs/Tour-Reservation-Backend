@@ -37,4 +37,10 @@ public class ReservationServiceImplementation
         return reservationRepository.findById(reservationId);
     }
 
+    @Override
+    public Reservation addReservation(Reservation reservation) {
+        return reservationRepository.save(reservation);
+    }
+    
+
 }
