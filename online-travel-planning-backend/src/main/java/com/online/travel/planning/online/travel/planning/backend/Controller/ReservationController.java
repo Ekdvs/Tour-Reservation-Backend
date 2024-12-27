@@ -35,6 +35,11 @@ public class ReservationController {
         return reservationService.getReservationById(reservationId);
     }
 
+    @GetMapping("/getReservationByUserId/{id}")
+    public List<Reservation> getReservationByUserId(@PathVariable("id") String userId) {
+        return reservationService.getReservationByUserId(userId);
+    }
+
     
 
 }
