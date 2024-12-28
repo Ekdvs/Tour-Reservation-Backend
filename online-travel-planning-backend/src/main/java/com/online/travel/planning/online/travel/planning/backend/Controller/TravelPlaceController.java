@@ -44,6 +44,10 @@ public class TravelPlaceController {
         }
         // Call the service to update the TravelPlace
         TravelPlace updatedPlace = travelPlaceService.updateTravelPlace(placeName, travelPlace);
+        // Check if the place was successfully updated or not found
+        if (updatedPlace != null) {
+            return ResponseEntity.ok(updatedPlace);  // Return the updated place with status 200 OK
+        }
 
 
 
