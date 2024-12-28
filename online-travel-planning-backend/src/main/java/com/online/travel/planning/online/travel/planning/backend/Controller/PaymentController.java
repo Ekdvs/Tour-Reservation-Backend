@@ -19,6 +19,11 @@ public class PaymentController {
     public Payment processPayment(@RequestBody Payment payment) {
         return paymentService.processPayment(payment);
     }
+    @GetMapping("/getPaymentByUserId/{id}")
+    public List<Payment> getPaymentByUserId(@PathVariable("id") String userId) {
+        return paymentService.getPaymentByUserId(userId);
+    }
+
 
 
 
