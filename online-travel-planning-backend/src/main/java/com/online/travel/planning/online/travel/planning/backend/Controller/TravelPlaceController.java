@@ -42,6 +42,8 @@ public class TravelPlaceController {
         if (travelPlace == null || placeName == null || placeName.isEmpty()) {
             return ResponseEntity.badRequest().build(); // Bad Request if input is invalid
         }
+        // Call the service to update the TravelPlace
+        TravelPlace updatedPlace = travelPlaceService.updateTravelPlace(placeName, travelPlace);
 
 
 
