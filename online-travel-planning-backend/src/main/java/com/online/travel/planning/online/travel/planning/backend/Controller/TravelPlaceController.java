@@ -48,13 +48,9 @@ public class TravelPlaceController {
         if (updatedPlace != null) {
             return ResponseEntity.ok(updatedPlace);  // Return the updated place with status 200 OK
         }
-
-
-
-
-
-
-
-
+        else {
+            return ResponseEntity.notFound().build();  // Return 404 if the place was not found
+        }
+    }
 
 }
