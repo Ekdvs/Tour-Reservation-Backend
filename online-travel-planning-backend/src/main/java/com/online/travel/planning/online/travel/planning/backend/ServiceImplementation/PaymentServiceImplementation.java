@@ -15,6 +15,10 @@ public class PaymentServiceImplementation implements PaymentService{
     public List<Payment> getAllPayment() {
         return paymentRepository.findAll();
     }
+    public List<Payment> getPaymentByUserId(String userId) {
+        return paymentRepository.findByUserId(userId);
+    }
+
 
 
 
