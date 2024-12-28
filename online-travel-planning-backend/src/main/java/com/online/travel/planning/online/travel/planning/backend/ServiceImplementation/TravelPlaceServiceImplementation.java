@@ -1,4 +1,13 @@
 package com.online.travel.planning.online.travel.planning.backend.ServiceImplementation;
+import com.online.travel.planning.online.travel.planning.backend.Model.TravelPlace;
+import com.online.travel.planning.online.travel.planning.backend.Model.User;
+import com.online.travel.planning.online.travel.planning.backend.Repository.TravelPlaceRepository;
+import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
+import com.online.travel.planning.online.travel.planning.backend.Service.EmailService;
+import com.online.travel.planning.online.travel.planning.backend.Service.TravelPlaceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
