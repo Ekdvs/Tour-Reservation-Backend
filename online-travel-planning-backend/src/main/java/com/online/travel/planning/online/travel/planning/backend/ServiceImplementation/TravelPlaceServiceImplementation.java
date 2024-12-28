@@ -5,6 +5,10 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
     @Autowired
     private TravelPlaceRepository travelPlaceRepository;
 
+    @Autowired
+    private TravelPlaceService travelPlaceService;
+
+
 
 
 }
