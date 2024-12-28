@@ -59,6 +59,13 @@ public class Payment {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+    public String getUserEmail() {
+        return userEmail;
+    }
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+    
     
 
 
