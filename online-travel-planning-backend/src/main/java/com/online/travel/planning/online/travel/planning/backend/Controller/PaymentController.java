@@ -27,6 +27,11 @@ public class PaymentController {
     public List<Payment> getPaymentByReservationId(@PathVariable("id") String reservationId) {
         return paymentService.getPaymentByReservationId(reservationId);
     }
+    @GetMapping("/getAllPayment")
+    public List<Payment> getAllPayment() {
+        return paymentService.getAllPayment();
+    }
+
 
 
 
