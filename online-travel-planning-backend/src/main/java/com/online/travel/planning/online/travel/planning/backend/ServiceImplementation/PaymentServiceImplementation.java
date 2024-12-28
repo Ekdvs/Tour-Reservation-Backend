@@ -104,13 +104,9 @@ public class PaymentServiceImplementation implements PaymentService{
             } catch (Exception e) {
                 System.out.println("Failed to send email: " + e.getMessage());
             }
-
-
-
-
-
-
-
-
+        } else {
+            System.out.println("User not found with ID: " + payment.getUserId());
+            }
+    }
 
 }
