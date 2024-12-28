@@ -5,6 +5,9 @@ package com.online.travel.planning.online.travel.planning.backend.Controller;
 public class PaymentController {
     @Autowired
     private PaymentServiceImplementation paymentService;
+    @Autowired
+    private PaymentRepository paymentRepository;
+
 
 
 }
