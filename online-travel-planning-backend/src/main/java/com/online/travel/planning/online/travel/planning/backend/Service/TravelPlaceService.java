@@ -4,5 +4,7 @@ import java.util.List;
 
 
 public interface TravelPlaceService {
+    TravelPlace createTravelPlace(TravelPlace travelPlace);
+
 
 }
