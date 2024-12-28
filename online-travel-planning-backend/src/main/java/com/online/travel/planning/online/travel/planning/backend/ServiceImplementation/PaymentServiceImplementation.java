@@ -18,10 +18,10 @@ public class PaymentServiceImplementation implements PaymentService{
     public List<Payment> getPaymentByUserId(String userId) {
         return paymentRepository.findByUserId(userId);
     }
-
-
-
-
+    public List<Payment> getPaymentByReservationId(String reservationId) {
+        return paymentRepository.findByReservationId(reservationId);
+    }
+    
 
 
 }
