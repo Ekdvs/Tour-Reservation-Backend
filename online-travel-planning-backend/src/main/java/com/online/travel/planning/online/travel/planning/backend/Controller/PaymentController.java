@@ -35,14 +35,10 @@ public class PaymentController {
     public Optional<Payment> getPaymentById(@PathVariable("id") String paymentId) {
         return paymentService.getPaymentById(paymentId);
     }
-
-
-
-
-
-
-
-
-
+    @DeleteMapping("/deletePayment/{id}")
+    public String deletePayment(@PathVariable("id") String paymentId) {
+        paymentService.deletePayment(paymentId);
+        return "Payment deleted with id " + paymentId;
+    }
 
 }
