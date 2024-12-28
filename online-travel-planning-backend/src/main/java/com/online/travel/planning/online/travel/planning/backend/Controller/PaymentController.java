@@ -15,6 +15,11 @@ public class PaymentController {
         List<DailyIncome> dailyIncome = paymentRepository.aggregateDailyIncome(); // Implement aggregation in your repository
         return ResponseEntity.ok(dailyIncome);
     }
+    @PostMapping("/process") // add method
+    public Payment processPayment(@RequestBody Payment payment) {
+        return paymentService.processPayment(payment);
+    }
+
 
 
 
