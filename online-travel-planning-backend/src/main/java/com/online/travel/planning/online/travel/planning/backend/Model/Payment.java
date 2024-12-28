@@ -71,7 +71,11 @@ public class Payment {
     public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
+    public LocalTime getPaymentTime() {
+        return paymentTime;
+    }
     
+
 
 
     
