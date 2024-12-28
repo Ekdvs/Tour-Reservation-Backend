@@ -25,6 +25,13 @@ public class TravelPlaceController {
         return ResponseEntity.ok("place with ID " + placename + " has been deleted successfully.");
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TravelPlace> getPlaceById(@PathVariable String id) {
+        TravelPlace place = travelPlaceService.getTravelPlaceById(id);
+        return place != null ? ResponseEntity.ok(place) : ResponseEntity.notFound().build();
+    }
+
+
 
 
 
