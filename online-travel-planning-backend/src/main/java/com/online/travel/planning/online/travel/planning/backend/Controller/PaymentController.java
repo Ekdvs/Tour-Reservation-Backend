@@ -10,6 +10,12 @@ public class PaymentController {
     public PaymentController(PaymentServiceImplementation paymentService) {
         this.paymentService = paymentService;
     }
+    @GetMapping("/dailyIncome")
+    public ResponseEntity<List<DailyIncome>> getDailyIncome() {
+        List<DailyIncome> dailyIncome = paymentRepository.aggregateDailyIncome(); // Implement aggregation in your repository
+        return ResponseEntity.ok(dailyIncome);
+    }
+
 
 
 
