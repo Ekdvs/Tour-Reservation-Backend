@@ -41,7 +41,14 @@ public class Payment {
     public void setReservationId(String reservationId) {
         this.reservationId = reservationId;
     }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
     
+
 
 
 }
