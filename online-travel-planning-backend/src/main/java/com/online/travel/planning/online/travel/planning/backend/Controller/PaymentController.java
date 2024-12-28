@@ -31,6 +31,11 @@ public class PaymentController {
     public List<Payment> getAllPayment() {
         return paymentService.getAllPayment();
     }
+    @GetMapping("/getPaymentById/{id}")
+    public Optional<Payment> getPaymentById(@PathVariable("id") String paymentId) {
+        return paymentService.getPaymentById(paymentId);
+    }
+
 
 
 
