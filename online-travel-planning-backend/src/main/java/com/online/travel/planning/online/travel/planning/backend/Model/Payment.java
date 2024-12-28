@@ -74,7 +74,13 @@ public class Payment {
     public LocalTime getPaymentTime() {
         return paymentTime;
     }
-    
+    public void setPaymentTime(LocalTime paymentTime) {
+        this.paymentTime = paymentTime;
+    }
+    public String getDescription() {
+        return description;
+    }
+
 
 
 
