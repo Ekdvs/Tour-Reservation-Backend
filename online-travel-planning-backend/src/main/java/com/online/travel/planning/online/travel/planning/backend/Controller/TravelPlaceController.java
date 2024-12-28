@@ -7,13 +7,20 @@ public class TravelPlaceController {
     private TravelPlaceService travelPlaceService;
 
      //add place
-     @PostMapping("/addplace")
-     public ResponseEntity<TravelPlace> addPlace(@RequestBody TravelPlace travelPlace) {
-         TravelPlace savedPlace = travelPlaceService.createTravelPlace(travelPlace);
-         return ResponseEntity.ok(savedPlace);
-     }
- 
- 
+    @PostMapping("/addplace")
+    public ResponseEntity<TravelPlace> addPlace(@RequestBody TravelPlace travelPlace) {
+        TravelPlace savedPlace = travelPlaceService.createTravelPlace(travelPlace);
+        return ResponseEntity.ok(savedPlace);
+    }
+    //get all places
+    @GetMapping("/allplaces")
+    public ResponseEntity<List<TravelPlace>> getAllPlaces() {
+        List<TravelPlace> places = travelPlaceService.getAllTravelPlaces();
+        return ResponseEntity.ok(places);
+    }
+
+
+
 
 
 }
