@@ -67,5 +67,11 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
         return newplace;
     }
 
+    @Override
+    public List<TravelPlace> getAllTravelPlaces() {
+        return travelPlaceRepository.findAll();
+    }
+
+
 
 }
