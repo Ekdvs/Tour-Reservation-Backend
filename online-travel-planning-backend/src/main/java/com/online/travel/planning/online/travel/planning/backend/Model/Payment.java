@@ -65,7 +65,11 @@ public class Payment {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
     
+
     
 
 
