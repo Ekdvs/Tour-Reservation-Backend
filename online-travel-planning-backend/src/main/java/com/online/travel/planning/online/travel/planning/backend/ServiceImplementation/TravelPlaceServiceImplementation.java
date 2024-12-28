@@ -71,6 +71,11 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
     public List<TravelPlace> getAllTravelPlaces() {
         return travelPlaceRepository.findAll();
     }
+    @Override
+    public void deleteTravelPlace(String placeId) {
+        travelPlaceRepository.deleteById(placeId);
+    }
+
 
 
 
