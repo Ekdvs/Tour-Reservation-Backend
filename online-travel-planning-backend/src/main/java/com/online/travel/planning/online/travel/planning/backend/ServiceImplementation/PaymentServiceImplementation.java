@@ -6,7 +6,13 @@ public class PaymentServiceImplementation implements PaymentService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private EmailService emailService;
+    @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private PackagesRepository packagesRepository;
+
+
 
 
 }
