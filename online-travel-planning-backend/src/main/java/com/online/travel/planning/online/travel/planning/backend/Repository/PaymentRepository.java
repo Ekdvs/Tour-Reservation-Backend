@@ -1,4 +1,7 @@
 package com.online.travel.planning.online.travel.planning.backend.Repository;
+import com.online.travel.planning.online.travel.planning.backend.Model.DailyIncome;
+import com.online.travel.planning.online.travel.planning.backend.Model.Payment;
+
 
 public interface PaymentRepository extends MongoRepository<Payment,String>{
     List<Payment> findByUserId(String userId);
