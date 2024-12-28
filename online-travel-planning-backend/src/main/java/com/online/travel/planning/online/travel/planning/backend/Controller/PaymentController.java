@@ -1,6 +1,8 @@
 package com.online.travel.planning.online.travel.planning.backend.Controller;
 import com.online.travel.planning.online.travel.planning.backend.Model.DailyIncome;
 import com.online.travel.planning.online.travel.planning.backend.Model.Payment;
+import com.online.travel.planning.online.travel.planning.backend.Repository.PaymentRepository;
+
 
 @RestController
 @CrossOrigin("http://localhost:3000")
