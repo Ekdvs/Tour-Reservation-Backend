@@ -80,6 +80,10 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
         return travelPlaceRepository.findById(placeId)
                 .orElseThrow(() -> new RuntimeException("Travel Place not found with ID: " + placeId));
     }
+    @Override
+    public TravelPlace getTravelPlaceByName(String placeName) {
+        return travelPlaceRepository.findByPlaceName(placeName);
+    }
 
 
 
