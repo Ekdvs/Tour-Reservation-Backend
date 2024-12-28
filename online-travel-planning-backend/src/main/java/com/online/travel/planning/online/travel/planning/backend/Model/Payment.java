@@ -47,7 +47,13 @@ public class Payment {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    
+    public String getTravelId() {
+        return travelId;
+    }
+    public void setTravelId(String travelId) {
+        this.travelId = travelId;
+    }
+
 
 
 
