@@ -3,6 +3,10 @@ import com.online.travel.planning.online.travel.planning.backend.Model.Packages;
 import com.online.travel.planning.online.travel.planning.backend.Model.Payment;
 import com.online.travel.planning.online.travel.planning.backend.Model.Reservation;
 import com.online.travel.planning.online.travel.planning.backend.Model.User;
+import com.online.travel.planning.online.travel.planning.backend.Repository.PackagesRepository;
+import com.online.travel.planning.online.travel.planning.backend.Repository.PaymentRepository;
+import com.online.travel.planning.online.travel.planning.backend.Repository.ReservationRepository;
+
 
 
 @Service
