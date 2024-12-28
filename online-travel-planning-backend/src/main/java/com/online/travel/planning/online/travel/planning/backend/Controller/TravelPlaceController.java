@@ -1,5 +1,6 @@
 package com.online.travel.planning.online.travel.planning.backend.Controller;
 import com.online.travel.planning.online.travel.planning.backend.Model.TravelPlace;
+import com.online.travel.planning.online.travel.planning.backend.Model.User;
 
 
 @RestController
