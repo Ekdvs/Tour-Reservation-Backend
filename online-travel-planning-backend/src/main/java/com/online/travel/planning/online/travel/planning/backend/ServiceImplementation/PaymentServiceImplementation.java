@@ -39,6 +39,12 @@ public class PaymentServiceImplementation implements PaymentService{
         }
         return savedPayment;
     }
+    public void sendPaymentSuccessEmail(Payment payment) {
+        // Fetch user details by userId
+        Optional<User> userOptional = userRepository.findByUserId(payment.getUserId());
+        Optional<Reservation> reservationOptional = reservationRepository.findById(payment.getReservationId());
+
+
 
 
 
