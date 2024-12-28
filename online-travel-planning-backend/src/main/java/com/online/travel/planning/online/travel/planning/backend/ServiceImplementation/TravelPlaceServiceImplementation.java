@@ -75,6 +75,12 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
     public void deleteTravelPlace(String placeId) {
         travelPlaceRepository.deleteById(placeId);
     }
+    @Override
+    public TravelPlace getTravelPlaceById(String placeId) {
+        return travelPlaceRepository.findById(placeId)
+                .orElseThrow(() -> new RuntimeException("Travel Place not found with ID: " + placeId));
+    }
+
 
 
 
