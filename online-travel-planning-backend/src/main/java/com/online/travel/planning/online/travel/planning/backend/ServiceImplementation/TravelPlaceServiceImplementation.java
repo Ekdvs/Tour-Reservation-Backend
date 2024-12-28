@@ -1,5 +1,6 @@
 package com.online.travel.planning.online.travel.planning.backend.ServiceImplementation;
 
-public class TravelPlaceServiceImplementation {
+@Service
+public class TravelPlaceServiceImplementation implements TravelPlaceService{
 
 }
