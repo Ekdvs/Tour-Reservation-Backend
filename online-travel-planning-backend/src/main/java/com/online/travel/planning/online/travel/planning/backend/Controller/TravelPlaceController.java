@@ -30,6 +30,12 @@ public class TravelPlaceController {
         TravelPlace place = travelPlaceService.getTravelPlaceById(id);
         return place != null ? ResponseEntity.ok(place) : ResponseEntity.notFound().build();
     }
+    // Get TravelPlace by placeName
+    @GetMapping("/getPlaceByName/{id}")
+    public TravelPlace getPlaceByName(@PathVariable("id") String placeName) {
+        return travelPlaceService.getTravelPlaceByName(placeName);
+    }
+
 
 
 
