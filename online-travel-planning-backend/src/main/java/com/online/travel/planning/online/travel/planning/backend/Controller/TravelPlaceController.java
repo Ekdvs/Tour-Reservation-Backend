@@ -18,6 +18,13 @@ public class TravelPlaceController {
         List<TravelPlace> places = travelPlaceService.getAllTravelPlaces();
         return ResponseEntity.ok(places);
     }
+     //delete place by name
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteTravelPlace(@PathVariable("id") String placename) {
+        travelPlaceService.deleteTravelPlace(placename);
+        return ResponseEntity.ok("place with ID " + placename + " has been deleted successfully.");
+    }
+
 
 
 
