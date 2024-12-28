@@ -86,6 +86,10 @@ public class Payment {
     public boolean isCheckAccept() {
         return checkAccept;
     }
+    public void setCheckAccept(boolean checkAccept) {
+        this.checkAccept = checkAccept;
+    }
+    
 
 
 
