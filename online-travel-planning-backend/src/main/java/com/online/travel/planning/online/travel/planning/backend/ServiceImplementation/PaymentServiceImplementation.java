@@ -31,6 +31,15 @@ public class PaymentServiceImplementation implements PaymentService{
     public void deletePayment(String paymentId) {
         paymentRepository.deleteById(paymentId);
     }
+    public Payment processPayment(Payment payment) {
+        Payment savedPayment = paymentRepository.save(payment);
+
+        if (payment.isCheckAccept()) {
+            sendPaymentSuccessEmail(payment);
+        }
+        return savedPayment;
+    }
+
 
 
 
