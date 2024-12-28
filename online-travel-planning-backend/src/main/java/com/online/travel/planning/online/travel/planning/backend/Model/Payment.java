@@ -15,6 +15,14 @@ public class Payment {
     private String travelId;
     private Double amount;
     private String userEmail;
-    
+    private LocalDate paymentDate=LocalDate.now();
+    private LocalTime paymentTime=LocalTime.now();
+    private String description="Payment Conformance" ;
+    private String transactionId;
+    private boolean checkAccept=true;
+    private String refundStatus = "Not Applicable";
+
+
+
 
 }
