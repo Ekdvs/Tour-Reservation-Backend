@@ -8,8 +8,6 @@ public interface TravelPlaceService {
     TravelPlace getTravelPlaceById(String placeId);
     TravelPlace getTravelPlaceByName(String placeName);
     List<TravelPlace> getAllTravelPlaces();
-    
-
-
-
+    void deleteTravelPlace(String placeName);
+    TravelPlace updateTravelPlace(String placeName, TravelPlace travelPlace);
 }
