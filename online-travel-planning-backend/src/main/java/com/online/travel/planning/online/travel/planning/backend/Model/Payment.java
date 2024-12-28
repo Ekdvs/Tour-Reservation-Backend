@@ -1,10 +1,10 @@
 package com.online.travel.planning.online.travel.planning.backend.Model;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Document(collection = "payment")
 public class Payment {
@@ -23,6 +23,8 @@ public class Payment {
     private String refundStatus = "Not Applicable";
 
     // add getter and setter
+
+
     public String getTransactionId() {
         return transactionId;
     }
@@ -118,5 +120,4 @@ public class Payment {
     public void setCheckAccept(boolean checkAccept) {
         this.checkAccept = checkAccept;
     }
-
 }
