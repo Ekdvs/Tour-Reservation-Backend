@@ -26,70 +26,99 @@ public class Payment {
     public String getTransactionId() {
         return transactionId;
     }
+
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
+
+    public String getRefundStatus() {
+        return refundStatus;
+    }
+
+    public void setRefundStatus(String refundStatus) {
+        this.refundStatus = refundStatus;
+    }
+
     public String getPaymentId() {
         return paymentId;
     }
+
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
     }
-    public String getReservationId() {
-        return reservationId;
-    }
-    public void setReservationId(String reservationId) {
-        this.reservationId = reservationId;
-    }
+
     public String getUserId() {
         return userId;
     }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
     public String getTravelId() {
         return travelId;
     }
+
     public void setTravelId(String travelId) {
         this.travelId = travelId;
     }
+
     public Double getAmount() {
         return amount;
     }
+
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+
     public String getUserEmail() {
         return userEmail;
     }
+
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
     public LocalDate getPaymentDate() {
         return paymentDate;
     }
+
     public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
+
     public LocalTime getPaymentTime() {
         return paymentTime;
     }
+
     public void setPaymentTime(LocalTime paymentTime) {
         this.paymentTime = paymentTime;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(String reservationId) {
+        this.reservationId = reservationId;
+    }
+
     public boolean isCheckAccept() {
         return checkAccept;
     }
+
     public void setCheckAccept(boolean checkAccept) {
         this.checkAccept = checkAccept;
-    }
-    
+    }
+
 
 
 
