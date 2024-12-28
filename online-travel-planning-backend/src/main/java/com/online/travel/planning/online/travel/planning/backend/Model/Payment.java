@@ -53,6 +53,10 @@ public class Payment {
     public void setTravelId(String travelId) {
         this.travelId = travelId;
     }
+    public Double getAmount() {
+        return amount;
+    }
+    
 
 
 
