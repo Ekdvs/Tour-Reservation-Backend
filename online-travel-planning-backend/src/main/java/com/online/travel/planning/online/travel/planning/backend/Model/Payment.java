@@ -11,5 +11,10 @@ public class Payment {
     @Id
     private String paymentId;
     private String reservationId;
+    private String userId;
+    private String travelId;
+    private Double amount;
+    private String userEmail;
+    
 
 }
