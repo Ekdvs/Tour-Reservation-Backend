@@ -12,6 +12,11 @@ public class PaymentServiceImplementation implements PaymentService{
     @Autowired
     private PackagesRepository packagesRepository;
 
+    public List<Payment> getAllPayment() {
+        return paymentRepository.findAll();
+    }
+
+
 
 
 
