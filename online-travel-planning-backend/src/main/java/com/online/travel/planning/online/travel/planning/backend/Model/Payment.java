@@ -117,15 +117,6 @@ public class Payment {
 
     public void setCheckAccept(boolean checkAccept) {
         this.checkAccept = checkAccept;
-    }
-
-
-
-
-
-    
-
-
-
+    }
 
 }
