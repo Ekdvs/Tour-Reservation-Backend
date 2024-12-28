@@ -38,7 +38,11 @@ public class TravelPlaceController {
 
     @PutMapping("/update/{name}")
     public ResponseEntity<TravelPlace> updatePlace(@PathVariable("name") String placeName, @RequestBody TravelPlace travelPlace) {
-        
+         // Ensure that the travelPlace to update has the correct values for the update
+        if (travelPlace == null || placeName == null || placeName.isEmpty()) {
+            return ResponseEntity.badRequest().build(); // Bad Request if input is invalid
+        }
+
 
 
 
