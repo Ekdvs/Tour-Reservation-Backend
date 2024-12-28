@@ -22,6 +22,12 @@ public class Payment {
     private boolean checkAccept=true;
     private String refundStatus = "Not Applicable";
 
+    // add getter and setter
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+
 
 
 
