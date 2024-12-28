@@ -36,6 +36,10 @@ public class TravelPlaceController {
         return travelPlaceService.getTravelPlaceByName(placeName);
     }
 
+    @PutMapping("/update/{name}")
+    public ResponseEntity<TravelPlace> updatePlace(@PathVariable("name") String placeName, @RequestBody TravelPlace travelPlace) {
+        
+
 
 
 
