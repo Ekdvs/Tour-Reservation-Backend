@@ -43,6 +43,12 @@ public class PaymentServiceImplementation implements PaymentService{
         // Fetch user details by userId
         Optional<User> userOptional = userRepository.findByUserId(payment.getUserId());
         Optional<Reservation> reservationOptional = reservationRepository.findById(payment.getReservationId());
+        if (userOptional.isPresent() && reservationOptional.isPresent()) {
+            User user = userOptional.get();
+            Reservation reservation = reservationOptional.get();
+            Optional<Packages> optionalPackages = packagesRepository.findById(reservation.getPackgeId());
+            Packages packages = optionalPackages.get();
+
 
 
 
