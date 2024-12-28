@@ -7,6 +7,10 @@ public class PaymentController {
     private PaymentServiceImplementation paymentService;
     @Autowired
     private PaymentRepository paymentRepository;
+    public PaymentController(PaymentServiceImplementation paymentService) {
+        this.paymentService = paymentService;
+    }
+
 
 
 
