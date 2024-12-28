@@ -8,6 +8,10 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
     @Autowired
     private TravelPlaceService travelPlaceService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+
 
 
 
