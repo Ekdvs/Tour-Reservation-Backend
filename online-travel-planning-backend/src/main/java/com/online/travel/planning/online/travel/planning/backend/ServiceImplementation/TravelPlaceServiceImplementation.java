@@ -84,6 +84,26 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
     public TravelPlace getTravelPlaceByName(String placeName) {
         return travelPlaceRepository.findByPlaceName(placeName);
     }
+    public TravelPlace updateTravelPlace(String placeName, TravelPlace travelPlace) {
+        // Find the existing travel place by name
+        TravelPlace existingPlace = travelPlaceRepository.findByPlaceName(placeName);
+
+        if (existingPlace != null) {
+            // Update the fields of the existing place
+            existingPlace.setPlaceName(travelPlace.getPlaceName());
+            existingPlace.setLocation(travelPlace.getLocation());
+            existingPlace.setDescription(travelPlace.getDescription());
+            existingPlace.setPrice(travelPlace.getPrice());
+            existingPlace.setPictureUrls(travelPlace.getPictureUrls());
+            existingPlace.setCategory(travelPlace.getCategory());
+
+            // Save the updated place to the database
+            return travelPlaceRepository.save(existingPlace);
+        }
+
+        // Return null if the place was not found
+        return null;
+    }
 
 
 
