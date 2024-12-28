@@ -6,6 +6,11 @@ import com.online.travel.planning.online.travel.planning.backend.Model.User;
 import com.online.travel.planning.online.travel.planning.backend.Repository.PackagesRepository;
 import com.online.travel.planning.online.travel.planning.backend.Repository.PaymentRepository;
 import com.online.travel.planning.online.travel.planning.backend.Repository.ReservationRepository;
+import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
+import com.online.travel.planning.online.travel.planning.backend.Service.EmailService;
+import com.online.travel.planning.online.travel.planning.backend.Service.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 
 
