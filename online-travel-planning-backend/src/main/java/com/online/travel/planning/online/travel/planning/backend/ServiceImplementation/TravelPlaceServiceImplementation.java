@@ -104,9 +104,22 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
         // Return null if the place was not found
         return null;
     }
+        /*@Override
+    public TravelPlace getTravelPlaceByName(String placeName) {
+        return Optional.ofNullable(travelPlaceRepository.findByTravelPlaceName(placeName))
+                .orElseThrow(() -> new RuntimeException("Travel Place not found with Name: " + placeName));
+    }
+    @Override
+    public TravelPlace updateTravelPlace(String placeId, TravelPlace travelPlace) {
+        TravelPlace existingPlace = getTravelPlaceById(placeId);
 
+        existingPlace.setPlaceName(travelPlace.getPlaceName());
+        existingPlace.setLocation(travelPlace.getLocation());
+        existingPlace.setDescription(travelPlace.getDescription());
+        existingPlace.setPrice(travelPlace.getPrice());
+        existingPlace.setPictureUrls(travelPlace.getPictureUrls());
 
-
-
+        return travelPlaceRepository.save(existingPlace);
+    }*/
 
 }
