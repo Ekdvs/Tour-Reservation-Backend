@@ -6,7 +6,7 @@ public interface TravelPlaceRepository extends MongoRepository <TravelPlace,Stri
     //Optional<TravelPlace> findByTravelPlaceName(String travelPlacename);
    // TravelPlace findByTravelPlaceName(String travelPlaceName);
    // Optional<TravelPlace>findTravelPlaceByUserId(String userId);
-   TravelPlace findByPlaceName(String PlaceName);
+   TravelPlace findByPlaceName(String placeName);
 
 
 }
