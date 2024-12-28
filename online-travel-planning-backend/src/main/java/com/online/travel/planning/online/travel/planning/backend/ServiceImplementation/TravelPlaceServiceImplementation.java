@@ -11,6 +11,10 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EmailService emailService;
+
+
 
 
 
