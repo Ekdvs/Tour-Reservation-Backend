@@ -29,6 +29,10 @@ public class Payment {
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
+    public String getPaymentId() {
+        return paymentId;
+    }
+    
     
 
 
