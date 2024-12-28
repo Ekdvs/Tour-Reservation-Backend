@@ -68,7 +68,11 @@ public class Payment {
     public LocalDate getPaymentDate() {
         return paymentDate;
     }
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
     
+
 
     
 
