@@ -30,6 +30,10 @@ public class Event {
         return eventId;
     }
 
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
 
     
     
