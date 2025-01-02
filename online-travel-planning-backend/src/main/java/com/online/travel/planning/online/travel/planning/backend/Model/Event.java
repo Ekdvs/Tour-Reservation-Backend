@@ -90,6 +90,10 @@ public class Event {
         this.oneTicketPrice = oneTicketPrice;
     }
 
+    public String getEventType() {
+        return eventType;
+    }
+
 
 
 
