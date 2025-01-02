@@ -8,6 +8,8 @@ public class Packages {
     @Id
     private String id;
     private String name;
+    private String description;
+    
    
 
 
