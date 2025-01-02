@@ -2,7 +2,6 @@ package com.online.travel.planning.online.travel.planning.backend.Controller;
 import com.online.travel.planning.online.travel.planning.backend.Model.DailyIncome;
 import com.online.travel.planning.online.travel.planning.backend.Model.Payment;
 import com.online.travel.planning.online.travel.planning.backend.Repository.PaymentRepository;
-import com.online.travel.planning.online.travel.planning.backend.Service.PaymentServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +13,10 @@ import java.util.Optional;
 @RequestMapping("/payment")
 public class PaymentController {
     @Autowired
-    private PaymentServiceImplementation paymentService;
+    private com.online.travel.planning.online.travel.planning.backend.ServiceImplementation.PaymentServiceImplementation paymentService;
     @Autowired
     private PaymentRepository paymentRepository;
-    public PaymentController(PaymentServiceImplementation paymentService) {
+    public PaymentController(com.online.travel.planning.online.travel.planning.backend.ServiceImplementation.PaymentServiceImplementation paymentService) {
         this.paymentService = paymentService;
     }
     @GetMapping("/dailyIncome")
