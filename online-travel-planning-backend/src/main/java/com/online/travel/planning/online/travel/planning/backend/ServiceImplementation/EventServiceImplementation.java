@@ -134,17 +134,18 @@ String message =
                 "</div>" +
                 "</body>" +
                 "</html>";
-allUsers.forEach(user -> {
-    if (user.getUserRole().equals("user") || user.getUserRole().equals("GUIDE")) {
-        emailService.sendEmail(user.getUserEmail(), subject, message);
-    }
-});
+                allUsers.forEach(user -> {
+                    if (user.getUserRole().equals("user") || user.getUserRole().equals("GUIDE")) {
+                        emailService.sendEmail(user.getUserEmail(), subject, message);
+                    }
+                });
         
 
 
         return newevent;
 
     }
+    
 
 
 
