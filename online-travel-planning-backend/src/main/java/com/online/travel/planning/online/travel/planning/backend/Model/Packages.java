@@ -42,6 +42,11 @@ public class Packages {
         this.onePersonPrice = onePersonPrice;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+
    
     
     
