@@ -11,7 +11,8 @@ public class Packages {
     private String description;
     private double onePersonPrice;
     private int duration; // in days
-    
+    private String location;
+   
     
     
    
