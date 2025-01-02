@@ -29,6 +29,11 @@ public class PackagesServiceImplementation implements PackagesService {
         return packagesRepository.save(existingPackage);
     }
 
+    @Override
+    public void deletePackage(String id) {
+        packagesRepository.deleteById(id);
+    }
+
 
 
 }
