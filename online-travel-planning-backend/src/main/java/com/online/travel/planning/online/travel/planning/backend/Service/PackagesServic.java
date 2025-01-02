@@ -8,6 +8,8 @@ public interface PackagesServic {
     Packages createPackage(Packages packages);
     Packages updatePackage(String id, Packages packages);
     void deletePackage(String id);
+    List<Packages> getAllPackages();
+    
     
     
     
