@@ -46,4 +46,18 @@ public class EventServiceImplementation implements EventService{
     public Optional<Event> getEventById(String eventId) {
         return eventRepository.findById(eventId);
     }
+
+    public List<Event> getEventByType(String eventType) {
+        List<Event> events = eventRepository.findByType(eventType);
+        for (Event event : events) {
+            String imagePath = event.getEventImagePath();
+
+            if (imagePath != null && !imagePath.isEmpty()) {
+                String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
+                event.setEventImagePath(fullPath);
+            }
+        }
+        return events;
+    }
+
 }
