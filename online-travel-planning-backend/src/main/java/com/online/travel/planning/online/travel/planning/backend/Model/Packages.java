@@ -12,6 +12,7 @@ public class Packages {
     private double onePersonPrice;
     private int duration; // in days
     private String location;
+    private String imageUrl;
    
     
     
