@@ -13,6 +13,14 @@ public class Packages {
     private int duration; // in days
     private String location;
     private String imageUrl;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
    
     
     
