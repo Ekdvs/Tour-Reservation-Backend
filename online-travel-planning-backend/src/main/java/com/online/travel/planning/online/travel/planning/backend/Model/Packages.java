@@ -58,6 +58,11 @@ public class Packages {
         this.location = location;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+
 
 
    
