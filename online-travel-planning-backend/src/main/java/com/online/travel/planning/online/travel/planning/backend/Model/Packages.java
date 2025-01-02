@@ -10,6 +10,8 @@ public class Packages {
     private String name;
     private String description;
     private double onePersonPrice;
+    private int duration; // in days
+    
     
     
    
