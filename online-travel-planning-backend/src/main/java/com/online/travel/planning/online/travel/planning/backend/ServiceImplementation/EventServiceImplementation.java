@@ -69,5 +69,18 @@ public class EventServiceImplementation implements EventService{
         return null; // or handle it if neither URL is accessible
     }
 
+    private boolean isUrlAccessible(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            return (responseCode == HttpURLConnection.HTTP_OK);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
 
 }
