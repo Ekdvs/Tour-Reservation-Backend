@@ -46,6 +46,10 @@ public class Packages {
         return duration;
     }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
 
    
     
