@@ -102,6 +102,10 @@ public class Event {
         return eventIsFor;
     }
 
+    public void setEventIsFor(String eventIsFor) {
+        this.eventIsFor = eventIsFor;
+    }
+
 
 
 
