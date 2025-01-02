@@ -86,6 +86,10 @@ public class Event {
         return oneTicketPrice;
     }
 
+    public void setOneTicketPrice(Double oneTicketPrice) {
+        this.oneTicketPrice = oneTicketPrice;
+    }
+
 
 
 
