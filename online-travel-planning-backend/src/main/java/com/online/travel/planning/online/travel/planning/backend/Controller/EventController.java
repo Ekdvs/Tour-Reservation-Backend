@@ -40,5 +40,11 @@ public class EventController {
         return eventService.getEventById(eventId);
     }
 
+    @GetMapping("/getEventByType/{eventType}")
+    public List<Event> getEventByType(@PathVariable("eventType") String eventType) {
+        return eventService.getEventByType(eventType);
+    }
+
+
 
 }
