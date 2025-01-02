@@ -17,5 +17,13 @@ public class PackagesServiceImplementation implements PackagesService {
         return packagesRepository.save(packages);
     }
 
+    @Override
+    public Packages updatePackage(String id, Packages packages) {
+        Packages existingPackage = packagesRepository.findById(id).orElseThrow(() -> new RuntimeException("Package not found"));
+        
+        return packagesRepository.save(existingPackage);
+    }
+
+
 
 }
