@@ -78,6 +78,10 @@ public class Event {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
 
 
