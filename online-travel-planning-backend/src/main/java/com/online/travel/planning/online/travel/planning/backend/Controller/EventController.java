@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.online.travel.planning.online.travel.planning.backend.Model.Event;
 import com.online.travel.planning.online.travel.planning.backend.Service.EventService;
 
 @RestController
@@ -20,6 +21,8 @@ public class EventController {
     private static final String IMAGE_DIRECTORY = "src/main/resources/static/images/";
 
     @GetMapping("/getAllEvents")
-    
+    public List<Event> getAllEvents() {
+        return eventService.getAllEvents();
+    }
 
 }
