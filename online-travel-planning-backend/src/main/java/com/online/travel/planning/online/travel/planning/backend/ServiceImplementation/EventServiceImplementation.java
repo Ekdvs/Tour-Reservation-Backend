@@ -30,7 +30,10 @@ public class EventServiceImplementation implements EventService{
         List<User> allUsers = userRepository.findAll();
         for (Event event : events) {
             String imagePath = event.getEventImagePath();
-
+            if (imagePath != null && !imagePath.isEmpty()) {
+                String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
+                event.setEventImagePath(fullPath);
+            }
            
 
         }
