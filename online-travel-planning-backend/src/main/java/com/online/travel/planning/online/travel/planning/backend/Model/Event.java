@@ -24,6 +24,8 @@ public class Event {
     private String contentType;
     private byte[] imageData;
     private LocalDate dateAdded = LocalDate.now();
+    private LocalTime timeAdded = LocalTime.now();
+
     
     
     
