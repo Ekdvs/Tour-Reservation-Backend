@@ -122,6 +122,10 @@ public class Event {
         this.numOfTickets = numOfTickets;
     }
 
+    public LocalDate getDateAdded() {
+        return dateAdded;
+    }
+
 
 
 
