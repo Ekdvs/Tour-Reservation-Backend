@@ -142,6 +142,10 @@ public class Event {
         this.contentType = contentType;
     }
 
+    public byte[] getImageData() {
+        return imageData;
+    }
+
 
 
 
