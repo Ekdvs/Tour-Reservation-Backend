@@ -28,6 +28,10 @@ public class EventController {
     }
 
     @GetMapping("/searchEvents")
+    public ResponseEntity<List<Event>> searchEvents(@RequestParam String name) {
+        
+        return ResponseEntity.ok(events);
+    }
     
 
 
