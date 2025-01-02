@@ -114,6 +114,11 @@ public class Event {
         this.eventImagePath = eventImagePath;
     }
 
+    public Integer getNumOfTickets() {
+        return numOfTickets;
+    }
+
+
 
 
 
