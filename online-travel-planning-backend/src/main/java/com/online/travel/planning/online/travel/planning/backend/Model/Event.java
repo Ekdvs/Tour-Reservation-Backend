@@ -62,6 +62,9 @@ public class Event {
         return eventVenue;
     }
 
+    public void setEventVenue(String eventVenue) {
+        this.eventVenue = eventVenue;
+    }
 
 
 
