@@ -53,7 +53,13 @@ public class EventController {
 
     @PostMapping("/addEvent")
     public ResponseEntity<?>addEvent(@RequestPart("event")String eventJson,@RequestPart("imageFile") MultipartFile imagefile) throws IOException {
-        
+        try {
+            
+
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
