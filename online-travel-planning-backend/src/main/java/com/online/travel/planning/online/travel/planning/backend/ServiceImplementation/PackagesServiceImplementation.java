@@ -37,9 +37,15 @@ public class PackagesServiceImplementation implements PackagesService {
     }
 
     @Override
-    public List<Packages> getAllPackages() {
-        return packagesRepository.findAll();
+        public List<Packages> getAllPackages() {
+            return packagesRepository.findAll();
+        }
+
+    @Override
+    public Packages getPackageById(String id) {
+        return packagesRepository.findById(id).orElseThrow(() -> new RuntimeException("Package not found"));
     }
+
 
 
 
