@@ -58,6 +58,10 @@ public class Event {
         this.eventTime = eventTime;
     }
 
+    public String getEventVenue() {
+        return eventVenue;
+    }
+
 
 
 
