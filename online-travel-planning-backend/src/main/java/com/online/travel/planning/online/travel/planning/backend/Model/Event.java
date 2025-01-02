@@ -106,6 +106,10 @@ public class Event {
         this.eventIsFor = eventIsFor;
     }
 
+    public String getEventImagePath() {
+        return eventImagePath;
+    }
+
 
 
 
