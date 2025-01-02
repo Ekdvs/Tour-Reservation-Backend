@@ -21,6 +21,9 @@ public class Event {
     private String eventIsFor;
     private String eventImagePath;
     private Integer numOfTickets;
+    private String contentType;
+
+    
     
     
     
