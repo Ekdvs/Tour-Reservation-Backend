@@ -20,7 +20,12 @@ public class PackagesServiceImplementation implements PackagesService {
     @Override
     public Packages updatePackage(String id, Packages packages) {
         Packages existingPackage = packagesRepository.findById(id).orElseThrow(() -> new RuntimeException("Package not found"));
-        
+        existingPackage.setName(packages.getName());
+        existingPackage.setDescription(packages.getDescription());
+        existingPackage.setOnePersonPrice(packages.getOnePersonPrice());
+        existingPackage.setDuration(packages.getDuration());
+        existingPackage.setLocation(packages.getLocation());
+        existingPackage.setImageUrl(packages.getImageUrl());
         return packagesRepository.save(existingPackage);
     }
 
