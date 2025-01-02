@@ -20,6 +20,8 @@ public class Event {
     private String eventType;
     private String eventIsFor;
     private String eventImagePath;
+    private Integer numOfTickets;
+    
     
     
     
