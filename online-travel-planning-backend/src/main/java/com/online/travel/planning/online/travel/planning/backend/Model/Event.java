@@ -23,6 +23,8 @@ public class Event {
     private Integer numOfTickets;
     private String contentType;
     private byte[] imageData;
+    private LocalDate dateAdded = LocalDate.now();
+    
     
     
     
