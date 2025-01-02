@@ -14,6 +14,8 @@ public class Event {
     private String eventDate;
     private String eventTime;
     private String eventVenue;
+    private String eventOrganizer;
+   
     
     
     
