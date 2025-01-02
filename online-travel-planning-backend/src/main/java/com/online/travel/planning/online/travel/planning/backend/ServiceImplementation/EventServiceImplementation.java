@@ -1,10 +1,14 @@
 package com.online.travel.planning.online.travel.planning.backend.ServiceImplementation;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.online.travel.planning.online.travel.planning.backend.Model.Event;
 import com.online.travel.planning.online.travel.planning.backend.Model.User;
@@ -80,6 +84,23 @@ public class EventServiceImplementation implements EventService{
             return false;
         }
     }
+
+     @Override
+    public Event addEvent(Event event, MultipartFile imagefile)throws IOException {
+
+            event.setEventImagePath(imagefile.getOriginalFilename());
+            event.setContentType(imagefile.getContentType());
+            event.setImageData(imagefile.getBytes());
+            Event newevent= eventRepository.save(event);
+        List<User> allUsers = userRepository.findAll();
+
+        
+
+
+        return newevent;
+
+    }
+
 
 
 
