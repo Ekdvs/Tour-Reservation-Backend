@@ -9,5 +9,5 @@ public interface TravelPlaceService {
     TravelPlace getTravelPlaceByName(String placeName);
     List<TravelPlace> getAllTravelPlaces();
     void deleteTravelPlace(String placeName);
-    TravelPlace updateTravelPlace(String placeName, TravelPlace travelPlace);
+    TravelPlace updateTravelPlace(String placeName, TravelPlace travelPlace);
 }
