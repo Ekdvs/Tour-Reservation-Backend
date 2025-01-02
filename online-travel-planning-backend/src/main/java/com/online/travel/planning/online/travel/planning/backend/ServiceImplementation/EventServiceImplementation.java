@@ -150,7 +150,14 @@ String message =
         return eventRepository.findById(eventId).map(event -> {
             event.setEventName(eventDetails.getEventName());
             event.setEventDate(eventDetails.getEventDate());
-
+            event.setEventTime(eventDetails.getEventTime());
+            event.setEventVenue(eventDetails.getEventVenue());
+            event.setEventOrganizer(eventDetails.getEventOrganizer());
+            event.setOneTicketPrice(eventDetails.getOneTicketPrice());
+            event.setDescription(eventDetails.getDescription());
+            event.setEventType(eventDetails.getEventType());
+            event.setEventIsFor(eventDetails.getEventIsFor());
+            event.setNumOfTickets(eventDetails.getNumOfTickets());
             return eventRepository.save(event);
         }).orElseThrow(() -> new RuntimeException("Event not found with id " + eventId));
     }
