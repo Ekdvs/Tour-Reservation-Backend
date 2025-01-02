@@ -161,6 +161,11 @@ String message =
             return eventRepository.save(event);
         }).orElseThrow(() -> new RuntimeException("Event not found with id " + eventId));
     }
+    @Override
+    public void deleteEvent(String eventId) {
+        eventRepository.deleteById(eventId);
+    }
+
 
     
 
