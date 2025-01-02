@@ -38,6 +38,10 @@ public class Packages {
         return onePersonPrice;
     }
 
+    public void setOnePersonPrice(double onePersonPrice) {
+        this.onePersonPrice = onePersonPrice;
+    }
+
    
     
     
