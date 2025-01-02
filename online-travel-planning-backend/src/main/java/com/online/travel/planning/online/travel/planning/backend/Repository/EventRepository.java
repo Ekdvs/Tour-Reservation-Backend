@@ -1,5 +1,9 @@
 package com.online.travel.planning.online.travel.planning.backend.Repository;
 
-public interface EventRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.online.travel.planning.online.travel.planning.backend.Model.Event;
+
+public interface EventRepository extends MongoRepository<Event, String>{
 
 }
