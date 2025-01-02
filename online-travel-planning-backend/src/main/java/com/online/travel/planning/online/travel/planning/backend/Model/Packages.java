@@ -34,6 +34,10 @@ public class Packages {
         this.description = description;
     }
 
+    public double getOnePersonPrice() {
+        return onePersonPrice;
+    }
+
    
     
     
