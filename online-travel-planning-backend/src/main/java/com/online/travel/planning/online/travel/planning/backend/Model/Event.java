@@ -130,6 +130,10 @@ public class Event {
         this.dateAdded = dateAdded;
     }
 
+    public LocalTime getTimeAdded() {
+        return timeAdded;
+    }
+
 
 
 
