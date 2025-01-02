@@ -14,6 +14,7 @@ public interface EventService {
     List<Event> getEventByType(String eventType);
     Event addEvent(Event event, MultipartFile imagefile)throws IOException;
     Event updateEvent(String eventId, Event eventDetails);
+    void deleteEvent(String eventId);
 
 
 }
