@@ -94,6 +94,10 @@ public class Event {
         return eventType;
     }
 
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
 
 
 
