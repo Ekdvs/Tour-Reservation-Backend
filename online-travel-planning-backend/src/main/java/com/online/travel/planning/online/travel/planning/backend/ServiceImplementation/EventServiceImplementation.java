@@ -28,7 +28,12 @@ public class EventServiceImplementation implements EventService{
     public List<Event> getAllEvents() {
         List<Event> events = eventRepository.findAll();
         List<User> allUsers = userRepository.findAll();
-        
+        for (Event event : events) {
+            String imagePath = event.getEventImagePath();
+
+           
+
+        }
 
         return events;
     }
