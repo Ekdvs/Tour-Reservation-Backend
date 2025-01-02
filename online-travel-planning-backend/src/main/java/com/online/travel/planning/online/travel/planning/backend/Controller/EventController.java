@@ -29,7 +29,7 @@ public class EventController {
 
     @GetMapping("/searchEvents")
     public ResponseEntity<List<Event>> searchEvents(@RequestParam String name) {
-        
+        List<Event> events = eventService.searchEventsByName(name);
         return ResponseEntity.ok(events);
     }
     
