@@ -54,6 +54,10 @@ public class Event {
         return eventTime;
     }
 
+    public void setEventTime(String eventTime) {
+        this.eventTime = eventTime;
+    }
+
 
 
 
