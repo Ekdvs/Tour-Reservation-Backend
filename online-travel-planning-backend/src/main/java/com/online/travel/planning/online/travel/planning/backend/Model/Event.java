@@ -22,7 +22,8 @@ public class Event {
     private String eventImagePath;
     private Integer numOfTickets;
     private String contentType;
-
+    private byte[] imageData;
+    
     
     
     
