@@ -7,5 +7,6 @@ import com.online.travel.planning.online.travel.planning.backend.Model.Packages;
 public interface PackagesServic {
     Packages createPackage(Packages packages);
     
+    
 
 }
