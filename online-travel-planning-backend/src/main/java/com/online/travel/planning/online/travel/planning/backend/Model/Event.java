@@ -50,6 +50,11 @@ public class Event {
         this.eventDate = eventDate;
     }
 
+    public String getEventTime() {
+        return eventTime;
+    }
+
+
 
 
 
