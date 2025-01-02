@@ -18,6 +18,8 @@ public class Event {
     private String description;
     private Double oneTicketPrice;
     private String eventType;
+    private String eventIsFor;
+    
     
     
     
