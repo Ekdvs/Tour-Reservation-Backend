@@ -11,6 +11,8 @@ public class Event {
     @Id
     private String eventId;
     private String eventName;
+    private String eventDate;
+    
     
 
 
