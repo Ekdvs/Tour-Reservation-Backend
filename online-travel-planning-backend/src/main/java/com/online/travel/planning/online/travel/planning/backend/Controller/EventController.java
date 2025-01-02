@@ -14,5 +14,7 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+    private static final String IMAGE_DIRECTORY = "src/main/resources/static/images/";
+
 
 }
