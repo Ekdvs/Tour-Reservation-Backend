@@ -74,6 +74,10 @@ public class Event {
         this.eventOrganizer = eventOrganizer;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
 
 
 
