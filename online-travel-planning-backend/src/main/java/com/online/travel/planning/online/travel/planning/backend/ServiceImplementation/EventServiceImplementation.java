@@ -25,6 +25,7 @@ public class EventServiceImplementation implements EventService{
 
     @Override
     public List<Event> getAllEvents() {
+        List<Event> events = eventRepository.findAll();
         
     }
 }
