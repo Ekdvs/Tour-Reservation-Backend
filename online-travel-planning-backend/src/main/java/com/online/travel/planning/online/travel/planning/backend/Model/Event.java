@@ -110,6 +110,10 @@ public class Event {
         return eventImagePath;
     }
 
+    public void setEventImagePath(String eventImagePath) {
+        this.eventImagePath = eventImagePath;
+    }
+
 
 
 
