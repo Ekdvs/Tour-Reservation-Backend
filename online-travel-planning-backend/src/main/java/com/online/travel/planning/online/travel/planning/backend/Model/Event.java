@@ -138,6 +138,10 @@ public class Event {
         return contentType;
     }
 
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
 
 
 
