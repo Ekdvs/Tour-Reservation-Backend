@@ -70,6 +70,10 @@ public class Event {
         return eventOrganizer;
     }
 
+    public void setEventOrganizer(String eventOrganizer) {
+        this.eventOrganizer = eventOrganizer;
+    }
+
 
 
 
