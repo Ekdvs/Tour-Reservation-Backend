@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.online.travel.planning.online.travel.planning.backend.Model.Event;
+import com.online.travel.planning.online.travel.planning.backend.Model.User;
 import com.online.travel.planning.online.travel.planning.backend.Repository.EventRepository;
 import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
 import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
@@ -26,7 +27,8 @@ public class EventServiceImplementation implements EventService{
     @Override
     public List<Event> getAllEvents() {
         List<Event> events = eventRepository.findAll();
-       
+        List<User> allUsers = userRepository.findAll();
+        
 
         return events;
     }
