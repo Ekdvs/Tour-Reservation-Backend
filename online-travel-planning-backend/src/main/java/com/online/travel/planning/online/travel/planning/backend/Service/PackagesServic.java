@@ -9,6 +9,7 @@ public interface PackagesServic {
     Packages updatePackage(String id, Packages packages);
     void deletePackage(String id);
     List<Packages> getAllPackages();
+    Packages getPackageById(String id);
     
     
     
