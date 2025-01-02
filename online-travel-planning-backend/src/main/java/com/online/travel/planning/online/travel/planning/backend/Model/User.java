@@ -30,6 +30,7 @@ public class User {
     private LocalDate dateRegistered =LocalDate.now();
     private LocalTime timeRegistered =LocalTime.now();
     private LocalDateTime lastLogin;
+    private boolean isOnline;
 
     public String getUserId() {
         return userId;
