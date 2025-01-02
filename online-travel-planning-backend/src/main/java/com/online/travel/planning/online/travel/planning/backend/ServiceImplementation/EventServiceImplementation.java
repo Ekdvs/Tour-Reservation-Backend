@@ -60,4 +60,14 @@ public class EventServiceImplementation implements EventService{
         return events;
     }
 
+    private String getAccessibleUrl(String... urls) {
+        for (String url : urls) {
+            if (isUrlAccessible(url)) {
+                return url;
+            }
+        }
+        return null; // or handle it if neither URL is accessible
+    }
+
+
 }
