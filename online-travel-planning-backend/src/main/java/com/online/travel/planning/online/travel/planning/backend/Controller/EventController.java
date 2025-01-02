@@ -53,7 +53,10 @@ public class EventController {
 
     @PostMapping("/addEvent")
     public ResponseEntity<?>addEvent(@RequestPart("event")String eventJson,@RequestPart("imageFile") MultipartFile imagefile) throws IOException {
-        try {
+        try {ObjectMapper objectMapper = new ObjectMapper();
+            Event event = objectMapper.readValue(eventJson, Event.class);
+            Event eventExist = eventService.addEvent(event,imagefile);
+            return new ResponseEntity<>(eventExist, HttpStatus.CREATED);
             
 
         }
