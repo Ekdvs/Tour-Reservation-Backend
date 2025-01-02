@@ -134,6 +134,11 @@ public class Event {
         return timeAdded;
     }
 
+    public String getContentType() {
+        return contentType;
+    }
+
+
 
 
 
