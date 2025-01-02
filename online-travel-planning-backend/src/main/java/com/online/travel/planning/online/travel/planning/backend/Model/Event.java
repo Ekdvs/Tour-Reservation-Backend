@@ -38,6 +38,12 @@ public class Event {
         return eventName;
     }
 
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+
+
 
 
     
