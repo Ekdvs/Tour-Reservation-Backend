@@ -19,6 +19,8 @@ public class Event {
     private Double oneTicketPrice;
     private String eventType;
     private String eventIsFor;
+    private String eventImagePath;
+    
     
     
     
