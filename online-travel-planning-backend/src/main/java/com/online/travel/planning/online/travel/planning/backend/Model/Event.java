@@ -16,6 +16,8 @@ public class Event {
     private String eventVenue;
     private String eventOrganizer;
     private String description;
+    private Double oneTicketPrice;
+    
     
    
     
