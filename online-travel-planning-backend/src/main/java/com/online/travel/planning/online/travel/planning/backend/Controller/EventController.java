@@ -27,6 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.online.travel.planning.online.travel.planning.backend.Model.Event;
 import com.online.travel.planning.online.travel.planning.backend.Service.EventService;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 @RestController
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/event")
