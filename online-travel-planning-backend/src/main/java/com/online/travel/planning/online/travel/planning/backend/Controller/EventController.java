@@ -84,7 +84,18 @@ public class EventController {
 
     @PostMapping("/uploadImage")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
-        try {
+        try {// Generate a unique filename
+            String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
+            // Create the directory if it doesn't exist
+            Path filePath = Paths.get(IMAGE_DIRECTORY, filename);
+            Files.createDirectories(filePath.getParent());
+
+            // Save the file to the server
+            Files.write(filePath, file.getBytes());
+
+            // Return the accessible file path
+            return ResponseEntity.ok("/images/" + filename);
             
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
