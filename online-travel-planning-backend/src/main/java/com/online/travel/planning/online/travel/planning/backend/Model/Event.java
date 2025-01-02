@@ -66,6 +66,10 @@ public class Event {
         this.eventVenue = eventVenue;
     }
 
+    public String getEventOrganizer() {
+        return eventOrganizer;
+    }
+
 
 
 
