@@ -146,6 +146,10 @@ public class Event {
         return imageData;
     }
 
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
 
 
 
