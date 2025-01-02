@@ -2,6 +2,7 @@ package com.online.travel.planning.online.travel.planning.backend.ServiceImpleme
 
 import com.online.travel.planning.online.travel.planning.backend.Service.EventService;
 
+@Service
 public class EventServiceImplementation implements EventService{
 
 }
