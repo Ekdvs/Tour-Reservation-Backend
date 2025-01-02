@@ -50,6 +50,10 @@ public class Packages {
         this.duration = duration;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
 
    
     
