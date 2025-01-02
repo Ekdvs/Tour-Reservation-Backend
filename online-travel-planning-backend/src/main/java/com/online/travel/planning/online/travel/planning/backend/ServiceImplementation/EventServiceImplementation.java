@@ -148,6 +148,7 @@ String message =
     @Override
     public Event updateEvent(String eventId, Event eventDetails) {
         return eventRepository.findById(eventId).map(event -> {
+            event.setEventName(eventDetails.getEventName());
             
             return eventRepository.save(event);
         }).orElseThrow(() -> new RuntimeException("Event not found with id " + eventId));
