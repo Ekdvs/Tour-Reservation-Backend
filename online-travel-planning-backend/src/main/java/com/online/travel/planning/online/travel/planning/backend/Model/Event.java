@@ -98,6 +98,10 @@ public class Event {
         this.eventType = eventType;
     }
 
+    public String getEventIsFor() {
+        return eventIsFor;
+    }
+
 
 
 
