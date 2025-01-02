@@ -150,6 +150,10 @@ public class Event {
         this.imageData = imageData;
     }
 
+    public void setTimeAdded(LocalTime timeAdded) {
+        this.timeAdded = timeAdded;
+    }
+
 
 
 
