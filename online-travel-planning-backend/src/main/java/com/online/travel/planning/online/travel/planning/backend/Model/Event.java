@@ -26,6 +26,11 @@ public class Event {
     private LocalDate dateAdded = LocalDate.now();
     private LocalTime timeAdded = LocalTime.now();
 
+    public String getEventId() {
+        return eventId;
+    }
+
+
     
     
     
