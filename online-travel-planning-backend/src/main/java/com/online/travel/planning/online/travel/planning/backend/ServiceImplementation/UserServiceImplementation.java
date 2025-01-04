@@ -113,18 +113,22 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public String sendRecoveryCode(String userEmail) {
-        // Find user by email
+        // Check if the email is valid and user exists
         Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("No user found with email: " + userEmail);
         }
 
+        User user = optionalUser.get();
 
+        // Generate a 6-digit recovery code
         String recoveryCode = String.format("%06d", new Random().nextInt(999999));
 
-
+        // Store the recovery code temporarily in the map
         recoveryCodes.put(userEmail, recoveryCode);
 
+        // Log for debugging
+        //System.out.println("Stored recovery code for email " + userEmail + ": " + recoveryCode);
 
         // Prepare the email content
         String subject = "Password Recovery Code!";
@@ -133,53 +137,51 @@ public class UserServiceImplementation implements UserService {
                         "<head>" +
                         "<style>" +
                         "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }" +
-                        ".image { width: 50px; height: 50px; display: block; margin: 0 auto; }" +
-                        ".container { max-width: 800px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }" +
-                        ".header { background-color: #00ff99; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; }" +
-                        ".content { padding: 20px; font-size: 16px; color: #333; }" +
-                        ".content p { line-height: 1.6; }" +
-                        ".recovery-code { font-weight: bold; color: #135bf2; font-size: 18px; }" +
-                        ".footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #dddddd; text-align: center; font-size: 13px; color: #777; }" +
-                        ".footer p { margin: 5px 0; }" +
+                        ".container { max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }" +
+                        ".header { background-color: #00ff99; color: white; padding: 15px; text-align: center; border-radius: 8px 8px 0 0; }" +
+                        ".content { font-size: 16px; color: #333; }" +
+                        ".recovery-code { font-weight: bold; font-size: 20px; color: #135bf2; }" +
+                        ".footer { margin-top: 20px; text-align: center; font-size: 12px; color: #777; }" +
                         "</style>" +
                         "</head>" +
                         "<body>" +
                         "<div class='container'>" +
-                        "<div class='header'><h2>Account Recovery</h2></div>" +
+                        "<div class='header'><h2>Password Recovery</h2></div>" +
                         "<div class='content'>" +
-                        "<p>Dear " + optionalUser.get().getFirstName() + " " + optionalUser.get().getLastName() + ",</p>" +
-                        "<p>We received a request to reset the password for your account. Use the code below to proceed with password recovery:</p>" +
+                        "<p>Dear " + user.getFirstName() + " " + user.getLastName() + ",</p>" +
+                        "<p>We received a request to reset the password for your account. Use the recovery code below to proceed:</p>" +
                         "<p class='recovery-code'>" + recoveryCode + "</p>" +
-                        "<p>If you did not request this change, please contact our support team immediately.</p>" +
-                        "<p>Warm regards,</p>" +
-                        "<p><strong>online-travel-planning Support Team</strong></p>" +
+                        "<p>If you did not request this, please contact our support team immediately.</p>" +
                         "</div>" +
                         "<div class='footer'>" +
                         "<p>&copy; 2024 online-travel-planning LK. All rights reserved.</p>" +
-                        "<p>If you have any questions, please contact us at ceylontravelplanning@gmail.com</p>" +
+                        "<p>For support, email us at <a href='mailto:ceylontravelplanning@gmail.com'>ceylontravelplanning@gmail.com</a></p>" +
                         "</div>" +
                         "</div>" +
                         "</body>" +
                         "</html>";
 
-
-
-
-        // Send the welcome email
+        // Send the recovery email
         emailService.sendOTPEmail(userEmail, subject, message);
 
-
-        return recoveryCode; // Optionally return it to the frontend for testing purposes
+        return recoveryCode; // Optionally return for testing purposes
     }
 
 
     @Override
     public boolean verifyRecoveryCode(String userEmail, String recoveryCode) {
+        // Retrieve the stored recovery code
         String storedCode = recoveryCodes.get(userEmail);
-        if (storedCode != null && storedCode.equals(recoveryCode)) {
-            recoveryCodes.remove(userEmail);
+
+        // Log for debugging
+        //System.out.println("UserEmail: " + userEmail + ", Entered RecoveryCode: " + recoveryCode + ", StoredCode: " + storedCode);
+
+        // Check if the entered code matches the stored code
+        if (storedCode != null && storedCode.trim().equals(recoveryCode.trim())) {
+             // Remove the code after successful verification
             return true;
         }
+
         return false;
     }
 

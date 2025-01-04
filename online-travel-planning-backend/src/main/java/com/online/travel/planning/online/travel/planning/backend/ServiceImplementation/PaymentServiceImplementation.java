@@ -7,7 +7,7 @@ import com.online.travel.planning.online.travel.planning.backend.Repository.Pack
 import com.online.travel.planning.online.travel.planning.backend.Repository.PaymentRepository;
 import com.online.travel.planning.online.travel.planning.backend.Repository.ReservationRepository;
 import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
-import com.online.travel.planning.online.travel.planning.backend.Service.EmailService;
+import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
 import com.online.travel.planning.online.travel.planning.backend.Service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class PaymentServiceImplementation implements PaymentService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private EmailService emailService;
+    private Email_Service emailService;
     @Autowired
     private ReservationRepository reservationRepository;
     @Autowired

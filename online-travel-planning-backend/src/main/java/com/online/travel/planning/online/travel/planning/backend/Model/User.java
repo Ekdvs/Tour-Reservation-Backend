@@ -30,6 +30,9 @@ public class User {
     private LocalDate dateRegistered =LocalDate.now();
     private LocalTime timeRegistered =LocalTime.now();
     private LocalDateTime lastLogin;
+    private boolean isOnline;
+    private byte[] imageData;
+    private String contentType;
 
     public String getUserId() {
         return userId;
@@ -141,5 +144,19 @@ public class User {
 
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
+    }
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }
