@@ -31,6 +31,7 @@ public class User {
     private LocalTime timeRegistered =LocalTime.now();
     private LocalDateTime lastLogin;
     private boolean isOnline;
+    private byte[] imageData;
 
     public String getUserId() {
         return userId;
