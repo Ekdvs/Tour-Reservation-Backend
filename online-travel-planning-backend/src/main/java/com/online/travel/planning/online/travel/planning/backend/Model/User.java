@@ -32,6 +32,7 @@ public class User {
     private LocalDateTime lastLogin;
     private boolean isOnline;
     private byte[] imageData;
+    private String contentType;
 
     public String getUserId() {
         return userId;
@@ -150,5 +151,12 @@ public class User {
 
     public void setImageData(byte[] imageData) {
         this.imageData = imageData;
+    }
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

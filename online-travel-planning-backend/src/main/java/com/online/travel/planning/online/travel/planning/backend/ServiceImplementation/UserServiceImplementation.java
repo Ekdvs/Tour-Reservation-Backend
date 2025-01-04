@@ -8,7 +8,9 @@ import com.online.travel.planning.online.travel.planning.backend.Service.UserSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -25,13 +27,14 @@ public class UserServiceImplementation implements UserService {
 
     private final Map<String,String> recoveryCodes = new HashMap<>();
 
-    public User createUser(User user) {
+    public User createUser(User user,MultipartFile imagefile)throws IOException {
 
         if (user == null || user.getUserEmail() == null || user.getUserEmail().isEmpty()) {
             throw new IllegalArgumentException("Invalid user data. Email is required.");
         }
 
-
+        user.setProfilePictureUrl(imagefile.getOriginalFilename());
+        user.
         User newUser = userRepository.save(user);
 
 
