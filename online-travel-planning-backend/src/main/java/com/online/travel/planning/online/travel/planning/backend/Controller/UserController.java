@@ -109,61 +109,49 @@ public class UserController {
         return "User registered successfully";
     }
 
-    //sendotpcode
     @PostMapping("/sendotpcode")
-    public ResponseEntity<String> sendRecoveryCode(@RequestBody Map<String, String> payload) {
+    public String sendRecoveryCode(@RequestBody Map<String, String> payload) {
         String userEmail = payload.get("userEmail");
-
         if (userEmail == null || userEmail.isBlank()) {
-            return ResponseEntity.badRequest().body("Email cannot be empty.");
+            throw new RuntimeException("Email cannot be empty.");
         }
-
-        try {
-            String result = userService.sendRecoveryCode(userEmail);
-            return ResponseEntity.ok(result); 
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to send OTP. Please try again.");
-        }
+        return userService.sendRecoveryCode(userEmail);
     }
 
-    //verify otp code
     @PostMapping("/verify-code")
-    public ResponseEntity<Map<String, Object>> verifyRecoveryCode(
-            @RequestParam String userEmail,
-            @RequestParam String recoveryCode) {
-        
-        if (userEmail == null || userEmail.isBlank() || recoveryCode == null || recoveryCode.isBlank()) {
-            Map<String, Object> response = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> verifyRecoveryCode(@RequestBody Map<String, String> payload) {
+        String userEmail = payload.get("userEmail");
+        String recoveryCode = payload.get("recoveryCode");
+
+        Map<String, Object> response = new HashMap<>();
+
+        // Validate that both userEmail and recoveryCode are provided
+        if (userEmail == null || recoveryCode == null) {
             response.put("success", false);
-            response.put("message", "Email and recovery code cannot be empty.");
-            return ResponseEntity.badRequest().body(response);
+            response.put("message", "Both userEmail and recoveryCode are required.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
         try {
-            
-            boolean isVerified = userService.verifyRecoveryCode(userEmail, recoveryCode);
-            if (isVerified) {
-                
-                Map<String, Object> response = new HashMap<>();
+            // Verify if the recovery code matches the stored one
+            boolean isCodeValid = userService.verifyRecoveryCode(userEmail, recoveryCode);
+
+            if (isCodeValid) {
                 response.put("success", true);
                 response.put("message", "OTP verified successfully.");
                 return ResponseEntity.ok(response);
             } else {
-                
-                Map<String, Object> response = new HashMap<>();
                 response.put("success", false);
                 response.put("message", "Invalid OTP. Please try again.");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
         } catch (Exception e) {
-            
-            Map<String, Object> response = new HashMap<>();
             response.put("success", false);
-            response.put("message", "Verification failed. Please try again.");
+            response.put("message", "An error occurred while verifying the OTP.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
 
 
     //update password using email
