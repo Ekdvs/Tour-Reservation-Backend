@@ -33,11 +33,23 @@ public class UserController {
 
     // Create a new user
     @PostMapping("/addUser")
-    public ResponseEntity<User> createUser(@RequestBody User user) throws MessagingException {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User createdUser = userService.createUser(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
 
-        return ResponseEntity.ok(createdUser);
+        try {
+
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+
+            User createdUser = userService.createUser(user);
+
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+
+        } catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null); // You can return an error response or message here
+        }
     }
 
     @GetMapping("/usersOnline")
