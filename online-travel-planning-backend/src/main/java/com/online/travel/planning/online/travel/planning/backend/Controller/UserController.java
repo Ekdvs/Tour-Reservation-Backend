@@ -96,7 +96,6 @@ public class UserController {
         return "Logged out successfully";
     }
 
-    //register
     @PostMapping("/register")
     public String register(@RequestBody User user) {
         if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
@@ -105,6 +104,7 @@ public class UserController {
 
         //password convert to hash
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User createdUser = userService.createUser(user);
         userRepository.save(user);
         return "User registered successfully";
     }
