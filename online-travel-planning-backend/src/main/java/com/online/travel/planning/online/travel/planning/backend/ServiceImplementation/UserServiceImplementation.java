@@ -32,10 +32,10 @@ public class UserServiceImplementation implements UserService {
         }
 
 
-        User newUser = userRepository.save(user);
+        
 
 
-        String userEmail = newUser.getUserEmail();
+        String userEmail = user.getUserEmail();
 
 
         String subject = "Welcome to Travel Planning Website!";
@@ -58,7 +58,7 @@ public class UserServiceImplementation implements UserService {
                 "<h1>Welcome to Travel Planning Website!</h1>" +
                 "</div>" +
                 "<div class='content'>" +
-                "<p>Dear <strong>" + newUser.getFirstName() + " " + newUser.getLastName() + "</strong>,</p>" +
+                "<p>Dear <strong>" + user.getFirstName() + " " + user.getLastName() + "</strong>,</p>" +
                 "<p>Thank you for registering with us. We are excited to have you on board.</p>" +
                 "<p>Enjoy planning your trips and feel free to explore our travel services!</p>" +
                 "<br>" +
@@ -82,7 +82,7 @@ public class UserServiceImplementation implements UserService {
             e.printStackTrace();
         }
 
-        return newUser;
+        return userRepository.save(user);
     }
 
 
