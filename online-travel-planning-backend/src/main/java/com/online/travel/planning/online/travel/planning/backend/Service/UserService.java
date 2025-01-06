@@ -1,14 +1,13 @@
 package com.online.travel.planning.online.travel.planning.backend.Service;
 
-import java.util.List;
-
 import com.online.travel.planning.online.travel.planning.backend.Model.User;
+import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.mail.MessagingException;
+import java.io.IOException;
+import java.util.List;
 
 public interface UserService {
 
-    
 
     User createUser(User user);
 

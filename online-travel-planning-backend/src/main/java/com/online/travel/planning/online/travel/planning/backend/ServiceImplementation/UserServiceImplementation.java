@@ -6,12 +6,12 @@ import com.online.travel.planning.online.travel.planning.backend.Repository.User
 import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
 import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
