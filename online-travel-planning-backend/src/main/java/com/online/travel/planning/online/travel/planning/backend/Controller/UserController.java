@@ -31,6 +31,19 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /*// Endpoint to fetch new customers
+    @GetMapping("/newCustomers")
+    public ResponseEntity<List<User>> getNewCustomers() {
+        List<User> newCustomers = userService.getNewCustomers();
+        return ResponseEntity.ok(newCustomers);
+    }*/
+   /* @GetMapping("/usersOnline")
+    public long getUsersOnline() {
+        return userService.getOnlineUsersCount();  // Fetch and return the online user count
+    }*/
+
+    // Create a new user
+    // Create a new user
     // Create a new user
     @PostMapping("/addUser")
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -52,10 +65,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/usersOnline")
-    public long getUsersOnline() {
-        return userService.getOnlineUsersCount();  // Fetch and return the online user count
-    }
+
 
     // Get user by ID
     @GetMapping("/getUserById/{id}")
@@ -68,6 +78,18 @@ public class UserController {
         User user = userService.getUserNameById(userId);
         String userName=user.getFirstName();
         return userName;
+    }
+    @PostMapping("/register")
+    public String register(@RequestBody User user) {
+        if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
+            return "User already registered as a user";
+        }
+
+        //password convert to hash
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User createdUser = userService.createUser(user);
+        userRepository.save(user);
+        return "User registered successfully";
     }
 
     @GetMapping("/getUserByEmail/{id}")
@@ -88,7 +110,6 @@ public class UserController {
         return ResponseEntity.ok("User with ID " + userId + " has been deleted successfully.");
     }
 
-    //login
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user, HttpSession session) {
         // Find user by email
@@ -115,26 +136,12 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
-
-    //logout
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "Logged out successfully";
     }
 
-    @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
-            return "User already registered as a user";
-        }
-
-        //password convert to hash
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User createdUser = userService.createUser(user);
-        userRepository.save(user);
-        return "User registered successfully";
-    }
 
     @PostMapping("/sendotpcode")
     public String sendRecoveryCode(@RequestBody Map<String, String> payload) {
@@ -181,7 +188,7 @@ public class UserController {
 
 
 
-    //update password using email
+
     @PostMapping("/update-password/{email}")
     public ResponseEntity<String> updatePassword(
             @PathVariable("email") String userEmail,
@@ -216,17 +223,9 @@ public class UserController {
         }
     }
 
-    // Get user profile by email
-    @GetMapping("/{email}")
-    public ResponseEntity<User> getUserProfile(@PathVariable String email) {
-        User user = userService.getUserProfile(email);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return ResponseEntity.ok(user);
-    }
 
-    //updateuserpofile
+
+
     @PutMapping("/{email}")
     public ResponseEntity<User> updateUserProfile(@PathVariable String email,@RequestBody User updatedUser ) {
         User user = userService.updateUserProfile(email, updatedUser);
@@ -236,8 +235,15 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-
-    //user change to travel guide
+    // Get user profile by email
+    @GetMapping("/{email}")
+    public ResponseEntity<User> getUserProfile(@PathVariable String email) {
+        User user = userService.getUserProfile(email);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(user);
+    }
     @PutMapping("/travelgudie/{userId}")
     public ResponseEntity<String> promoteToGuide(@PathVariable String userId) {
         try {
@@ -252,11 +258,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error promoting user to Travel Guide");
         }
     }
+
 }
 
 
 
-    /*@Va lue("${8888profile-pic.upload-dir}")
+    /*@Value("${profile-pic.upload-dir}")
     private String uploadDir; // The directory to save the profile pictures
 
     @PutMapping("/{email}")
