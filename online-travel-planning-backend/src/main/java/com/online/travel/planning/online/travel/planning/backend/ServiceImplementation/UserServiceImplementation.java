@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -17,15 +19,13 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private JavaMailSender mailSender;
+
 
     @Autowired
     private Email_Service emailService;
 
     private final Map<String,String> recoveryCodes = new HashMap<>();
 
-    @Override
     public User createUser(User user) {
 
         if (user == null || user.getUserEmail() == null || user.getUserEmail().isEmpty()) {
@@ -33,7 +33,7 @@ public class UserServiceImplementation implements UserService {
         }
 
 
-        
+
 
 
         String userEmail = user.getUserEmail();
@@ -85,6 +85,8 @@ public class UserServiceImplementation implements UserService {
 
         return userRepository.save(user);
     }
+
+
 
 
     @Override
@@ -163,7 +165,7 @@ public class UserServiceImplementation implements UserService {
                         "</html>";
 
         // Send the recovery email
-        emailService.sendOTPEmail(userEmail, subject, message);
+        emailService.sendEmail(userEmail, subject, message);
 
         return recoveryCode; // Optionally return for testing purposes
     }
@@ -185,6 +187,8 @@ public class UserServiceImplementation implements UserService {
 
         return false;
     }
+
+
 
     @Override
     public User updatePassword(String userEmail, String newPassword) {
@@ -236,20 +240,37 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public long getOnlineUsersCount() {
-        // Get the current time and calculate the cutoff for "recent activity" (e.g., last 5 minutes)
-        LocalDateTime cutoffTime = LocalDateTime.now().minusMinutes(5);
+    public User getUserProfile(String email) {
+        User getuser = userRepository.findByUserEmail(email);
+        String imagePath =getuser.getProfilePictureUrl();
+        if (imagePath != null && !imagePath.isEmpty()) {
+            String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
+            getuser.setProfilePictureUrl(fullPath);
+        }
 
-        // Find users who have logged in after the cutoff time
-        List<User> onlineUsers = userRepository.findByLastLoginAfter(cutoffTime);
 
-        // Return the count of online users
-        return onlineUsers.size();
+        return getuser;
     }
 
-    @Override
-    public User getUserProfile(String email) {
-        return userRepository.findByUserEmail(email);
+    private String getAccessibleUrl(String... urls) {
+        for (String url : urls) {
+            if (isUrlAccessible(url)) {
+                return url;
+            }
+        }
+        return null; // or handle it if neither URL is accessible
+    }
+
+    private boolean isUrlAccessible(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            return (responseCode == HttpURLConnection.HTTP_OK);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -265,17 +286,32 @@ public class UserServiceImplementation implements UserService {
             updatedUser.setTitle(user.getTitle());
             updatedUser.setGender(user.getGender());
             updatedUser.setCountry(user.getCountry());
+            updatedUser.setProfilePictureUrl(user.getProfilePictureUrl());
+            updatedUser.setImageData(user.getImageData());
             return userRepository.save(updatedUser);
 
         }
     }
+   /* @Override
+    public long getOnlineUsersCount() {
+        return userRepository.
+    }*/
+
+   /* @Override
+    public List<User> getNewCustomers() {
+        // Get today's date
+        LocalDate today = LocalDate.now();
+        // Fetch users based on their registration date (latest first)
+        return userRepository.findTop5ByDateRegisteredOrderByDateRegisteredDesc(today);
+    }*/
+
     @Override
     public User promoteUserToGuide(String userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setUserRole("travelGuide"); // Update the role
-            return userRepository.save(user); // Save the updated user
+           return userRepository.save(user); // Save the updated user
 
         }
         else {
@@ -283,7 +319,6 @@ public class UserServiceImplementation implements UserService {
         }
 
     }
-
 
 
 
