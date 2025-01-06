@@ -25,6 +25,7 @@ public class UserServiceImplementation implements UserService {
 
     private final Map<String,String> recoveryCodes = new HashMap<>();
 
+    @Override
     public User createUser(User user) {
 
         if (user == null || user.getUserEmail() == null || user.getUserEmail().isEmpty()) {
