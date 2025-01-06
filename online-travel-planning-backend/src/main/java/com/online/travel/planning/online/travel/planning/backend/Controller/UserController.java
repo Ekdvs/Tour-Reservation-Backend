@@ -90,15 +90,30 @@ public class UserController {
 
     //login
     @PostMapping("/login")
-    public String login(@RequestBody User user, HttpSession session) {
+    public ResponseEntity<?> login(@RequestBody User user, HttpSession session) {
+        // Find user by email
         User existingUser = userRepository.findByUserEmail(user.getUserEmail());
 
-        if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-            session.setAttribute("user", existingUser);
-            return "Login successful";
-        } else {
-            return "Invalid username or password";
+        if (existingUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
         }
+
+        // Check password
+        if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
+        }
+
+        // Store user in session
+        session.setAttribute("user", existingUser);
+
+        // Prepare response
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Login successful");
+        response.put("userEmail", existingUser.getUserEmail());
+        response.put("role", existingUser.getUserRole());
+        //System.out.println(existingUser.getUserRole());
+
+        return ResponseEntity.ok(response);
     }
 
     //logout
