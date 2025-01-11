@@ -46,22 +46,11 @@ public class UserController {
     // Create a new user
     // Create a new user
     @PostMapping("/addUser")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestPart("user")String userJson,@RequestPart("imageFile")MultipartFile imagefile) throws IOException {
 
-        try {
-
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-
-            User createdUser = userService.createUser(user);
-
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-
-        } catch (Exception e) {
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null); // You can return an error response or message here
+        try {}
+        catch (Exception e) {
+        
         }
     }
 
