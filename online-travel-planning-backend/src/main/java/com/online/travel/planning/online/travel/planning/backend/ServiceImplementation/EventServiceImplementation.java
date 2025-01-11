@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,21 +147,40 @@ String message =
 
     }
     @Override
-    public Event updateEvent(String eventId, Event eventDetails) {
-        return eventRepository.findById(eventId).map(event -> {
-            event.setEventName(eventDetails.getEventName());
-            event.setEventDate(eventDetails.getEventDate());
-            event.setEventTime(eventDetails.getEventTime());
-            event.setEventVenue(eventDetails.getEventVenue());
-            event.setEventOrganizer(eventDetails.getEventOrganizer());
-            event.setOneTicketPrice(eventDetails.getOneTicketPrice());
-            event.setDescription(eventDetails.getDescription());
-            event.setEventType(eventDetails.getEventType());
-            event.setEventIsFor(eventDetails.getEventIsFor());
-            event.setNumOfTickets(eventDetails.getNumOfTickets());
-            return eventRepository.save(event);
-        }).orElseThrow(() -> new RuntimeException("Event not found with id " + eventId));
+    public Event updateEvent(String eventId, Event eventDetails, MultipartFile imageFile) throws IOException {
+        Optional<Event> existingEventOpt = eventRepository.findById(eventId);
+
+        if (!existingEventOpt.isPresent()) {
+            throw new NoSuchElementException("Event with ID " + eventId + " not found.");
+        }
+
+        Event event = existingEventOpt.get();
+
+        // Update event details
+        event.setEventName(eventDetails.getEventName());
+        event.setEventDate(eventDetails.getEventDate());
+        event.setEventTime(eventDetails.getEventTime());
+        event.setEventVenue(eventDetails.getEventVenue());
+        event.setEventOrganizer(eventDetails.getEventOrganizer());
+        event.setOneTicketPrice(eventDetails.getOneTicketPrice());
+        event.setDescription(eventDetails.getDescription());
+        event.setEventType(eventDetails.getEventType());
+        event.setEventIsFor(eventDetails.getEventIsFor());
+        event.setNumOfTickets(eventDetails.getNumOfTickets());
+        // Add any additional attributes here.
+
+        // Update image file if provided
+        if (imageFile != null && !imageFile.isEmpty()) {
+            event.setEventImagePath(imageFile.getOriginalFilename());
+            event.setContentType(imageFile.getContentType());
+            event.setImageData(imageFile.getBytes());
+        }
+
+        // Save the updated event
+        return eventRepository.save(event);
     }
+
+
 
     @Override
     public void deleteEvent(String eventId) {
