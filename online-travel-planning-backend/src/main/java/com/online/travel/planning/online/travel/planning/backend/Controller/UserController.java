@@ -238,13 +238,24 @@ public class UserController {
 
 
     @PutMapping("/{email}")
-    public ResponseEntity<User> updateUserProfile(@PathVariable String email,@RequestBody User updatedUser ) {
-        User user = userService.updateUserProfile(email, updatedUser);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    public ResponseEntity<?> updateUserProfile(@PathVariable("userEmail") String userEmail,@RequestPart("user") String userJson,@RequestPart(value = "imageFile",required = false) MultipartFile imageFile) throws IOException {
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            User userUpdate = objectMapper.readValue(userJson, User.class);
+            User user = userService.updateUserProfile(userEmail, userUpdate, imageFile);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return ResponseEntity.ok(user);
     }
+
+
+
+
+
+
 
     // Get user profile by email
     @GetMapping("/{email}")

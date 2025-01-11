@@ -252,7 +252,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User getUserProfile(String email) {
         User getuser = userRepository.findByUserEmail(email);
-        String imagePath =getuser.getProfileImagePath()
+        String imagePath =getuser.getProfileImagePath();
         if (imagePath != null && !imagePath.isEmpty()) {
             String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
             getuser.setProfileImagePath(fullPath);
