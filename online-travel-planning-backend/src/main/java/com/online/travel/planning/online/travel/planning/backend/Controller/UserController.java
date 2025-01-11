@@ -48,9 +48,15 @@ public class UserController {
     @PostMapping("/addUser")
     public ResponseEntity<?> createUser(@RequestPart("user")String userJson,@RequestPart("imageFile")MultipartFile imagefile) throws IOException {
 
-        try {}
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            User user = objectMapper.readValue(userJson, User.class);
+            User userExist=userService.createUser(user,imagefile);
+            return new ResponseEntity<>(userExist, HttpStatus.CREATED);
+        }
         catch (Exception e) {
-        
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 
