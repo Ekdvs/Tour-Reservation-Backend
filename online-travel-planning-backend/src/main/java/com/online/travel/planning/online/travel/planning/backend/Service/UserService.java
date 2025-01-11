@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
 
 
-    User createUser(User user);
+    User createUser(User user,MultipartFile imagefile)throws IOException;
 
     User getUserById(String userId);
     User getUserNameById(String userId);
@@ -22,7 +22,7 @@ public interface UserService {
 
     User getUserProfile(String email);
 
-    User updateUserProfile(String email, User updatedUser);
+    User updateUserProfile(String email, User updatedUser,MultipartFile imagefile)throws IOException;
 
     //long getOnlineUsersCount();
 
