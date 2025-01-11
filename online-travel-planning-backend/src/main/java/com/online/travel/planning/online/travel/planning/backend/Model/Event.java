@@ -19,8 +19,8 @@ public class Event {
     private Double oneTicketPrice;
     private String eventType;
     private String eventIsFor;
-    private String eventImagePath;
     private Integer numOfTickets;
+    private String eventImagePath;
     private String contentType;
     private byte[] imageData;
     private LocalDate dateAdded = LocalDate.now();
