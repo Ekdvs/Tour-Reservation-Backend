@@ -22,13 +22,13 @@ public class User {
     private String title;
     private String gender;
     private String country;
-    private String profilePictureUrl;
     private LocalDate dateRegistered =LocalDate.now();
     private LocalTime timeRegistered =LocalTime.now();
     private LocalDateTime lastLogin;
     private boolean isOnline;
-    private byte[] imageData;
+    private String eventImagePath;
     private String contentType;
+    private byte[] imageData;
 
     public byte[] getImageData() {
         return imageData;
@@ -62,16 +62,7 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-    public String getProfilePictureUrl() {
-        return profilePictureUrl;
-    }
-
-    public void setProfilePictureUrl(String profilePictureUrl) {
-        this.profilePictureUrl = profilePictureUrl;
-    }
-
-
-
+    
 
     public String getUserId() {
         return userId;

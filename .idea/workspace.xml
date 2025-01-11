@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c7d5da3-c44c-4a9b-a824-3ac2f112697a" name="Changes" comment="promoteUserToGuide" />
+    <list default="true" id="1c7d5da3-c44c-4a9b-a824-3ac2f112697a" name="Changes" comment="promoteUserToGuide">
+      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Model/User.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,7 +67,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.OnlineTravelPlanningBackendApplication.executor": "Run",
-    "git-widget-placeholder": "developer",
+    "git-widget-placeholder": "#22 on developer",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/ekdvs/Downloads/online travel planning backend new",
     "node.js.detected.package.eslint": "true",
