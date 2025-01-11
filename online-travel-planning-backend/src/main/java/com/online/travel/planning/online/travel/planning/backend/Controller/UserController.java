@@ -75,17 +75,33 @@ public class UserController {
         return userName;
     }
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
-            return "User already registered as a user";
-        }
+    public ResponseEntity<?> register(
+            @RequestPart("user") String userJson,
+            @RequestPart("imageFile") MultipartFile imageFile
+    ) throws IOException {
+        try {
+            // Parse JSON into User object
+            ObjectMapper objectMapper = new ObjectMapper();
+            User user = objectMapper.readValue(userJson, User.class);
 
-        //password convert to hash
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User createdUser = userService.createUser(user);
-        userRepository.save(user);
-        return "User registered successfully";
+            // Check if the user already exists
+            if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
+                return new ResponseEntity<>("User already registered with this email", HttpStatus.CONFLICT);
+            }
+
+            // Hash the user's password
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            // Create and save the user with the image file
+            User createdUser = userService.createUser(user, imageFile);
+            userRepository.save(createdUser);
+
+            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
     @GetMapping("/getUserByEmail/{id}")
     public User getUserByEmail(@PathVariable("id") String userEmail) {
