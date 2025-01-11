@@ -1,18 +1,18 @@
 package com.online.travel.planning.online.travel.planning.backend.Controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.online.travel.planning.online.travel.planning.backend.Model.User;
 import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
 import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,19 +31,36 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Create a new user
-    @PostMapping("/addUser")
-    public ResponseEntity<User> createUser(@RequestBody User user) throws MessagingException {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User createdUser = userService.createUser(user);
-
-        return ResponseEntity.ok(createdUser);
-    }
-
-    @GetMapping("/usersOnline")
+    /*// Endpoint to fetch new customers
+    @GetMapping("/newCustomers")
+    public ResponseEntity<List<User>> getNewCustomers() {
+        List<User> newCustomers = userService.getNewCustomers();
+        return ResponseEntity.ok(newCustomers);
+    }*/
+   /* @GetMapping("/usersOnline")
     public long getUsersOnline() {
         return userService.getOnlineUsersCount();  // Fetch and return the online user count
+    }*/
+
+    // Create a new user
+    // Create a new user
+    // Create a new user
+    @PostMapping("/addUser")
+    public ResponseEntity<?> createUser(@RequestPart("user")String userJson,@RequestPart("imageFile")MultipartFile imagefile) throws IOException {
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            User user = objectMapper.readValue(userJson, User.class);
+            User userExist=userService.createUser(user,imagefile);
+            return new ResponseEntity<>(userExist, HttpStatus.CREATED);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
+
+
 
     // Get user by ID
     @GetMapping("/getUserById/{id}")
@@ -57,6 +74,34 @@ public class UserController {
         String userName=user.getFirstName();
         return userName;
     }
+    @PostMapping("/register")
+    public ResponseEntity<?> register(
+            @RequestPart("user") String userJson,
+            @RequestPart("imageFile") MultipartFile imageFile
+    ) throws IOException {
+        try {
+            // Parse JSON into User object
+            ObjectMapper objectMapper = new ObjectMapper();
+            User user = objectMapper.readValue(userJson, User.class);
+
+            // Check if the user already exists
+            if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
+                return new ResponseEntity<>("User already registered with this email", HttpStatus.CONFLICT);
+            }
+
+            // Hash the user's password
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            // Create and save the user with the image file
+            User createdUser = userService.createUser(user, imageFile);
+            userRepository.save(createdUser);
+
+            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping("/getUserByEmail/{id}")
     public User getUserByEmail(@PathVariable("id") String userEmail) {
@@ -76,97 +121,85 @@ public class UserController {
         return ResponseEntity.ok("User with ID " + userId + " has been deleted successfully.");
     }
 
-    //login
     @PostMapping("/login")
-    public String login(@RequestBody User user, HttpSession session) {
+    public ResponseEntity<?> login(@RequestBody User user, HttpSession session) {
+        // Find user by email
         User existingUser = userRepository.findByUserEmail(user.getUserEmail());
 
-        if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-            session.setAttribute("user", existingUser);
-            return "Login successful";
-        } else {
-            return "Invalid username or password";
+        if (existingUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
         }
-    }
 
-    //logout
+        // Check password
+        if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
+        }
+
+        // Store user in session
+        session.setAttribute("user", existingUser);
+
+        // Prepare response
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Login successful");
+        response.put("userEmail", existingUser.getUserEmail());
+        response.put("role", existingUser.getUserRole());
+        //System.out.println(existingUser.getUserRole());
+
+        return ResponseEntity.ok(response);
+    }
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "Logged out successfully";
     }
 
-    //register
-    @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
-            return "User already registered as a user";
-        }
 
-        //password convert to hash
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return "User registered successfully";
-    }
-
-    //sendotpcode
     @PostMapping("/sendotpcode")
-    public ResponseEntity<String> sendRecoveryCode(@RequestBody Map<String, String> payload) {
+    public String sendRecoveryCode(@RequestBody Map<String, String> payload) {
         String userEmail = payload.get("userEmail");
-
         if (userEmail == null || userEmail.isBlank()) {
-            return ResponseEntity.badRequest().body("Email cannot be empty.");
+            throw new RuntimeException("Email cannot be empty.");
         }
-
-        try {
-            String result = userService.sendRecoveryCode(userEmail);
-            return ResponseEntity.ok(result); 
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to send OTP. Please try again.");
-        }
+        return userService.sendRecoveryCode(userEmail);
     }
 
-    //verify otp code
     @PostMapping("/verify-code")
-    public ResponseEntity<Map<String, Object>> verifyRecoveryCode(
-            @RequestParam String userEmail,
-            @RequestParam String recoveryCode) {
-        
-        if (userEmail == null || userEmail.isBlank() || recoveryCode == null || recoveryCode.isBlank()) {
-            Map<String, Object> response = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> verifyRecoveryCode(@RequestBody Map<String, String> payload) {
+        String userEmail = payload.get("userEmail");
+        String recoveryCode = payload.get("recoveryCode");
+
+        Map<String, Object> response = new HashMap<>();
+
+        // Validate that both userEmail and recoveryCode are provided
+        if (userEmail == null || recoveryCode == null) {
             response.put("success", false);
-            response.put("message", "Email and recovery code cannot be empty.");
-            return ResponseEntity.badRequest().body(response);
+            response.put("message", "Both userEmail and recoveryCode are required.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
         try {
-            
-            boolean isVerified = userService.verifyRecoveryCode(userEmail, recoveryCode);
-            if (isVerified) {
-                
-                Map<String, Object> response = new HashMap<>();
+            // Verify if the recovery code matches the stored one
+            boolean isCodeValid = userService.verifyRecoveryCode(userEmail, recoveryCode);
+
+            if (isCodeValid) {
                 response.put("success", true);
                 response.put("message", "OTP verified successfully.");
                 return ResponseEntity.ok(response);
             } else {
-                
-                Map<String, Object> response = new HashMap<>();
                 response.put("success", false);
                 response.put("message", "Invalid OTP. Please try again.");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
         } catch (Exception e) {
-            
-            Map<String, Object> response = new HashMap<>();
             response.put("success", false);
-            response.put("message", "Verification failed. Please try again.");
+            response.put("message", "An error occurred while verifying the OTP.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
 
-    //update password using email
+
+
     @PostMapping("/update-password/{email}")
     public ResponseEntity<String> updatePassword(
             @PathVariable("email") String userEmail,
@@ -201,6 +234,29 @@ public class UserController {
         }
     }
 
+
+
+
+    @PutMapping("/{email}")
+    public ResponseEntity<?> updateUserProfile(@PathVariable("userEmail") String userEmail,@RequestPart("user") String userJson,@RequestPart(value = "imageFile",required = false) MultipartFile imageFile) throws IOException {
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            User userUpdate = objectMapper.readValue(userJson, User.class);
+            User user = userService.updateUserProfile(userEmail, userUpdate, imageFile);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+
+
+
     // Get user profile by email
     @GetMapping("/{email}")
     public ResponseEntity<User> getUserProfile(@PathVariable String email) {
@@ -210,19 +266,6 @@ public class UserController {
         }
         return ResponseEntity.ok(user);
     }
-
-    //updateuserpofile
-    @PutMapping("/{email}")
-    public ResponseEntity<User> updateUserProfile(@PathVariable String email,@RequestBody User updatedUser ) {
-        User user = userService.updateUserProfile(email, updatedUser);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return ResponseEntity.ok(user);
-    }
-
-
-    //user change to travel guide
     @PutMapping("/travelgudie/{userId}")
     public ResponseEntity<String> promoteToGuide(@PathVariable String userId) {
         try {
@@ -237,11 +280,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error promoting user to Travel Guide");
         }
     }
+
 }
 
 
 
-    /*@Va lue("${8888profile-pic.upload-dir}")
+    /*@Value("${profile-pic.upload-dir}")
     private String uploadDir; // The directory to save the profile pictures
 
     @PutMapping("/{email}")
