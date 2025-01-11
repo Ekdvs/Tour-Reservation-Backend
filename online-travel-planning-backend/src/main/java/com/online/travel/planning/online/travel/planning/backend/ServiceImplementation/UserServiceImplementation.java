@@ -252,10 +252,10 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User getUserProfile(String email) {
         User getuser = userRepository.findByUserEmail(email);
-        String imagePath =getuser.getProfilePictureUrl();
+        String imagePath =getuser.getProfileImagePath()
         if (imagePath != null && !imagePath.isEmpty()) {
             String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
-            getuser.setProfilePictureUrl(fullPath);
+            getuser.setProfileImagePath(fullPath);
         }
 
 
@@ -284,23 +284,20 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User updateUserProfile(String userEmail, User user) {
-        User updatedUser = userRepository.findByUserEmail(userEmail);
-        if (updatedUser == null) {
-            return null;
+    public User updateUserProfile(String userEmail, User user,MultipartFile imageFile) throws IOException {
+        Optional<User> existingUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        if (!existingUser.isPresent()) {
+            throw new NoSuchElementException("No user found with email: " + userEmail);
         }
-        else {
-            updatedUser.setFirstName(user.getFirstName());
-            updatedUser.setLastName(user.getLastName());
-            updatedUser.setPhoneNumber(user.getPhoneNumber());
-            updatedUser.setTitle(user.getTitle());
-            updatedUser.setGender(user.getGender());
-            updatedUser.setCountry(user.getCountry());
-            updatedUser.setProfilePictureUrl(user.getProfilePictureUrl());
-            updatedUser.setImageData(user.getImageData());
-            return userRepository.save(updatedUser);
+        User user1=existingUser.get();
 
-        }
+        // User user details
+        user1.setFirstName(user1.getFirstName());
+        user1.setLastName(user1.getLastName());
+        user1.setTitle(user1.getTitle());
+        user1.setGender(user1.getGender());
+        user1.setCountry(user1.getCountry());
+
     }
    /* @Override
     public long getOnlineUsersCount() {
