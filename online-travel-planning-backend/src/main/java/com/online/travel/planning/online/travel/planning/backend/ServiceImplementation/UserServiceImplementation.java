@@ -26,15 +26,16 @@ public class UserServiceImplementation implements UserService {
 
     private final Map<String,String> recoveryCodes = new HashMap<>();
 
-    public User createUser(User user) {
+    @Override
+    User createUser(User user, MultipartFile imagefile)throws IOException {
 
         if (user == null || user.getUserEmail() == null || user.getUserEmail().isEmpty()) {
             throw new IllegalArgumentException("Invalid user data. Email is required.");
         }
 
-
-
-
+        user.setPassword(imagefile.getOriginalFilename());
+        user.setContentType(imagefile.getContentType());
+        user.setImageData(imagefile.getBytes());
 
         String userEmail = user.getUserEmail();
 
@@ -106,8 +107,17 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public List<User> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+          String imagePath=user.getProfileImagePath();
+          if(imagePath!=null && !imagePath.isEmpty()) {
+              String fullPath=getAccessibleUrl("http://localhost:8080" +imagePath);
+              user.setProfileImagePath(fullPath);
+          }
+        }
         return userRepository.findAll();
     }
+
 
     @Override
     public void deleteUser(String userId) {
