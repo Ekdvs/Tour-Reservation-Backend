@@ -26,7 +26,7 @@ public class User {
     private LocalTime timeRegistered =LocalTime.now();
     private LocalDateTime lastLogin;
     private boolean isOnline;
-    private String eventImagePath;
+    private String profileImagePath;
     private String contentType;
     private byte[] imageData;
 
@@ -62,7 +62,13 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-    
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
+
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
+    }
 
     public String getUserId() {
         return userId;
