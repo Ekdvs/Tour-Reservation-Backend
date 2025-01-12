@@ -1,5 +1,6 @@
 package com.online.travel.planning.online.travel.planning.backend.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.online.travel.planning.online.travel.planning.backend.Model.User;
 import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -79,29 +77,44 @@ public class UserController {
     public ResponseEntity<?> register(
             @RequestPart("user") String userJson,
             @RequestPart("imageFile") MultipartFile imageFile
-    ) throws IOException {
+    ) {
         try {
-            // Parse JSON into User object
+            // Parse the JSON string into a User object
             ObjectMapper objectMapper = new ObjectMapper();
             User user = objectMapper.readValue(userJson, User.class);
 
-            // Check if the user already exists
-            if (userRepository.findByUserEmail(user.getUserEmail()) != null) {
-                return new ResponseEntity<>("User already registered with this email", HttpStatus.CONFLICT);
+            // Check if the email is already registered
+            Optional<User> existingUser = userRepository.findByUserEmail(user.getUserEmail());
+            if (existingUser.isPresent()) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("User already registered with this email");
             }
 
             // Hash the user's password
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
 
-            // Create and save the user with the image file
-            User createdUser = userService.createUser(user, imageFile);
-            userRepository.save(createdUser);
+            // Process the image file
+            if (imageFile != null && !imageFile.isEmpty()) {
+                user.setContentType(imageFile.getContentType());
+                user.setImageData(Base64.getEncoder().encodeToString(imageFile.getBytes()).getBytes());
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profile image is required");
+            }
 
-            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+            // Save the user to the database
+            userRepository.save(user);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user data: " + e.getMessage());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing the image file: " + e.getMessage());
         } catch (Exception e) {
-            return new ResponseEntity<>("An error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
         }
     }
+
+
 
 
     @GetMapping("/getUserByEmail/{id}")
