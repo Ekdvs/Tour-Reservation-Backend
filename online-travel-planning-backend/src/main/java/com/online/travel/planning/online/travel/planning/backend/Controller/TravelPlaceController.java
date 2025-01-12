@@ -2,6 +2,7 @@ package com.online.travel.planning.online.travel.planning.backend.Controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import com.online.travel.planning.online.travel.planning.backend.Model.TravelPlace;
 import com.online.travel.planning.online.travel.planning.backend.Service.TravelPlaceService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -23,7 +23,33 @@ public class TravelPlaceController {
     private TravelPlaceService travelPlaceService;
 
     private static final String IMAGE_DIRECTORY = "src/main/resources/static/images/";
-     //add place
+
+    //get all places
+    @GetMapping("/allplaces")
+    public ResponseEntity<List<TravelPlace>> getAllPlaces() {
+        List<TravelPlace> places = travelPlaceService.getAllTravelPlaces();
+        return ResponseEntity.ok(places);
+    }
+
+    //searchplace
+    @GetMapping("searchPlace")
+    public ResponseEntity<List<TravelPlace>> searchPlace(@RequestParam String name) {
+        List<TravelPlace>places=travelPlaceService.searchPlaceByName(name);
+        return ResponseEntity.ok(places);
+    }
+
+    //getplace by id
+    @GetMapping("/getPlaceById/{id}")
+    public Optional<TravelPlace> getPlaceById(@PathVariable String placeId) {
+        return travelPlaceService.getTravelPlaceById(placeId);
+    }
+
+    //get place by catagary
+    @GetMapping("/getplacebycategory/{placecategory}")
+    public List<TravelPlace> getPlaceByCategory(@PathVariable("placecategory") String placecategory) {
+        return travelPlaceService.getPlaceByCategory(placecategory);
+    }
+    //add place
     @PostMapping("/addplace")
     public ResponseEntity<?> addEvent(@RequestPart("place")String placeJson, @RequestPart("imageFile") MultipartFile imagefile) throws IOException {
         try {
@@ -39,12 +65,7 @@ public class TravelPlaceController {
         }
     }
 
-    //get all places
-    @GetMapping("/allplaces")
-    public ResponseEntity<List<TravelPlace>> getAllPlaces() {
-        List<TravelPlace> places = travelPlaceService.getAllTravelPlaces();
-        return ResponseEntity.ok(places);
-    }
+
 
      //delete place by name
     @DeleteMapping("/delete/{id}")
