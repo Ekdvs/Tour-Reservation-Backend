@@ -116,50 +116,9 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
         travelPlaceRepository.deleteById(placeId);
     }
     @Override
-    public TravelPlace getTravelPlaceById(String placeId) {
-        return travelPlaceRepository.findById(placeId)
-                .orElseThrow(() -> new RuntimeException("Travel Place not found with ID: " + placeId));
+    public Optional<TravelPlace> getTravelPlaceById(String placeId) {
+    return travelPlaceRepository.findById(placeId);
     }
-    @Override
-    public TravelPlace getTravelPlaceByName(String placeName) {
-        return travelPlaceRepository.findByPlaceName(placeName);
-    }
-    public TravelPlace updateTravelPlace(String placeName, TravelPlace travelPlace) {
-        // Find the existing travel place by name
-        TravelPlace existingPlace = travelPlaceRepository.findByPlaceName(placeName);
-
-        if (existingPlace != null) {
-            // Update the fields of the existing place
-            existingPlace.setPlaceName(travelPlace.getPlaceName());
-            existingPlace.setLocation(travelPlace.getLocation());
-            existingPlace.setDescription(travelPlace.getDescription());
-            existingPlace.setPrice(travelPlace.getPrice());
-            existingPlace.setPictureUrls(travelPlace.getPictureUrls());
-            existingPlace.setCategory(travelPlace.getCategory());
-
-            // Save the updated place to the database
-            return travelPlaceRepository.save(existingPlace);
-        }
-
-        // Return null if the place was not found
-        return null;
-    }
-        /*@Override
-    public TravelPlace getTravelPlaceByName(String placeName) {
-        return Optional.ofNullable(travelPlaceRepository.findByTravelPlaceName(placeName))
-                .orElseThrow(() -> new RuntimeException("Travel Place not found with Name: " + placeName));
-    }
-    @Override
-    public TravelPlace updateTravelPlace(String placeId, TravelPlace travelPlace) {
-        TravelPlace existingPlace = getTravelPlaceById(placeId);
-
-        existingPlace.setPlaceName(travelPlace.getPlaceName());
-        existingPlace.setLocation(travelPlace.getLocation());
-        existingPlace.setDescription(travelPlace.getDescription());
-        existingPlace.setPrice(travelPlace.getPrice());
-        existingPlace.setPictureUrls(travelPlace.getPictureUrls());
-
-        return travelPlaceRepository.save(existingPlace);
-    }*/
+   
 
 }
