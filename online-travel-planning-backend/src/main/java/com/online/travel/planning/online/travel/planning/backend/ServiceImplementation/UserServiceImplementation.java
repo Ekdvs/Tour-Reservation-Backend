@@ -28,12 +28,12 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User createUser(User user, MultipartFile imagefile)throws IOException {
-
+        System.out.println("welcome");
         if (user == null || user.getUserEmail() == null || user.getUserEmail().isEmpty()) {
             throw new IllegalArgumentException("Invalid user data. Email is required.");
         }
-
-        user.setPassword(imagefile.getOriginalFilename());
+        //System.out.println(imagefile.getOriginalFilename());
+        user.setProfileImagePath(imagefile.getOriginalFilename());
         user.setContentType(imagefile.getContentType());
         user.setImageData(imagefile.getBytes());
 
@@ -102,21 +102,25 @@ public class UserServiceImplementation implements UserService {
     }
     @Override
     public User getUserByUserEmail(String userEmail) {
-        Optional<User> optionalUser=userRepository.findByUserEmail(userEmail);
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
 
-        if(optionalUser.isEmpty()) {
+        if (optionalUser.isEmpty()) {
             throw new RuntimeException("User not found with email: " + userEmail);
         }
-        User user=optionalUser.get();
-        String imagePath=user.getProfileImagePath();
 
-        if(imagePath!=null && !imagePath.isEmpty()) {
+        User user = optionalUser.get();
+        String imagePath = user.getProfileImagePath();
+
+
+
+        if (imagePath != null && !imagePath.isEmpty()) {
             String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
             user.setProfileImagePath(fullPath);
         }
-        return user;
 
+        return user;
     }
+
 
     @Override
     public List<User> getAllUsers() {

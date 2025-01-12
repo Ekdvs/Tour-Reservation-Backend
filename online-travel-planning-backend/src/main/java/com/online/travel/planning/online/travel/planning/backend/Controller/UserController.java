@@ -93,16 +93,7 @@ public class UserController {
             String hashedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(hashedPassword);
 
-            // Process the image file
-            if (imageFile != null && !imageFile.isEmpty()) {
-                user.setContentType(imageFile.getContentType());
-                user.setImageData(Base64.getEncoder().encodeToString(imageFile.getBytes()).getBytes());
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profile image is required");
-            }
-
-            // Save the user to the database
-            userRepository.save(user);
+            userService.createUser(user,imageFile);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
         } catch (JsonProcessingException e) {
@@ -119,6 +110,7 @@ public class UserController {
 
     @GetMapping("/getUserByEmail/{id}")
     public User getUserByEmail(@PathVariable("id") String userEmail) {
+        //System.out.println(userEmail);
         return userService.getUserByUserEmail(userEmail);
     }
 
