@@ -357,6 +357,17 @@ public class UserServiceImplementation implements UserService {
         }
 
     }
+    @Override
+    public List<User> getTravelGuides() {
+        // Fetch users with the "travelGuide" role
+        List<User> users = userRepository.findByRole("travelGuide");
+
+
+
+        return users;
+    }
+
+
 
 
 

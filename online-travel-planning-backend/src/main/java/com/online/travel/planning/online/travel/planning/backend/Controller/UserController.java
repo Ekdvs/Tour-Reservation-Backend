@@ -289,6 +289,14 @@ public class UserController {
         }
     }
 
+    //get all travel guides
+    @GetMapping("/travel-guides")
+    public List<User> getTravelGuides() {
+        // Fetch and return travel guides from the service
+        return userService.getTravelGuides();
+    }
+
+
 }
 
 
