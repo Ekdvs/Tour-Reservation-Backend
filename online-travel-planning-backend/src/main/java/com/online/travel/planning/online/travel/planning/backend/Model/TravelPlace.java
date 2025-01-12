@@ -15,16 +15,33 @@ public class TravelPlace {
     private Double price;
     private LocalDate dateAdded = LocalDate.now();
     private LocalTime timeAdded = LocalTime.now();
-    private List<String> pictureUrls;
+    private String placeImagePath;
+    private String contentType;
+    private byte[] imageData;
     private String category;
 
-    //add getter setter
-    public List<String> getPictureUrls() {
-        return pictureUrls;
+    public String getPlaceImagePath() {
+        return placeImagePath;
     }
 
-    public void setPictureUrls(List<String> pictureUrls) {
-        this.pictureUrls = pictureUrls;
+    public void setPlaceImagePath(String placeImagePath) {
+        this.placeImagePath = placeImagePath;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
     }
 
     public LocalDate getDateAdded() {
