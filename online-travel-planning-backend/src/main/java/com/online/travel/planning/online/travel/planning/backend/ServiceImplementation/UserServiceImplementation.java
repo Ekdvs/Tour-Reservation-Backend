@@ -301,29 +301,35 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User updateUserProfile(String userEmail, User user,MultipartFile imageFile) throws IOException {
-        Optional<User> existingUser = userRepository.findByUserEmail(userEmail);
-        if (!existingUser.isPresent()) {
-            throw new NoSuchElementException("No user found with email: " + userEmail);
+    public User updateUserProfile(String userEmail, User userDetails, MultipartFile imageFile) throws IOException {
+        System.out.println("Updating user profile with email: " + userEmail);
+
+        // Use orElseThrow to handle the case when the user is not found
+        User user = userRepository.findByUserEmail(userEmail)
+                .orElseThrow(() -> new NoSuchElementException("No user found with email: " + userEmail));
+
+        // Update user details with new data
+        user.setFirstName(userDetails.getFirstName());
+        user.setLastName(userDetails.getLastName());
+        user.setPhoneNumber(userDetails.getPhoneNumber());
+        user.setTitle(userDetails.getTitle());
+        user.setGender(userDetails.getGender());
+        user.setCountry(userDetails.getCountry());
+
+        // Update profile image if provided
+        if (imageFile != null && !imageFile.isEmpty()) {
+            // Assuming you have a method to save the file and get the file name
+            user.setProfileImagePath(imageFile.getOriginalFilename());
+            user.setContentType(imageFile.getContentType());
+            user.setImageData(imageFile.getBytes());  // Storing image as byte array, but might be better to store only file path
         }
-        User user1=existingUser.get();
 
-        // User user details
-        user1.setFirstName(user1.getFirstName());
-        user1.setLastName(user1.getLastName());
-        user1.setTitle(user1.getTitle());
-        user1.setGender(user1.getGender());
-        user1.setCountry(user1.getCountry());
-
-        //update image file if provided
-        if(imageFile != null &&!imageFile.isEmpty()) {
-            user1.setProfileImagePath(imageFile.getOriginalFilename());
-            user1.setContentType(imageFile.getContentType());
-            user1.setImageData(imageFile.getBytes());
-        }
-        return userRepository.save(user1);
-
+        // Save and return updated user
+        return userRepository.save(user);
     }
+
+
+
    /* @Override
     public long getOnlineUsersCount() {
         return userRepository.
