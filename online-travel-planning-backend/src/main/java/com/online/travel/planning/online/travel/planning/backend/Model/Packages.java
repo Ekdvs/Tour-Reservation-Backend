@@ -3,27 +3,38 @@ package com.online.travel.planning.online.travel.planning.backend.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Document(collection = "packages")
 public class Packages {
     @Id
-    private String id;
-    private String name;
+    private String packageId;
+    private String packageName;
     private String description;
     private double onePersonPrice;
     private int duration; // in days
     private String location;
-    private String imageUrl;
+    private String packageImagePath;
+    private String contentType;
+    private byte[] imageData;
+    private LocalDate dateAdded = LocalDate.now();
+    private LocalTime timeAdded = LocalTime.now();
 
-    public String getId() {
-        return id;
+    public String getPackageId() {
+        return packageId;
     }
 
-    public String getName() {
-        return name;
+    public void setPackageId(String packageId) {
+        this.packageId = packageId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public String getDescription() {
@@ -58,13 +69,46 @@ public class Packages {
         this.location = location;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPackageImagePath() {
+        return packageImagePath;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPackageImagePath(String packageImagePath) {
+        this.packageImagePath = packageImagePath;
     }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    public LocalDate getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(LocalDate dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public LocalTime getTimeAdded() {
+        return timeAdded;
+    }
+
+    public void setTimeAdded(LocalTime timeAdded) {
+        this.timeAdded = timeAdded;
+    }
+}
 
 
 
