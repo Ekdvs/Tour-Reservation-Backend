@@ -15,11 +15,20 @@ public class Packages {
     private double onePersonPrice;
     private int duration; // in days
     private String location;
+    private String PackageType;
     private String packageImagePath;
     private String contentType;
     private byte[] imageData;
     private LocalDate dateAdded = LocalDate.now();
     private LocalTime timeAdded = LocalTime.now();
+
+    public String getPackageType() {
+        return PackageType;
+    }
+
+    public void setPackageType(String packageType) {
+        PackageType = packageType;
+    }
 
     public String getPackageId() {
         return packageId;
@@ -110,15 +119,3 @@ public class Packages {
     }
 }
 
-
-
-
-
-   
-    
-    
-   
-
-
-
-}
