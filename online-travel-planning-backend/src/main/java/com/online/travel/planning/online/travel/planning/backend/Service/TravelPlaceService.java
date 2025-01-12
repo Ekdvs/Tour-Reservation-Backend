@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface TravelPlaceService {
     List<TravelPlace> getAllTravelPlaces();
     Optional<TravelPlace> getTravelPlaceById(String placeId);
+    List<TravelPlace> searchTravelPlaceByName(String placeName);
 }
