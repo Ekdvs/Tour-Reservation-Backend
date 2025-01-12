@@ -33,7 +33,7 @@ public class EventServiceImplementation implements EventService{
     @Override
     public List<Event> getAllEvents() {
         List<Event> events = eventRepository.findAll();
-        List<User> allUsers = userRepository.findAll();
+    
         for (Event event : events) {
             String imagePath = event.getEventImagePath();
             if (imagePath != null && !imagePath.isEmpty()) {

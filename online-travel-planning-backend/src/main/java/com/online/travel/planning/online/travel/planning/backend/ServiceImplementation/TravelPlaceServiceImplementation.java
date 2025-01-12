@@ -80,7 +80,15 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
 
     @Override
     public List<TravelPlace> getAllTravelPlaces() {
-        return travelPlaceRepository.findAll();
+        List<TravelPlace> places = travelPlaceRepository.findAll();
+        for (TravelPlace place : places) {
+            String imagePath=place.getPlaceImagePath();
+            if (imagePath != null && !imagePath.isEmpty()) {
+                String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
+                place.setPlaceImagePath(fullPath);
+            }
+        }
+        return places;
     }
     @Override
     public void deleteTravelPlace(String placeId) {
