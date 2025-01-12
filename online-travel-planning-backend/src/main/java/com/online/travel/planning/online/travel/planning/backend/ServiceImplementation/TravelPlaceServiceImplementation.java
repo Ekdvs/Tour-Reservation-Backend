@@ -7,10 +7,13 @@ import com.online.travel.planning.online.travel.planning.backend.Service.Email_S
 import com.online.travel.planning.online.travel.planning.backend.Service.TravelPlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -28,10 +31,15 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
     private Email_Service emailService;
 
     @Override
-    public TravelPlace createTravelPlace(TravelPlace travelPlace) {
-        TravelPlace newplace= travelPlaceRepository.save(travelPlace);
-        List<User> allUsers = userRepository.findAll();
+    public TravelPlace addPlace(TravelPlace travelPlace, MultipartFile imagefile)throws IOException {
 
+        travelPlace.setPlaceImagePath(imagefile.getOriginalFilename());
+        travelPlace.setContentType(imagefile.getContentType());
+        travelPlace.setImageData(imagefile.getBytes());
+        TravelPlace savedTravelPlace = travelPlaceRepository.save(travelPlace);
+
+        //get all users
+        List<User> allUsers = userRepository.findAll();
         // Prepare the email content
         String subject = "New Travel Place Added: " + travelPlace.getPlaceName();
         String message =
@@ -58,7 +66,6 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
                         "<p><strong>" + travelPlace.getPlaceName() + "</strong></p>" +
                         "<p>Location: " + travelPlace.getLocation() + "</p>" +
                         "<p>Description: " + travelPlace.getDescription() + "</p>" +
-                        "<p>Price: $" + travelPlace.getPrice() + "</p>" +
                         "<br>" +
                         "<p>Plan your next adventure now!</p>" +
                         "<p><strong>Travel Planning Team</strong></p>" +
@@ -77,7 +84,7 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
         });
 
 
-        return newplace;
+        return savedTravelPlace;
     }
 
     @Override
@@ -112,13 +119,58 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
         }
     }
     @Override
-    public void deleteTravelPlace(String placeId) {
+    public void deletePlace(String placeId) {
         travelPlaceRepository.deleteById(placeId);
     }
+
     @Override
     public Optional<TravelPlace> getTravelPlaceById(String placeId) {
     return travelPlaceRepository.findById(placeId);
     }
-   
+
+    @Override
+    public List<TravelPlace> getPlaceByCategory(String category) {
+        List<TravelPlace> places = travelPlaceRepository.findByCategory(category);
+
+        for (TravelPlace place : places) {
+            String imagePath=place.getPlaceImagePath();
+            if (imagePath != null && !imagePath.isEmpty()) {
+                String fullPath = getAccessibleUrl(imagePath);
+                place.setPlaceImagePath(fullPath);
+            }
+        }
+        return places;
+    }
+
+    @Override
+    public List<TravelPlace> searchPlaceByName(String name) {
+        return travelPlaceRepository.findByplaceNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public TravelPlace updatePlace(String placeid, TravelPlace placeDetails, MultipartFile imageFile) throws IOException {
+        Optional<TravelPlace> existingPlaceOpt = travelPlaceRepository.findById(placeid);
+
+        if (!existingPlaceOpt.isPresent()) {
+            throw new NoSuchElementException("Place with ID " + placeid + " not found.");
+        }
+        TravelPlace place = existingPlaceOpt.get();
+
+        //update place
+        place.setPlaceName(placeDetails.getPlaceName());
+        place.setLocation(placeDetails.getLocation());
+        place.setDescription(placeDetails.getDescription());
+
+        // Update image file if provided
+        if (imageFile != null && !imageFile.isEmpty()) {
+            place.setPlaceImagePath(imageFile.getOriginalFilename());
+            place.setContentType(imageFile.getContentType());
+            place.setImageData(imageFile.getBytes());
+        }
+        return travelPlaceRepository.save(place);
+    }
+
+
+
 
 }

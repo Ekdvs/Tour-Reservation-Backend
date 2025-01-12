@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface TravelPlaceService {
     List<TravelPlace> getAllTravelPlaces();
     Optional<TravelPlace> getTravelPlaceById(String placeId);
-    List<TravelPlace> searchTravelPlaceByName(String placeName);
+    List<TravelPlace> getPlaceByCategory(String category);
     TravelPlace addPlace(TravelPlace travelPlace, MultipartFile imagefile)throws IOException;
     TravelPlace updatePlace(String placeid,TravelPlace travelPlace ,MultipartFile imagefile)throws IOException;
     void deletePlace(String placeid);

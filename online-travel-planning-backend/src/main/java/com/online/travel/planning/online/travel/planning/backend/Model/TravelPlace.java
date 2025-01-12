@@ -12,7 +12,6 @@ public class TravelPlace {
     private String placeName;
     private String location;
     private String description;
-    private Double price;
     private LocalDate dateAdded = LocalDate.now();
     private LocalTime timeAdded = LocalTime.now();
     private String placeImagePath;
@@ -86,12 +85,7 @@ public class TravelPlace {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+
     public void setCategory(String category) {
         this.category = category;
     }
