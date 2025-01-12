@@ -15,5 +15,5 @@ public interface UserRepository extends MongoRepository<User,String> {
    // List<User> findTop5ByDateRegisteredOrderByDateRegisteredDesc(LocalDate dateRegistered);
    //long countByIsOnline(boolean isOnline);
     //List<User> findByLastLoginAfter(LocalDateTime lastLoginTime);
-    List<User>findByRole(String role);
+    List<User>findByUserRole(String userRole);
 }
