@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c7d5da3-c44c-4a9b-a824-3ac2f112697a" name="Changes" comment="promoteUserToGuide">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/UserServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/UserServiceImplementation.java" afterDir="false" />
     </list>
@@ -107,7 +108,7 @@
       <workItem from="1734252480083" duration="315000" />
       <workItem from="1735271606585" duration="1712000" />
       <workItem from="1736174566095" duration="645000" />
-      <workItem from="1736643895315" duration="513000" />
+      <workItem from="1736643895315" duration="1177000" />
     </task>
     <task id="LOCAL-00001" summary="upadate mongodb">
       <option name="closed" value="true" />

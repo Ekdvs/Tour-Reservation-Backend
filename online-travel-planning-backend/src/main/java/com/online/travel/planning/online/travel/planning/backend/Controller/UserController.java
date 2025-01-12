@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -124,14 +125,14 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user, HttpSession session) {
         // Find user by email
-        User existingUser = userRepository.findByUserEmail(user.getUserEmail());
+        Optional<User> existingUser = userRepository.findByUserEmail(user.getUserEmail());
 
-        if (existingUser == null) {
+        if (existingUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
         }
 
         // Check password
-        if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+        if (!passwordEncoder.matches(user.getPassword(), existingUser.get().getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
         }
 
@@ -141,8 +142,8 @@ public class UserController {
         // Prepare response
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Login successful");
-        response.put("userEmail", existingUser.getUserEmail());
-        response.put("role", existingUser.getUserRole());
+        response.put("userEmail", existingUser.get().getUserEmail());
+        response.put("role", existingUser.get().getUserRole());
         //System.out.println(existingUser.getUserRole());
 
         return ResponseEntity.ok(response);

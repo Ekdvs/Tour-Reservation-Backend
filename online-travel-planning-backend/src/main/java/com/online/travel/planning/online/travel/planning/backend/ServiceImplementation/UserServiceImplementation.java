@@ -102,16 +102,19 @@ public class UserServiceImplementation implements UserService {
     }
     @Override
     public User getUserByUserEmail(String userEmail) {
-        List<User> users=userRepository.findByUserEmail(userEmail);
-        for (User user : users) {
-            String imagePath=user.getProfileImagePath();
+        Optional<User> optionalUser=userRepository.findByUserEmail(userEmail);
 
-            if(imagePath!=null &&!imagePath.isEmpty()) {
-                String fullpath=getAccessibleUrl("http://localhost:8080"+imagePath);
-                user.setProfileImagePath(fullpath);
-            }
+        if(optionalUser.isEmpty()) {
+            throw new RuntimeException("User not found with email: " + userEmail);
         }
+        User user=optionalUser.get();
+        String imagePath=user.getProfileImagePath();
 
+        if(imagePath!=null && !imagePath.isEmpty()) {
+            String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
+            user.setProfileImagePath(fullPath);
+        }
+        return user;
 
     }
 
@@ -137,7 +140,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public String sendRecoveryCode(String userEmail) {
         // Check if the email is valid and user exists
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("No user found with email: " + userEmail);
         }
@@ -212,7 +215,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User updatePassword(String userEmail, String newPassword) {
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("No user found with email: " + userEmail);
         }
@@ -261,15 +264,15 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUserProfile(String email) {
-        User getuser = userRepository.findByUserEmail(email);
-        String imagePath =getuser.getProfileImagePath();
+        Optional<User> getuser = userRepository.findByUserEmail(email);
+        String imagePath = getuser.get().getProfileImagePath();
         if (imagePath != null && !imagePath.isEmpty()) {
             String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
-            getuser.setProfileImagePath(fullPath);
+            getuser.get().setProfileImagePath(fullPath);
         }
 
 
-        return getuser;
+        return getuser.orElse(null);
     }
 
     private String getAccessibleUrl(String... urls) {
@@ -295,7 +298,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User updateUserProfile(String userEmail, User user,MultipartFile imageFile) throws IOException {
-        Optional<User> existingUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        Optional<User> existingUser = userRepository.findByUserEmail(userEmail);
         if (!existingUser.isPresent()) {
             throw new NoSuchElementException("No user found with email: " + userEmail);
         }
