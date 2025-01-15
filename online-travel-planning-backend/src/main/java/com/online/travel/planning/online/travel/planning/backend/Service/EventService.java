@@ -13,7 +13,7 @@ public interface EventService {
     Optional<Event> getEventById(String eventId);
     List<Event> getEventByType(String eventType);
     Event addEvent(Event event, MultipartFile imagefile)throws IOException;
-    Event updateEvent(String eventId, Event eventDetails);
+    Event updateEvent(String eventId, Event eventDetails,MultipartFile imageFile)throws IOException;
     void deleteEvent(String eventId);
     List<Event> searchEventsByName(String name);
 

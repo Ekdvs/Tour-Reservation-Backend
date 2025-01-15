@@ -6,10 +6,12 @@ import com.online.travel.planning.online.travel.planning.backend.Repository.User
 import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
 import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 @Service
@@ -17,8 +19,7 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private JavaMailSender mailSender;
+
 
     @Autowired
     private Email_Service emailService;
@@ -26,15 +27,15 @@ public class UserServiceImplementation implements UserService {
     private final Map<String,String> recoveryCodes = new HashMap<>();
 
     @Override
-    public User createUser(User user) {
-
+    public User createUser(User user, MultipartFile imagefile)throws IOException {
+        System.out.println("welcome");
         if (user == null || user.getUserEmail() == null || user.getUserEmail().isEmpty()) {
             throw new IllegalArgumentException("Invalid user data. Email is required.");
         }
-
-
-        
-
+        //System.out.println(imagefile.getOriginalFilename());
+        user.setProfileImagePath(imagefile.getOriginalFilename());
+        user.setContentType(imagefile.getContentType());
+        user.setImageData(imagefile.getBytes());
 
         String userEmail = user.getUserEmail();
 
@@ -87,6 +88,8 @@ public class UserServiceImplementation implements UserService {
     }
 
 
+
+
     @Override
     public User getUserById(String userId) {
         return userRepository.findById(userId)
@@ -99,13 +102,39 @@ public class UserServiceImplementation implements UserService {
     }
     @Override
     public User getUserByUserEmail(String userEmail) {
-        return userRepository.findByUserEmail(userEmail);
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
+
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("User not found with email: " + userEmail);
+        }
+
+        User user = optionalUser.get();
+        String imagePath = user.getProfileImagePath();
+
+
+
+        if (imagePath != null && !imagePath.isEmpty()) {
+            String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
+            user.setProfileImagePath(fullPath);
+        }
+
+        return user;
     }
+
 
     @Override
     public List<User> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+          String imagePath=user.getProfileImagePath();
+          if(imagePath!=null && !imagePath.isEmpty()) {
+              String fullPath=getAccessibleUrl("http://localhost:8080" +imagePath);
+              user.setProfileImagePath(fullPath);
+          }
+        }
         return userRepository.findAll();
     }
+
 
     @Override
     public void deleteUser(String userId) {
@@ -115,7 +144,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public String sendRecoveryCode(String userEmail) {
         // Check if the email is valid and user exists
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("No user found with email: " + userEmail);
         }
@@ -163,7 +192,7 @@ public class UserServiceImplementation implements UserService {
                         "</html>";
 
         // Send the recovery email
-        emailService.sendOTPEmail(userEmail, subject, message);
+        emailService.sendEmail(userEmail, subject, message);
 
         return recoveryCode; // Optionally return for testing purposes
     }
@@ -186,9 +215,11 @@ public class UserServiceImplementation implements UserService {
         return false;
     }
 
+
+
     @Override
     public User updatePassword(String userEmail, String newPassword) {
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("No user found with email: " + userEmail);
         }
@@ -236,46 +267,89 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public long getOnlineUsersCount() {
-        // Get the current time and calculate the cutoff for "recent activity" (e.g., last 5 minutes)
-        LocalDateTime cutoffTime = LocalDateTime.now().minusMinutes(5);
-
-        // Find users who have logged in after the cutoff time
-        List<User> onlineUsers = userRepository.findByLastLoginAfter(cutoffTime);
-
-        // Return the count of online users
-        return onlineUsers.size();
-    }
-
-    @Override
     public User getUserProfile(String email) {
-        return userRepository.findByUserEmail(email);
+        Optional<User> getuser = userRepository.findByUserEmail(email);
+        String imagePath = getuser.get().getProfileImagePath();
+        if (imagePath != null && !imagePath.isEmpty()) {
+            String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
+            getuser.get().setProfileImagePath(fullPath);
+        }
+
+
+        return getuser.orElse(null);
+    }
+
+    private String getAccessibleUrl(String... urls) {
+        for (String url : urls) {
+            if (isUrlAccessible(url)) {
+                return url;
+            }
+        }
+        return null; // or handle it if neither URL is accessible
+    }
+
+    private boolean isUrlAccessible(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            return (responseCode == HttpURLConnection.HTTP_OK);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
-    public User updateUserProfile(String userEmail, User user) {
-        User updatedUser = userRepository.findByUserEmail(userEmail);
-        if (updatedUser == null) {
-            return null;
-        }
-        else {
-            updatedUser.setFirstName(user.getFirstName());
-            updatedUser.setLastName(user.getLastName());
-            updatedUser.setPhoneNumber(user.getPhoneNumber());
-            updatedUser.setTitle(user.getTitle());
-            updatedUser.setGender(user.getGender());
-            updatedUser.setCountry(user.getCountry());
-            return userRepository.save(updatedUser);
+    public User updateUserProfile(String userEmail, User userDetails, MultipartFile imageFile) throws IOException {
+        System.out.println("Updating user profile with email: " + userEmail);
 
+        // Use orElseThrow to handle the case when the user is not found
+        User user = userRepository.findByUserEmail(userEmail)
+                .orElseThrow(() -> new NoSuchElementException("No user found with email: " + userEmail));
+
+        // Update user details with new data
+        user.setFirstName(userDetails.getFirstName());
+        user.setLastName(userDetails.getLastName());
+        user.setPhoneNumber(userDetails.getPhoneNumber());
+        user.setTitle(userDetails.getTitle());
+        user.setGender(userDetails.getGender());
+        user.setCountry(userDetails.getCountry());
+
+        // Update profile image if provided
+        if (imageFile != null && !imageFile.isEmpty()) {
+            // Assuming you have a method to save the file and get the file name
+            user.setProfileImagePath(imageFile.getOriginalFilename());
+            user.setContentType(imageFile.getContentType());
+            user.setImageData(imageFile.getBytes());  // Storing image as byte array, but might be better to store only file path
         }
+
+        // Save and return updated user
+        return userRepository.save(user);
     }
+
+
+
+   /* @Override
+    public long getOnlineUsersCount() {
+        return userRepository.
+    }*/
+
+   /* @Override
+    public List<User> getNewCustomers() {
+        // Get today's date
+        LocalDate today = LocalDate.now();
+        // Fetch users based on their registration date (latest first)
+        return userRepository.findTop5ByDateRegisteredOrderByDateRegisteredDesc(today);
+    }*/
+
     @Override
     public User promoteUserToGuide(String userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setUserRole("travelGuide"); // Update the role
-            return userRepository.save(user); // Save the updated user
+           return userRepository.save(user); // Save the updated user
 
         }
         else {
@@ -283,6 +357,16 @@ public class UserServiceImplementation implements UserService {
         }
 
     }
+    @Override
+    public List<User> getTravelGuides() {
+        // Fetch users with the "travelGuide" role
+        List<User> users = userRepository.findByUserRole("travelGuide");
+
+
+
+        return users;
+    }
+
 
 
 

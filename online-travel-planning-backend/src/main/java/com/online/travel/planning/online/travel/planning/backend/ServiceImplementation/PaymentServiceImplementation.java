@@ -90,11 +90,11 @@ public class PaymentServiceImplementation implements PaymentService{
 
                         "<table class='table'>" +
                         "<tr><td><strong>Email Address:</strong></td><td>" + user.getUserEmail() + "</td></tr>" +
-                        "<tr><td><strong>Event Name:</strong></td><td>" + packages.getName() + "</td></tr>" +
+                        "<tr><td><strong>Event Name:</strong></td><td>" + packages.getPackageName() + "</td></tr>" +
                         "<tr><td><strong>Reservation Date:</strong></td><td>" + user.getDateRegistered() + "</td></tr>" +
                         "<tr><td><strong>Reservation Time:</strong></td><td>" + user.getTimeRegistered() + "</td></tr>" +
                         "<tr><td><strong>Event Date:</strong></td><td>" + packages.getDescription() + "</td></tr>" +
-                        "<tr><td><strong>Event Time:</strong></td><td>" + packages.getName() + "</td></tr>" +
+                        "<tr><td><strong>Event Time:</strong></td><td>" + packages.getPackageName() + "</td></tr>" +
                         "<tr><td><strong>Event Venue:</strong></td><td class='amount'>" + packages.getLocation() + "</td></tr>" +
                         "<tr><td><strong>Number of Tickets:</strong></td><td>" + reservation.getNumOfPerson() + "</td></tr>" +
                         "<tr><td><strong>Amount Paid:</strong></td><td class='amount'>Rs" + payment.getAmount() + ".0</td></tr>" +

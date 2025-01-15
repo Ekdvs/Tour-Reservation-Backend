@@ -74,9 +74,21 @@ public class EventController {
     }
 
     @PutMapping("/updateEvent/{id}")
-    public Event updateEvent(@PathVariable("id") String eventId, @RequestBody Event event) {
-        return eventService.updateEvent(eventId, event);
+    public ResponseEntity<?> updateEvent(
+            @PathVariable("id") String eventId,
+            @RequestPart("event") String eventJson,
+            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile
+    ) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Event updatedEvent = objectMapper.readValue(eventJson, Event.class);
+            Event event = eventService.updateEvent(eventId, updatedEvent, imageFile);
+            return new ResponseEntity<>(event, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
     @DeleteMapping("/deleteEvent/{id}")
     public String deleteEvent(@PathVariable("id") String eventId) {
