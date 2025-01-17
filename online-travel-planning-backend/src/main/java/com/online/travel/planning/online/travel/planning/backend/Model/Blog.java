@@ -18,60 +18,12 @@ public class Blog {
     private byte[] imageData;
     private LocalDate dateAdded = LocalDate.now();
 
-    public LocalTime getTimeAdded() {
-        return timeAdded;
+    public String getBlogId() {
+        return blogId;
     }
 
-    public void setTimeAdded(LocalTime timeAdded) {
-        this.timeAdded = timeAdded;
-    }
-
-    public LocalDate getDateAdded() {
-        return dateAdded;
-    }
-
-    public void setDateAdded(LocalDate dateAdded) {
-        this.dateAdded = dateAdded;
-    }
-
-    public byte[] getImageData() {
-        return imageData;
-    }
-
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public String getImagePath() {
-        return ImagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        ImagePath = imagePath;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setBlogId(String blogId) {
+        this.blogId = blogId;
     }
 
     public String getTitle() {
@@ -82,14 +34,51 @@ public class Blog {
         this.title = title;
     }
 
-    public String getBlogId() {
-        return blogId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setBlogId(String blogId) {
-        this.blogId = blogId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    private LocalTime timeAdded = LocalTime.now();
+    public String getAuthor() {
+        return author;
+    }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getImagePath() {
+        return ImagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        ImagePath = imagePath;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    public LocalDate getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(LocalDate dateAdded) {
+        this.dateAdded = dateAdded;
+    }
 }
