@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c7d5da3-c44c-4a9b-a824-3ac2f112697a" name="Changes" comment="promoteUserToGuide">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Repository/EventRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Repository/EventRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/EventServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/EventServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/TravelPlaceServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/TravelPlaceServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Repository/BlogRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Model/Blog.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/Model/Blog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +17,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -58,6 +56,9 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2qFJddVrJWWVxl7xfTpPM5Ztem1" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -118,7 +119,7 @@
       <workItem from="1737006091241" duration="9424000" />
       <workItem from="1737021611375" duration="809000" />
       <workItem from="1737037954791" duration="3910000" />
-      <workItem from="1737072321575" duration="1727000" />
+      <workItem from="1737072321575" duration="2034000" />
     </task>
     <task id="LOCAL-00001" summary="upadate mongodb">
       <option name="closed" value="true" />
