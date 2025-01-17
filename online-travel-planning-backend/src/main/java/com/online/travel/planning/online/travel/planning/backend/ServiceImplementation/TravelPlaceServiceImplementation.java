@@ -79,7 +79,7 @@ public class TravelPlaceServiceImplementation implements TravelPlaceService{
                         "</html>";
         allUsers.forEach(user -> {
             if (user.getUserRole().equals("user") || user.getUserRole().equals("GUIDE")) {
-                //emailService.sendEmail(user.getUserEmail(), subject, message);
+                emailService.sendEmail(user.getUserEmail(), subject, message);
             }
         });
 
