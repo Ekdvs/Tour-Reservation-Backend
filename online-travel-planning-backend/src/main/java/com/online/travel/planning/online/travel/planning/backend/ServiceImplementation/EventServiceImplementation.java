@@ -33,7 +33,7 @@ public class EventServiceImplementation implements EventService{
     @Override
     public List<Event> getAllEvents() {
         List<Event> events = eventRepository.findAll();
-        List<User> allUsers = userRepository.findAll();
+    
         for (Event event : events) {
             String imagePath = event.getEventImagePath();
             if (imagePath != null && !imagePath.isEmpty()) {
@@ -52,6 +52,7 @@ public class EventServiceImplementation implements EventService{
         return eventRepository.findById(eventId);
     }
 
+    @Override
     public List<Event> getEventByType(String eventType) {
         List<Event> events = eventRepository.findByType(eventType);
         for (Event event : events) {
@@ -147,12 +148,12 @@ String message =
 
     }
     @Override
-    public Event updateEvent(String eventId, Event eventDetails, MultipartFile imageFile) throws IOException {
-        Optional<Event> existingEventOpt = eventRepository.findById(eventId);
+        public Event updateEvent(String eventId, Event eventDetails, MultipartFile imageFile) throws IOException {
+            Optional<Event> existingEventOpt = eventRepository.findById(eventId);
 
-        if (!existingEventOpt.isPresent()) {
-            throw new NoSuchElementException("Event with ID " + eventId + " not found.");
-        }
+            if (!existingEventOpt.isPresent()) {
+                throw new NoSuchElementException("Event with ID " + eventId + " not found.");
+            }
 
         Event event = existingEventOpt.get();
 

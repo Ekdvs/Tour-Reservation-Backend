@@ -25,7 +25,7 @@ public interface UserService {
     User updateUserProfile(String email, User updatedUser,MultipartFile imagefile)throws IOException;
 
     //long getOnlineUsersCount();
-
+    List<User> getTravelGuides();
     User promoteUserToGuide(String userId);
     //List<User> getNewCustomers();
 }

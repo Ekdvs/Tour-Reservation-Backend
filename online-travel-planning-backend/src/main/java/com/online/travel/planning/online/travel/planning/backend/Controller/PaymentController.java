@@ -1,53 +1,56 @@
 package com.online.travel.planning.online.travel.planning.backend.Controller;
-import com.online.travel.planning.online.travel.planning.backend.Model.DailyIncome;
+
 import com.online.travel.planning.online.travel.planning.backend.Model.Payment;
-import com.online.travel.planning.online.travel.planning.backend.Repository.PaymentRepository;
+import com.online.travel.planning.online.travel.planning.backend.Service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/payment")
+@RequestMapping("/payments")
 public class PaymentController {
     @Autowired
-    private com.online.travel.planning.online.travel.planning.backend.ServiceImplementation.PaymentServiceImplementation paymentService;
-    @Autowired
-    private PaymentRepository paymentRepository;
-    public PaymentController(com.online.travel.planning.online.travel.planning.backend.ServiceImplementation.PaymentServiceImplementation paymentService) {
-        this.paymentService = paymentService;
-    }
-    @GetMapping("/dailyIncome")
-    public ResponseEntity<List<DailyIncome>> getDailyIncome() {
-        List<DailyIncome> dailyIncome = paymentRepository.aggregateDailyIncome(); // Implement aggregation in your repository
-        return ResponseEntity.ok(dailyIncome);
-    }
-    @PostMapping("/process") // add method
-    public Payment processPayment(@RequestBody Payment payment) {
-        return paymentService.processPayment(payment);
-    }
-    @GetMapping("/getPaymentByUserId/{id}")
-    public List<Payment> getPaymentByUserId(@PathVariable("id") String userId) {
-        return paymentService.getPaymentByUserId(userId);
-    }
-    @GetMapping("/getPaymentByReservationId/{id}")
-    public List<Payment> getPaymentByReservationId(@PathVariable("id") String reservationId) {
-        return paymentService.getPaymentByReservationId(reservationId);
-    }
-    @GetMapping("/getAllPayment")
-    public List<Payment> getAllPayment() {
-        return paymentService.getAllPayment();
-    }
-    @GetMapping("/getPaymentById/{id}")
-    public Optional<Payment> getPaymentById(@PathVariable("id") String paymentId) {
-        return paymentService.getPaymentById(paymentId);
-    }
-    @DeleteMapping("/deletePayment/{id}")
-    public String deletePayment(@PathVariable("id") String paymentId) {
-        paymentService.deletePayment(paymentId);
-        return "Payment deleted with id " + paymentId;
+    private PaymentService paymentService;
+
+    @GetMapping("/all")
+    public List<Payment> getAllPayments() {
+        return paymentService.getAllPayments();
     }
 
+    @GetMapping("/user/{userId}")
+    public List<Payment> getPaymentsByUserId(@PathVariable String userId) {
+        return paymentService.getPaymentsByUserId(userId);
+    }
+
+    @GetMapping("/reservation/{reservationId}")
+    public List<Payment> getPaymentsByReservationId(@PathVariable String reservationId) {
+        return paymentService.getPaymentsByReservationId(reservationId);
+    }
+
+    @GetMapping("/{paymentId}")
+    public ResponseEntity<Payment> getPaymentById(@PathVariable String paymentId) {
+        Optional<Payment> payment = paymentService.getPaymentById(paymentId);
+        return payment.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PostMapping("/process")
+    public ResponseEntity<Payment> processPayment(@RequestBody Payment payment) {
+        try {
+            Payment savedPayment = paymentService.processPayment(payment);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedPayment);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping("/{paymentId}")
+    public ResponseEntity<String> deletePayment(@PathVariable String paymentId) {
+        paymentService.deletePayment(paymentId);
+        return ResponseEntity.ok("Payment deleted successfully.");
+    }
 }
