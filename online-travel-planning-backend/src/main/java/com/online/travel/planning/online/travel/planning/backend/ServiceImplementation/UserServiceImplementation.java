@@ -28,12 +28,12 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User createUser(User user, MultipartFile imagefile)throws IOException {
-
+        System.out.println("welcome");
         if (user == null || user.getUserEmail() == null || user.getUserEmail().isEmpty()) {
             throw new IllegalArgumentException("Invalid user data. Email is required.");
         }
-
-        user.setPassword(imagefile.getOriginalFilename());
+        //System.out.println(imagefile.getOriginalFilename());
+        user.setProfileImagePath(imagefile.getOriginalFilename());
         user.setContentType(imagefile.getContentType());
         user.setImageData(imagefile.getBytes());
 
@@ -102,8 +102,25 @@ public class UserServiceImplementation implements UserService {
     }
     @Override
     public User getUserByUserEmail(String userEmail) {
-        return userRepository.findByUserEmail(userEmail);
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
+
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("User not found with email: " + userEmail);
+        }
+
+        User user = optionalUser.get();
+        String imagePath = user.getProfileImagePath();
+
+
+
+        if (imagePath != null && !imagePath.isEmpty()) {
+            String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
+            user.setProfileImagePath(fullPath);
+        }
+
+        return user;
     }
+
 
     @Override
     public List<User> getAllUsers() {
@@ -127,7 +144,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public String sendRecoveryCode(String userEmail) {
         // Check if the email is valid and user exists
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("No user found with email: " + userEmail);
         }
@@ -202,7 +219,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User updatePassword(String userEmail, String newPassword) {
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
+        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("No user found with email: " + userEmail);
         }
@@ -251,15 +268,15 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUserProfile(String email) {
-        User getuser = userRepository.findByUserEmail(email);
-        String imagePath =getuser.getProfileImagePath();
+        Optional<User> getuser = userRepository.findByUserEmail(email);
+        String imagePath = getuser.get().getProfileImagePath();
         if (imagePath != null && !imagePath.isEmpty()) {
             String fullPath = getAccessibleUrl("http://localhost:8080" + imagePath);
-            getuser.setProfileImagePath(fullPath);
+            getuser.get().setProfileImagePath(fullPath);
         }
 
 
-        return getuser;
+        return getuser.orElse(null);
     }
 
     private String getAccessibleUrl(String... urls) {
@@ -284,29 +301,35 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User updateUserProfile(String userEmail, User user,MultipartFile imageFile) throws IOException {
-        Optional<User> existingUser = Optional.ofNullable(userRepository.findByUserEmail(userEmail));
-        if (!existingUser.isPresent()) {
-            throw new NoSuchElementException("No user found with email: " + userEmail);
+    public User updateUserProfile(String userEmail, User userDetails, MultipartFile imageFile) throws IOException {
+        System.out.println("Updating user profile with email: " + userEmail);
+
+        // Use orElseThrow to handle the case when the user is not found
+        User user = userRepository.findByUserEmail(userEmail)
+                .orElseThrow(() -> new NoSuchElementException("No user found with email: " + userEmail));
+
+        // Update user details with new data
+        user.setFirstName(userDetails.getFirstName());
+        user.setLastName(userDetails.getLastName());
+        user.setPhoneNumber(userDetails.getPhoneNumber());
+        user.setTitle(userDetails.getTitle());
+        user.setGender(userDetails.getGender());
+        user.setCountry(userDetails.getCountry());
+
+        // Update profile image if provided
+        if (imageFile != null && !imageFile.isEmpty()) {
+            // Assuming you have a method to save the file and get the file name
+            user.setProfileImagePath(imageFile.getOriginalFilename());
+            user.setContentType(imageFile.getContentType());
+            user.setImageData(imageFile.getBytes());  // Storing image as byte array, but might be better to store only file path
         }
-        User user1=existingUser.get();
 
-        // User user details
-        user1.setFirstName(user1.getFirstName());
-        user1.setLastName(user1.getLastName());
-        user1.setTitle(user1.getTitle());
-        user1.setGender(user1.getGender());
-        user1.setCountry(user1.getCountry());
-
-        //update image file if provided
-        if(imageFile != null &&!imageFile.isEmpty()) {
-            user1.setProfileImagePath(imageFile.getOriginalFilename());
-            user1.setContentType(imageFile.getContentType());
-            user1.setImageData(imageFile.getBytes());
-        }
-        return userRepository.save(user1);
-
+        // Save and return updated user
+        return userRepository.save(user);
     }
+
+
+
    /* @Override
     public long getOnlineUsersCount() {
         return userRepository.
@@ -334,6 +357,17 @@ public class UserServiceImplementation implements UserService {
         }
 
     }
+    @Override
+    public List<User> getTravelGuides() {
+        // Fetch users with the "travelGuide" role
+        List<User> users = userRepository.findByUserRole("travelGuide");
+
+
+
+        return users;
+    }
+
+
 
 
 
