@@ -1,72 +1,64 @@
 package com.online.travel.planning.online.travel.planning.backend.ServiceImplementation;
-import com.online.travel.planning.online.travel.planning.backend.Model.Packages;
+
 import com.online.travel.planning.online.travel.planning.backend.Model.Payment;
-import com.online.travel.planning.online.travel.planning.backend.Model.Reservation;
-import com.online.travel.planning.online.travel.planning.backend.Model.User;
-import com.online.travel.planning.online.travel.planning.backend.Repository.PackagesRepository;
 import com.online.travel.planning.online.travel.planning.backend.Repository.PaymentRepository;
-import com.online.travel.planning.online.travel.planning.backend.Repository.ReservationRepository;
-import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
-import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
 import com.online.travel.planning.online.travel.planning.backend.Service.PaymentService;
+import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PaymentServiceImplementation implements PaymentService{
+public class PaymentServiceImplementation implements PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
-    @Autowired
-    private UserRepository userRepository;
+
     @Autowired
     private Email_Service emailService;
-    @Autowired
-    private ReservationRepository reservationRepository;
-    @Autowired
-    private PackagesRepository packagesRepository;
 
-    public List<Payment> getAllPayment() {
+    @Override
+    public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }
 
-    public List<Payment> getPaymentByUserId(String userId) {
+    @Override
+    public List<Payment> getPaymentsByUserId(String userId) {
         return paymentRepository.findByUserId(userId);
     }
 
-    public List<Payment> getPaymentByReservationId(String reservationId) {
+    @Override
+    public List<Payment> getPaymentsByReservationId(String reservationId) {
         return paymentRepository.findByReservationId(reservationId);
     }
 
+    @Override
     public Optional<Payment> getPaymentById(String paymentId) {
         return paymentRepository.findById(paymentId);
     }
 
+    @Override
     public void deletePayment(String paymentId) {
         paymentRepository.deleteById(paymentId);
     }
+
+    @Override
     public Payment processPayment(Payment payment) {
         Payment savedPayment = paymentRepository.save(payment);
-
         if (payment.isCheckAccept()) {
             sendPaymentSuccessEmail(payment);
         }
         return savedPayment;
     }
+    @Override
     public void sendPaymentSuccessEmail(Payment payment) {
-        // Fetch user details by userId
-        Optional<User> userOptional = userRepository.findByUserId(payment.getUserId());
-        Optional<Reservation> reservationOptional = reservationRepository.findById(payment.getReservationId());
-        if (userOptional.isPresent() && reservationOptional.isPresent()) {
-            User user = userOptional.get();
-            Reservation reservation = reservationOptional.get();
-            Optional<Packages> optionalPackages = packagesRepository.findById(reservation.getPackgeId());
-            Packages packages = optionalPackages.get();
+
             try {
-                String userEmail = user.getUserEmail();
+                String userEmail = payment.getUserEmail();
                 String subject = "Payment Confirmation";
-                String message = "<html>" +
+                String message = "";
+                        /*"<html>" +
                         "<head>" +
                         "<style>" +
                         "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }" +
@@ -111,7 +103,7 @@ public class PaymentServiceImplementation implements PaymentService{
                         "</div>" +
                         "</div>" +
                         "</body>" +
-                        "</html>";
+                        "</html>";*/
 
                 emailService.sendEmail(userEmail, subject, message); // Ensure this method supports HTML content
                 System.out.println("Email sent successfully to: " + userEmail);
@@ -119,9 +111,7 @@ public class PaymentServiceImplementation implements PaymentService{
             } catch (Exception e) {
                 System.out.println("Failed to send email: " + e.getMessage());
             }
-        } else {
-            System.out.println("User not found with ID: " + payment.getUserId());
-            }
+        }
     }
 
-}
+

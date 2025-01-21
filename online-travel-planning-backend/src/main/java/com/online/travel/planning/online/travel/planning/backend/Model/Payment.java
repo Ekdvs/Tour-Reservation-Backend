@@ -1,45 +1,27 @@
 package com.online.travel.planning.online.travel.planning.backend.Model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "payment")
 public class Payment {
     @Id
     private String paymentId;
-    private String reservationId;
     private String userId;
-    private String travelId;
+    private String packageId; // Can be null if payment is for an event
+    private String reservationId; // Optional for package or event
     private Double amount;
     private String userEmail;
-    private LocalDate paymentDate=LocalDate.now();
-    private LocalTime paymentTime=LocalTime.now();
-    private String description="Payment Conformance" ;
+    private LocalDate paymentDate = LocalDate.now();
+    private LocalTime paymentTime = LocalTime.now();
+    private String description = "Payment Confirmation";
     private String transactionId;
-    private boolean checkAccept=true;
+    private boolean checkAccept = true;
     private String refundStatus = "Not Applicable";
 
-    // add getter and setter
-
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getRefundStatus() {
-        return refundStatus;
-    }
-
-    public void setRefundStatus(String refundStatus) {
-        this.refundStatus = refundStatus;
-    }
+    // Getters and Setters
 
     public String getPaymentId() {
         return paymentId;
@@ -57,12 +39,20 @@ public class Payment {
         this.userId = userId;
     }
 
-    public String getTravelId() {
-        return travelId;
+    public String getPackageId() {
+        return packageId;
     }
 
-    public void setTravelId(String travelId) {
-        this.travelId = travelId;
+    public void setPackageId(String packageId) {
+        this.packageId = packageId;
+    }
+
+    public String getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(String reservationId) {
+        this.reservationId = reservationId;
     }
 
     public Double getAmount() {
@@ -105,12 +95,12 @@ public class Payment {
         this.description = description;
     }
 
-    public String getReservationId() {
-        return reservationId;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public void setReservationId(String reservationId) {
-        this.reservationId = reservationId;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
     public boolean isCheckAccept() {
@@ -119,5 +109,13 @@ public class Payment {
 
     public void setCheckAccept(boolean checkAccept) {
         this.checkAccept = checkAccept;
+    }
+
+    public String getRefundStatus() {
+        return refundStatus;
+    }
+
+    public void setRefundStatus(String refundStatus) {
+        this.refundStatus = refundStatus;
     }
 }
