@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c7d5da3-c44c-4a9b-a824-3ac2f112697a" name="Changes" comment="promoteUserToGuide">
+    <list default="true" id="1c7d5da3-c44c-4a9b-a824-3ac2f112697a" name="Changes" comment="fix mongo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/EventServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/EventServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/TravelPlaceServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/TravelPlaceServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/UserServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-travel-planning-backend/src/main/java/com/online/travel/planning/online/travel/planning/backend/ServiceImplementation/UserServiceImplementation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +123,7 @@
       <workItem from="1737037954791" duration="3910000" />
       <workItem from="1737072321575" duration="10370000" />
       <workItem from="1737160075497" duration="617000" />
-      <workItem from="1737513074665" duration="954000" />
+      <workItem from="1737513074665" duration="7780000" />
     </task>
     <task id="LOCAL-00001" summary="upadate mongodb">
       <option name="closed" value="true" />
@@ -322,7 +325,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735273266228</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fix mongo">
+      <option name="closed" value="true" />
+      <created>1737515672014</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1737515672014</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -367,7 +378,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="upadate mongodb" />
     <MESSAGE value="upadate mongodb and chnage localhost 3000" />
     <MESSAGE value="add config class" />
     <MESSAGE value="add config dependence" />
@@ -391,6 +401,8 @@
     <MESSAGE value="password update update" />
     <MESSAGE value="getOnlineUsersCount()" />
     <MESSAGE value="promoteUserToGuide" />
-    <option name="LAST_COMMIT_MESSAGE" value="promoteUserToGuide" />
+    <MESSAGE value="Merge branch 'developer'" />
+    <MESSAGE value="fix mongo" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix mongo" />
   </component>
 </project>
