@@ -77,7 +77,7 @@ public class UserServiceImplementation implements UserService {
 
         // Send the welcome email
         try {
-            emailService.sendEmail(userEmail, subject, message); // Ensure this method supports HTML content
+            //emailService.sendEmail(userEmail, subject, message); // Ensure this method supports HTML content
             System.out.println("Email sent successfully to: " + userEmail);
         } catch (Exception e) {
             System.err.println("Failed to send email to: " + userEmail);
