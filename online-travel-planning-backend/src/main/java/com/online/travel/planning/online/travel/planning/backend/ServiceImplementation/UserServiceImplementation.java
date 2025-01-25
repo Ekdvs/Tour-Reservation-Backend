@@ -40,7 +40,7 @@ public class UserServiceImplementation implements UserService {
         String userEmail = user.getUserEmail();
 
 
-        String subject = "Welcome to Travel Planning Website!";
+        String subject = "Welcome to Travel Planning Website!!!";
         String message = "<html>" +
                 "<head>" +
                 "<style>" +
