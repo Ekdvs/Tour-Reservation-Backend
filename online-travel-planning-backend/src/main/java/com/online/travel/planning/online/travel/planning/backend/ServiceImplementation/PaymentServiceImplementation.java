@@ -98,7 +98,7 @@ public class PaymentServiceImplementation implements PaymentService {
                         "</div>" +
 
                         "<div class='footer'>" +
-                        "<p>&copy; 2024 BkTicketing LK. All rights reserved.</p>" +
+                        "<p>&copy; 2024 BkTicketing LK.  All rights reserved.</p>" +
                         "<p>If you have any questions, please contact us at support@bkticketing.lk</p>" +
                         "</div>" +
                         "</div>" +
