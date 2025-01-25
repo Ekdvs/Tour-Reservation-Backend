@@ -20,7 +20,7 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    private static final String IMAGE_DIRECTORY = "src/main/resources/static/images/";
+    
 
     @GetMapping("/getAllBlogs")
     public List<Blog> getAllBlogs() {

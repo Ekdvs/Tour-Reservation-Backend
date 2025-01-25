@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import com.online.travel.planning.online.travel.planning.backend.Model.Packages;
 import com.online.travel.planning.online.travel.planning.backend.Service.PackagesService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController

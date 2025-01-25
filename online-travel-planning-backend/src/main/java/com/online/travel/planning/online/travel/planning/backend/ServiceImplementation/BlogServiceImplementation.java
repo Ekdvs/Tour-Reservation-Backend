@@ -6,7 +6,6 @@ import com.online.travel.planning.online.travel.planning.backend.Repository.Blog
 import com.online.travel.planning.online.travel.planning.backend.Repository.UserRepository;
 import com.online.travel.planning.online.travel.planning.backend.Service.BlogService;
 import com.online.travel.planning.online.travel.planning.backend.Service.Email_Service;
-import com.online.travel.planning.online.travel.planning.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +22,7 @@ public class BlogServiceImplementation implements BlogService {
     @Autowired
     private BlogRepository blogRepository;
 
-    @Autowired
-    private UserService userService;
+    
 
     @Autowired
     private Email_Service emailService;

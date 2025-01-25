@@ -22,7 +22,7 @@ public class TravelPlaceController {
     @Autowired
     private TravelPlaceService travelPlaceService;
 
-    private static final String IMAGE_DIRECTORY = "src/main/resources/static/images/";
+    
 
     //get all places
     @GetMapping("/allplaces")
