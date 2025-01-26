@@ -10,8 +10,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 
 # Ignore all .war files
+target/
 *.war
-target/*.war
 
 ### STS ###
 .apt_generated
