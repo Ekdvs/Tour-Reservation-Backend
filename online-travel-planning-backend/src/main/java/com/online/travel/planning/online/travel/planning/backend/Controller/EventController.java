@@ -32,6 +32,9 @@ import com.online.travel.planning.online.travel.planning.backend.Service.EventSe
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/event")
 public class EventController {
+
+
+    
     @Autowired
     private EventService eventService;
 
