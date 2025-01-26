@@ -9,9 +9,7 @@ target/
 # Ignore Maven wrapper files
 !.mvn/wrapper/maven-wrapper.jar
 
-# Ignore all .war files
-target/
-*.war
+
 
 ### STS ###
 .apt_generated
