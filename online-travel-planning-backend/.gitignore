@@ -11,6 +11,7 @@ target/
 
 # Ignore all .war files
 *.war
+target/*.war
 
 ### STS ###
 .apt_generated
