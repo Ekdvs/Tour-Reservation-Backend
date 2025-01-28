@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface PackagesRepository extends MongoRepository<Packages, String> {
     @Query("{ 'PackageType' : ?0 }")
-    List<Packages> findByPackageType(String eventType);
-    public List<Packages> findByPackageNameContainingIgnoreCase(String name);
+    List<Packages> findByPackageType(String PackageType);
+    List<Packages> findByPackageNameContainingIgnoreCase(String name);
 }

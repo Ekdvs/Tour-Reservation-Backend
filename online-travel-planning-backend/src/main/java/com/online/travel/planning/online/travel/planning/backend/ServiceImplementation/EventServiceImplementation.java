@@ -138,7 +138,7 @@ String message =
                 "</html>";
                 allUsers.forEach(user -> {
                     if (user.getUserRole().equals("user") || user.getUserRole().equals("GUIDE")) {
-                       // emailService.sendEmail(user.getUserEmail(), subject, message);
+                       emailService.sendEmail(user.getUserEmail(), subject, message);
                     }
                 });
         
@@ -192,13 +192,5 @@ String message =
     public List<Event> searchEventsByName(String name) {
         return eventRepository.findByEventNameContainingIgnoreCase(name);
     }
-
-
-
-
-    
-
-
-
 
 }

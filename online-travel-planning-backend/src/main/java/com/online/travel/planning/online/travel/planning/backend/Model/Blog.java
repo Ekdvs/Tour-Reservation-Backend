@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Document(collection = "blog")
+@Document( collection = "blog")
 public class Blog {
     @Id
     private String blogId;
@@ -17,6 +17,15 @@ public class Blog {
     private String contentType;
     private byte[] imageData;
     private LocalDate dateAdded = LocalDate.now();
+    private LocalTime timeAdded = LocalTime.now();
+
+    public LocalTime getTimeAdded() {
+        return timeAdded;
+    }
+
+    public void setTimeAdded(LocalTime timeAdded) {
+        this.timeAdded = timeAdded;
+    }
 
     public String getBlogId() {
         return blogId;

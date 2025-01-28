@@ -1,8 +1,15 @@
 HELP.md
+# Ignore target directories
 target/
-!.mvn/wrapper/maven-wrapper.jar
+
+# Un-ignore target directories in src/main and src/test
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+# Ignore Maven wrapper files1111
+!.mvn/wrapper/maven-wrapper.jar
+
+
 
 ### STS ###
 .apt_generated
