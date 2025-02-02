@@ -12,7 +12,6 @@ public interface ReservationService {
     List<Reservation> getReservationsByUserEmail(String userEmail);
     Optional<Reservation> getReservationById(String reservationId);
     Reservation updateReservation(String reservationId,Reservation reservation);
-    Reservation updateReservationStatus(String reservationId);
     void deleteReservation(String reservationId);
     double getTotalPriceByCurrentDate();
     double getTotalPrice();
