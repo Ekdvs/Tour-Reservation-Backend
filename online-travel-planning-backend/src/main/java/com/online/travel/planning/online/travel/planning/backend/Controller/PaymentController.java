@@ -12,45 +12,43 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/payments")
+@RequestMapping("/payment")
 public class PaymentController {
+
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping("/all")
-    public List<Payment> getAllPayments() {
-        return paymentService.getAllPayments();
-    }
-
-    @GetMapping("/user/{userId}")
-    public List<Payment> getPaymentsByUserId(@PathVariable String userId) {
-        return paymentService.getPaymentsByUserId(userId);
-    }
-
-    @GetMapping("/reservation/{reservationId}")
-    public List<Payment> getPaymentsByReservationId(@PathVariable String reservationId) {
-        return paymentService.getPaymentsByReservationId(reservationId);
-    }
-
-    @GetMapping("/{paymentId}")
-    public ResponseEntity<Payment> getPaymentById(@PathVariable String paymentId) {
-        Optional<Payment> payment = paymentService.getPaymentById(paymentId);
-        return payment.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-
-    @PostMapping("/process")
-    public ResponseEntity<Payment> processPayment(@RequestBody Payment payment) {
+    // Create a new payment
+    @PostMapping("/create")
+    public ResponseEntity<Payment> createPayment(@RequestBody Payment payment) {
         try {
-            Payment savedPayment = paymentService.processPayment(payment);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedPayment);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            Payment newPayment = paymentService.createPayment(payment);
+            return ResponseEntity.ok(newPayment);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
-    @DeleteMapping("/{paymentId}")
-    public ResponseEntity<String> deletePayment(@PathVariable String paymentId) {
-        paymentService.deletePayment(paymentId);
-        return ResponseEntity.ok("Payment deleted successfully.");
+    // Get payment by ID
+    @GetMapping("/get/{paymentId}")
+    public ResponseEntity<Payment> getPaymentById(@PathVariable String paymentId) {
+        Payment payment = paymentService.getPaymentById(paymentId);
+        if (payment != null) {
+            return ResponseEntity.ok(payment);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Update payment status
+    @PutMapping("/update/{paymentId}")
+    public ResponseEntity<Payment> updatePaymentStatus(
+            @PathVariable String paymentId, @RequestParam String status) {
+        Payment updatedPayment = paymentService.updatePaymentStatus(paymentId, status);
+        if (updatedPayment != null) {
+            return ResponseEntity.ok(updatedPayment);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

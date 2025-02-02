@@ -40,8 +40,10 @@ public class TravelPlaceController {
 
     //getplace by id
     @GetMapping("/getPlaceById/{id}")
-    public Optional<TravelPlace> getPlaceById(@PathVariable String placeId) {
-        return travelPlaceService.getTravelPlaceById(placeId);
+    public ResponseEntity<TravelPlace> getPlaceById(@PathVariable String id) {
+        return travelPlaceService.getTravelPlaceById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     //get place by catagary

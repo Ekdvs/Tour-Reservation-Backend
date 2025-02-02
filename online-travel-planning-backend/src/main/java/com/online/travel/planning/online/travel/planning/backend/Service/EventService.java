@@ -16,6 +16,8 @@ public interface EventService {
     Event updateEvent(String eventId, Event eventDetails,MultipartFile imageFile)throws IOException;
     void deleteEvent(String eventId);
     List<Event> searchEventsByName(String name);
+    Event bookEvent(String eventId, Integer numOfTickets);
+    Integer getAvailableTickets(String eventId);
 
 
 }

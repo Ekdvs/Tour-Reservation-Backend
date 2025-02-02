@@ -2,6 +2,7 @@ package com.online.travel.planning.online.travel.planning.backend.Controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +24,8 @@ public class PackagesController {
      @Autowired
     private PackagesService packagesService;
 
+
+
     @GetMapping("/getAllPackages")
     public List<Packages> getAllPackages() {
         return packagesService.getAllPackages();
@@ -35,8 +38,10 @@ public class PackagesController {
     }
 
     @GetMapping("/getPackageById/{id}")
-    public Optional<Packages> getPackageById(@PathVariable("id") String packageId) {
-        return packagesService.getPackageById(packageId);
+    public ResponseEntity<Packages> getPackageById(@PathVariable("id") String packageId) {
+        Optional<Packages> packageOptional = packagesService.getPackageById(packageId);
+        return packageOptional.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getPackageByType/{packageType}")
@@ -44,35 +49,46 @@ public class PackagesController {
         return packagesService.getPackagesByPackageType(packageType);
     }
     @PostMapping("/addPackage")
-    public ResponseEntity<?> createPackage(@RequestPart("package")String packageJson, @RequestPart("imageFile") MultipartFile imagefile) throws IOException {
+    public ResponseEntity<?> createPackage(
+            @RequestPart("package") String packageJson,
+            @RequestPart("imageFile") MultipartFile imageFile) throws IOException {
         try {
+            // Deserialize the package JSON (no "imageFile" here)
             ObjectMapper objectMapper = new ObjectMapper();
             Packages packages = objectMapper.readValue(packageJson, Packages.class);
-            Packages packagesExist = packagesService.createPackage(packages,imagefile);
-            return new ResponseEntity<>(packagesExist, HttpStatus.CREATED);
 
+            // Handle package creation logic (process the image file)
+            Packages createdPackage = packagesService.createPackage(packages, imageFile);
 
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(createdPackage, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
 
     @PutMapping("/updatePackage/{id}")
     public ResponseEntity<?> updatePackage(
-            @PathVariable("id") String packageeId,
-            @RequestPart("event") String PackageJson,
-            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile
-    ) {
+            @PathVariable("id") String packageId,
+            @RequestPart("package") String packageJson,
+            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            Packages updatepackage = objectMapper.readValue(PackageJson, Packages.class);
-            Packages packages1 = packagesService.updatePackage(packageeId,updatepackage,imageFile);
-            return new ResponseEntity<>(packages1, HttpStatus.OK);
+            Packages updatedPackage = objectMapper.readValue(packageJson, Packages.class);
+            Packages savedPackage = packagesService.updatePackage(packageId, updatedPackage, imageFile);
+            return new ResponseEntity<>(savedPackage, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>("Package not found: " + e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            return new ResponseEntity<>("Error processing request: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Internal server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @DeleteMapping("/deletePackage/{id}")
     public String deletePackage(@PathVariable("id") String id) {

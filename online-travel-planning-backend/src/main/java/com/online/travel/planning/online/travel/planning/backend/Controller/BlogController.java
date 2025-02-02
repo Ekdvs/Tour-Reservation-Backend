@@ -63,7 +63,7 @@ public class BlogController {
     }
 
 
-    @DeleteMapping("/deleteBlogt/{id}")
+    @DeleteMapping("/deleteBlog/{id}")
     public String deleteBlog(@PathVariable("id") String blogId) {
         blogService.deleteBlog(blogId);
         return "Blog deleted with id " + blogId;

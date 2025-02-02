@@ -156,7 +156,7 @@ public class UserController {
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "Logged out successfully";
+        return "redirect:/login";
     }
 
 

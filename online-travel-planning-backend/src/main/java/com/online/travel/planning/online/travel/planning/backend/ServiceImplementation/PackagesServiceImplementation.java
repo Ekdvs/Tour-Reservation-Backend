@@ -109,33 +109,33 @@ public class PackagesServiceImplementation implements PackagesService {
     }
 
     @Override
-    public Packages updatePackage(String packageId, Packages packages, MultipartFile imagefile)throws IOException{
-        Optional<Packages>existingPackage=packagesRepository.findById(packageId);
+    public Packages updatePackage(String packageId, Packages updatedPackage, MultipartFile imageFile) throws IOException {
+        Optional<Packages> existingPackageOpt = packagesRepository.findById(packageId);
 
-        if(existingPackage.isPresent()){
-            throw new NoSuchElementException("Package with id "+packageId+" does not exist");
+        if (!existingPackageOpt.isPresent()) {
+            throw new NoSuchElementException("Package with ID " + packageId + " does not exist");
         }
 
-        Packages newPackage=existingPackage.get();
+        Packages existingPackage = existingPackageOpt.get();
 
-        //update package details
-        newPackage.setPackageName(packages.getPackageName());
-        newPackage.setPackageType(packages.getPackageType());
-        newPackage.setDescription(packages.getDescription());
-        newPackage.setOnePersonPrice(packages.getOnePersonPrice());
-        newPackage.setDuration(packages.getDuration());
-        newPackage.setLocation(packages.getLocation());
+        // Update package details
+        existingPackage.setPackageName(updatedPackage.getPackageName());
+        existingPackage.setPackageType(updatedPackage.getPackageType());
+        existingPackage.setDescription(updatedPackage.getDescription());
+        existingPackage.setOnePersonPrice(updatedPackage.getOnePersonPrice());
+        existingPackage.setDuration(updatedPackage.getDuration());
+        existingPackage.setLocation(updatedPackage.getLocation());
 
-
-
-        //update image
-        if(imagefile!=null&&!imagefile.isEmpty()){
-            newPackage.setPackageImagePath(imagefile.getOriginalFilename());
-            newPackage.setContentType(imagefile.getContentType());
-            newPackage.setImageData(imagefile.getBytes());
+        // Update image if provided
+        if (imageFile != null && !imageFile.isEmpty()) {
+            existingPackage.setPackageImagePath(imageFile.getOriginalFilename());
+            existingPackage.setContentType(imageFile.getContentType());
+            existingPackage.setImageData(imageFile.getBytes());
         }
-        return packagesRepository.save(newPackage);
+
+        return packagesRepository.save(existingPackage);
     }
+
 
     @Override
     public void deletePackage(String packageId) {
