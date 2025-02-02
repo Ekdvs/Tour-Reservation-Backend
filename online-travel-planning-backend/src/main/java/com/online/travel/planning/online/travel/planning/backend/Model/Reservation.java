@@ -89,7 +89,17 @@ public class Reservation {
         return travelGuide;
     }
 
+    public Integer getNumberOfPeople() {
+        return numberOfPeople;
+    }
+
+    public void setNumberOfPeople(Integer numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
+    }
+
     public void setTravelGuide(TravelGuide travelGuide) {
         this.travelGuide = travelGuide;
     }
+
+
 }
