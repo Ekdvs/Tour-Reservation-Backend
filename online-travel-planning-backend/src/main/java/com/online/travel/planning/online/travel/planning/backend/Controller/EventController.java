@@ -8,19 +8,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.online.travel.planning.online.travel.planning.backend.Model.BookingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -115,6 +107,25 @@ public class EventController {
             
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/bookEvent")
+    public ResponseEntity<String> bookEvent(@RequestBody BookingRequest bookingRequest) {
+        try {
+            Event updatedEvent = eventService.bookEvent(bookingRequest.getEventId(), bookingRequest.getNumOfTickets());
+            return ResponseEntity.ok("Booking successful. " + updatedEvent.getNumOfTickets() + " tickets remaining.");
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/availableTickets/{eventId}")
+    public ResponseEntity<Integer> getAvailableTickets(@PathVariable String eventId) {
+        try {
+            Integer availableTickets = eventService.getAvailableTickets(eventId);
+            return ResponseEntity.ok(availableTickets);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null); // Event not found
         }
     }
 

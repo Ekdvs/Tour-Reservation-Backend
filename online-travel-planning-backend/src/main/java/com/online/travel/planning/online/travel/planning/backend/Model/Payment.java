@@ -9,19 +9,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Payment {
     @Id
     private String paymentId;
-    private String userId;
-    private String packageId; // Can be null if payment is for an event
-    private String reservationId; // Optional for package or event
-    private Double amount;
     private String userEmail;
-    private LocalDate paymentDate = LocalDate.now();
-    private LocalTime paymentTime = LocalTime.now();
-    private String description = "Payment Confirmation";
-    private String transactionId;
-    private boolean checkAccept = true;
-    private String refundStatus = "Not Applicable";
-
-    // Getters and Setters
+    private String reservationId;
+    private Double amount;
+    private String paymentMethod;
+    private String status="Completed";
+    private String paymentDate;
 
     public String getPaymentId() {
         return paymentId;
@@ -31,20 +24,12 @@ public class Payment {
         this.paymentId = paymentId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getPackageId() {
-        return packageId;
-    }
-
-    public void setPackageId(String packageId) {
-        this.packageId = packageId;
+    public void setserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getReservationId() {
@@ -63,59 +48,27 @@ public class Payment {
         this.amount = amount;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
-    public LocalDate getPaymentDate() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(LocalDate paymentDate) {
+    public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
-    }
-
-    public LocalTime getPaymentTime() {
-        return paymentTime;
-    }
-
-    public void setPaymentTime(LocalTime paymentTime) {
-        this.paymentTime = paymentTime;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public boolean isCheckAccept() {
-        return checkAccept;
-    }
-
-    public void setCheckAccept(boolean checkAccept) {
-        this.checkAccept = checkAccept;
-    }
-
-    public String getRefundStatus() {
-        return refundStatus;
-    }
-
-    public void setRefundStatus(String refundStatus) {
-        this.refundStatus = refundStatus;
     }
 }

@@ -193,4 +193,34 @@ String message =
         return eventRepository.findByEventNameContainingIgnoreCase(name);
     }
 
+    @Override
+    public Event bookEvent(String eventId, Integer numOfTickets) {
+        Optional<Event> eventOpt = eventRepository.findById(eventId);
+
+        if (eventOpt.isPresent()) {
+            Event event = eventOpt.get();
+
+            // Check if there are enough available tickets
+            if (event.getNumOfTickets() >= numOfTickets) {
+                // Update the number of available tickets
+                event.setNumOfTickets(event.getNumOfTickets() - numOfTickets);
+                return eventRepository.save(event); // Save the updated event
+            } else {
+                throw new IllegalStateException("Not enough tickets available.");
+            }
+        } else {
+            throw new IllegalArgumentException("Event not found.");
+        }
+    }
+    @Override
+    public Integer getAvailableTickets(String eventId) {
+        Optional<Event> eventOpt = eventRepository.findById(eventId);
+
+        if (eventOpt.isPresent()) {
+            return eventOpt.get().getNumOfTickets(); // Return the available tickets
+        } else {
+            throw new IllegalArgumentException("Event not found.");
+        }
+    }
+
 }
